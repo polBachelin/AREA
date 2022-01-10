@@ -1,0 +1,423 @@
+openapi: 3.0.3
+info:
+  title: AREA
+  description: Area for epitech
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- name: user
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+- name: area
+  description: Access to User Areas
+- name: services
+  description: Access possible services
+paths:
+  /area:
+    get:
+      tags:
+      - area
+      summary: Returns all logged in user areas
+      description: Returns a map of areas
+      operationId: getAreas
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Area'
+            text/plain:
+              schema:
+                type: string
+      x-swagger-router-controller: Area
+  /area/{areaId}:
+    get:
+      tags:
+      - area
+      summary: Get the info of an Area
+      operationId: areaAreaIdGET
+      parameters:
+      - name: areaId
+        in: path
+        description: ID of the area to get
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Area'
+      x-swagger-router-controller: Area
+    put:
+      tags:
+      - area
+      summary: Update a user area
+      operationId: areaAreaIdPUT
+      parameters:
+      - name: areaId
+        in: path
+        description: Id of the area to update
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Area'
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: invalid Area object
+      x-swagger-router-controller: Area
+    delete:
+      tags:
+      - area
+      summary: Delete an area
+      operationId: areaAreaIdDELETE
+      parameters:
+      - name: areaId
+        in: path
+        description: ID of the area to delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: successful operation
+      x-swagger-router-controller: Area
+  /area/create:
+    get:
+      tags:
+      - area
+      summary: Create an empty area
+      operationId: areaCreateGET
+      responses:
+        "200":
+          description: successful operation
+      x-swagger-router-controller: Area
+    post:
+      tags:
+      - area
+      summary: Create an area with info
+      operationId: areaCreatePOST
+      parameters:
+      - name: areaObject
+        in: header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          $ref: '#/components/schemas/Area'
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Name already exists
+      x-swagger-router-controller: Area
+  /user/email:
+    post:
+      tags:
+      - user
+      summary: Update user email
+      description: This can only be done by logged in user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                userEmail:
+                  type: string
+  /user/username:
+    post:
+      tags:
+      - user
+      summary: Update username
+      description: This can only be done by logged in user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                username:
+                  type: string
+  /user/password:
+    post:
+      tags:
+      - user
+      summary: Update user email
+      description: This can only be done by logged in user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                userEmail:
+                  type: string
+
+
+  /user:
+    put:
+      tags:
+      - user
+      summary: Update user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      requestBody:
+          content:
+              application/json:
+                  schema:
+                      $ref: "#/components/schemas/User"
+      responses:
+        "400":
+          description: Invalid user supplied
+        "404":
+          description: User not found
+      x-swagger-router-controller: User
+    post:
+      tags:
+      - user
+      summary: Create user
+      description: This can only be done once at the registration page
+      operationId: createUser
+      requestBody:
+          content:
+              application/json:
+                  schema:
+                      $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: "successful operation, user is logged in"
+        "400":
+          description: Invalid email supplied
+        "413":
+          description: Invalid password supplied
+      x-swagger-router-controller: User
+    delete:
+      tags:
+      - user
+      summary: Delete user
+      description: This can only be done by the logged in user. Delete user from database
+        and log him out
+      operationId: deleteUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string                
+      responses:
+        "200":
+          description: User has been deleted
+        "400":
+          description: User not logged in
+      x-swagger-router-controller: User
+  /user/login:
+    get:
+      tags:
+      - user
+      summary: Logs user into the system
+      operationId: loginUser
+      parameters:
+      - name: username
+        in: query
+        description: The user name for login
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        description: The password for login in clear text
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid username/password supplied
+      x-swagger-router-controller: User
+  /user/logout:
+    get:
+      tags:
+      - user
+      summary: Logs out current logged in user session
+      operationId: logoutUser
+      responses:
+        default:
+          description: successful operation
+      x-swagger-router-controller: User
+  /services:
+    get:
+      tags:
+      - services
+      summary: Retrieves all services
+      operationId: servicesGET
+      responses:
+        "200":
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+                x-content-type: application/json
+      x-swagger-router-controller: Services
+  /services/{serviceId}/actions:
+    get:
+      tags:
+      - services
+      summary: Retrieves actions of a service
+      operationId: servicesServiceIdActionsGET
+      parameters:
+      - name: serviceId
+        in: path
+        description: the id of the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Action'
+                x-content-type: application/json
+        "400":
+          description: no known service with this id
+      x-swagger-router-controller: Services
+  /services/{serviceId}/reactions:
+    get:
+      tags:
+      - services
+      summary: Retrieves reactions of a service
+      operationId: servicesServiceIdReactionsGET
+      parameters:
+      - name: serviceId
+        in: path
+        description: the id of the service
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reaction'
+                x-content-type: application/json
+        "400":
+          description: no known service with this id
+      x-swagger-router-controller: Services
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+          format: password
+      xml:
+        name: User
+    Component:
+      type: object
+      properties:
+        name:
+          type: string
+    Service:
+      allOf:
+      - $ref: '#/components/schemas/Component'
+      - type: object
+        properties:
+          url:
+            type: string
+    Action:
+      allOf:
+      - $ref: '#/components/schemas/Component'
+      - type: object
+        properties:
+          serviceId:
+            type: integer
+    Reaction:
+      allOf:
+      - $ref: '#/components/schemas/Component'
+      - type: object
+        properties:
+          serviceId:
+            type: integer
+    Area:
+      allOf:
+      - $ref: '#/components/schemas/Component'
+      - type: object
+        properties:
+          status:
+            type: boolean
+            default: false
+          action:
+            type: array
+            items:
+              $ref: '#/components/schemas/Action'
+          reaction:
+            type: array
+            items:
+              $ref: '#/components/schemas/Reaction'
+    Token:
+      type: object
+      properties:
+        id:
+          type: string
+          format: byte
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
