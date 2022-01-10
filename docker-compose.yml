@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  db:
+    image: mongo:latest
+    volumes:
+      - data:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass12345
+    networks:
+      - server-net
+    restart: "no"
+
+  server:
+    build: "./server"
+    ports:
+      - "8080:8080"
+    # environment:
+    #   NM_DB_HOST: mongodb
+    #   NM_DB_PORT: 27017
+    #   NM_DB_USERNAME: root
+    #   NM_DB_PASSWORD: pass12345
+    restart: "no"
+    depends_on:
+      - db
+    links:
+      - "db"
+    networks:
+      - server-net
+  
+  # client_mobile:
+  #   build: 
+  #     context: "./client"
+  #     dockerfile: Dockerfile.android
+
+  client_web:
+    build: client
+    ports:
+      - "8081:8081"
+    volumes:
+      - data:/data/www/apk:Z
+    depends_on:
+      - server
+
+volumes:
+  data:
+networks:
+  server-net:
+  
