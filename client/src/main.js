@@ -15,12 +15,12 @@ Vue.config.productionTip = false
 const router = new VueRouter({
 	base: process.env.BASE_URL,
 	routes: [
-		{path: '/', component: Home},
-		{path: '/home', component: Home},
+		{path: '/', component: Login},
+		{path: '/home', component: Home, name: 'home'},
 		{path: '/area', component: Area},
 		{path: '/profile', component: Profile},
 		{path: '/login', component: Login},
-		{path: '/register', component: Register},
+		{path: '/register', component: Register, name: 'register'},
 	],
 })
 
