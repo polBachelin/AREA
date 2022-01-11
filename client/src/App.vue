@@ -1,24 +1,24 @@
 <template>
   <v-app class="police-montserrat">
     <v-container fluid>
+
+<!--      TOP APP BAR-->
       <v-app-bar
+          absolute
           dark
       >
-        <v-row class="justify-center text-center align-center">
-          <router-link
-              v-for="(button) in buttons"
-              v-bind:key="button"
-              :to="button.path">
-            <v-col md="12" lg="12">
-              <v-btn>
-                {{ button.name }}
-              </v-btn>
-            </v-col>
-          </router-link>
-        </v-row>
-
-        <v-row justify="end">
-          <v-col lg="4" md="4" xs="12">
+        <v-row>
+          <v-col cols="3"/>
+          <v-col cols="2">
+            <router-link :to="'/home'">
+              <v-img
+                  src="./assets/area.jpeg"
+                  max-height="50"
+              />
+            </router-link>
+          </v-col>
+          <v-col cols="4"/>
+          <v-col cols="1" class="justify-end">
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -34,66 +34,76 @@
               <span>Rechercher</span>
             </v-tooltip>
           </v-col>
+          <v-col cols="1" class="justify-end">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    icon
+                >
+                  <router-link :to="buttons[2].path">
+                    <v-icon>
+                      mdi-account
+                    </v-icon>
+                  </router-link>
+
+                </v-btn>
+              </template>
+              <span>Profil</span>
+            </v-tooltip>
+          </v-col>
+          <v-col cols="1"/>
         </v-row>
       </v-app-bar>
-      <div class="ma-12 pa-12">
+<!---->
+
+<!--      LEFT NAVIGATION DRAWER-->
+      <v-row class="mt-4 mb-7">
           <v-navigation-drawer
               permanent
+              absolute
               expand-on-hover
+              dark
           >
-            <v-list>
-              <v-list-item class="px-2">
-                <v-list-item-avatar>
-                  <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
-                </v-list-item-avatar>
-              </v-list-item>
-
-              <v-list-item link>
-                <v-list-item-content>
-                  <v-list-item-title class="text-h6">
-                    Sandra Adams
-                  </v-list-item-title>
-                  <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-
-            <v-divider></v-divider>
-
             <v-list
                 nav
                 dense
             >
-              <v-list-item link>
-                <v-list-item-icon>
-                  <v-icon>mdi-folder</v-icon>
-                </v-list-item-icon>
-                <v-list-item-title>My Files</v-list-item-title>
-              </v-list-item>
+              <router-link :to="buttons[0].path">
+                <v-list-item link>
+                  <v-list-item-icon>
+                    <v-icon>mdi-home</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title>Accueil</v-list-item-title>
+                </v-list-item>
+              </router-link>
+
               <v-list-item link>
                 <v-list-item-icon>
                   <v-icon>mdi-account-multiple</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>Shared with me</v-list-item-title>
+                <v-list-item-title>Mes apps</v-list-item-title>
               </v-list-item>
+
               <v-list-item link>
                 <v-list-item-icon>
                   <v-icon>mdi-star</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>Starred</v-list-item-title>
+                <v-list-item-title>Historique</v-list-item-title>
               </v-list-item>
+
+              <v-divider></v-divider>
+
+              <v-list-item link class="justify-center">
+                <v-list-item-icon>
+                  <v-icon>mdi-plus</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+
             </v-list>
           </v-navigation-drawer>
-      </div>
-        <v-col cols="12" class="mt-13">
-          <router-link :to="'/home'">
-            <v-img
-                src="./assets/NuageShocked.png"
-                max-width="200"
-            />
-          </router-link>
-        </v-col>
-
+      </v-row>
 
       <v-divider></v-divider>
 
@@ -134,6 +144,7 @@ export default {
       buttons: [
         {name: "Accueil", path: '/home'},
         {name: "Area", path: '/area'},
+        {name: "Profile", path: '/profile'},
         {name: "Login", path: '/login'},
         {name: "Register", path: '/register'},
       ],
@@ -156,5 +167,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+a {
+  text-decoration: none;
 }
 </style>
