@@ -348,8 +348,6 @@ components:
           items:
             type: integer
             $ref: '#/components/schemas/Oauth'
-        username:
-          type: string
         email:
           type: string
         password:
@@ -402,6 +400,8 @@ components:
     Oauth:
       type: object
       properties:
+        serviceId:
+          type: number
         token:
           type: string
         refreshToken:
