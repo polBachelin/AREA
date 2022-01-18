@@ -9,3 +9,4 @@ exports.ActionSchema = new mongoose_1.Schema({
 });
 const ActionModel = (0, mongoose_1.model)('Action', exports.ActionSchema);
 exports.default = ActionModel;
+//# sourceMappingURL=Action.js.map

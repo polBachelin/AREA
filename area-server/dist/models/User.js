@@ -44,3 +44,4 @@ async function updateUserEmail(email, newEmail) {
     updateUser(email, update);
 }
 exports.updateUserEmail = updateUserEmail;
+//# sourceMappingURL=User.js.map

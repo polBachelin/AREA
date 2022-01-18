@@ -12,3 +12,4 @@ exports.AreaModelSchema = new mongoose_1.Schema({
 });
 const AreaModel = (0, mongoose_1.model)('Area', exports.AreaModelSchema);
 exports.default = AreaModel;
+//# sourceMappingURL=Area.js.map

@@ -5,5 +5,5 @@ export DB_PORT=27017
 # export DB_PASSWORD=pass12345
 export PORT=8080
 export DB_DEBUG=mongodb://localhost:27017/db
-npm run build
-npm run start
+# npm run build
+npm run start:dev

@@ -9,3 +9,4 @@ exports.ReactionSchema = new mongoose_1.Schema({
 });
 const ReactionModel = (0, mongoose_1.model)('Reaction', exports.ReactionSchema);
 exports.default = ReactionModel;
+//# sourceMappingURL=Reaction.js.map
