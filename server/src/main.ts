@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import mongoose from 'mongoose';
@@ -79,27 +80,8 @@ class Server {
             });
     }
 }
+=======
+import { Server } from './server'
+>>>>>>> dev
 
 const serv = new Server();
-
-serv.createApp();
-serv.listen();
-
-// serv.app.post('/user', (req, res) => {
-//     createUser(req.body.username, req.body.email, req.body.password)
-//         .then(data => {
-//             res.send('User created');
-//         },
-//         error => {
-//             res.send('Error in user creation');
-//         });
-// })
-
-// serv.app.put('/user', (req, res) => {
-//     res.send('Updated user');
-// })
-
-// serv.app.delete('/user', (req, res) => {
-//     deleteUser(req.body.email);
-//     res.send('Deleted user');
-// })
