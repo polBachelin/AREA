@@ -11,8 +11,6 @@ allServices.push(Discord);
 @Injectable()
 export class ServicesService {
   getServices(): JSON {
-    console.log(JSON.stringify(allServices[1]));
-    console.log(process.env.NOTION);
-	  return undefined;
+	  return JSON.parse(JSON.stringify(allServices));
   }
 }
