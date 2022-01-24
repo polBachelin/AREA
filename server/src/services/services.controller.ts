@@ -14,14 +14,14 @@ export class ServicesController {
 	}
 
 	@Get(':id/actions')
-	@ApiOperation( {summary: 'Get certain service'})
-	getActions(@Param('id') id: string): string {
-		return 'The service id is ' + id;
+	@ApiOperation( {summary: 'Get certain service actions'})
+	getActions(@Param('id') id: string): JSON {
+		return this.servicesService.getServiceActions(id);
 	}
 
 	@Get(':id/reactions')
-	@ApiOperation( {summary: 'Get certain service'})
-	getReactions(@Param('id') id: string): string {
-		return 'The service id is ' + id;
+	@ApiOperation( {summary: 'Get certain service reactions'})
+	getReactions(@Param('id') id: string): JSON {
+		return this.servicesService.getServiceReactions(id);
 	}
 }
