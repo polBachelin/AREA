@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import express from 'express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { createUser, updateUserPassword, updateUserEmail, updateUserUsername, deleteUser } from './models/User'
+import { createUser, updateUserPassword, updateUserEmail, deleteUser } from './models/User'
 import { json } from 'express';
 import { INestApplication } from '@nestjs/common';
 declare const module: any;
@@ -29,7 +29,7 @@ class Server {
     public dbUri: string;
 
     constructor() {
-        this.app.use(json());
+        // this.app.use(json());
         this.dbHost = process.env.DB_HOST;
         this.port = process.env.PORT;
         this.dbPort = process.env.DB_PORT;
@@ -38,11 +38,12 @@ class Server {
         else
             this.dbUri = process.env.DB_DEBUG;
         this.initDoc();
-        this.connectDb();
+        // this.connectDb();
     }
 
     public async createApp() {
       this.app = await NestFactory.create(AppModule)
+      this.listen();
     }
 
     public async listen() {
@@ -63,8 +64,8 @@ class Server {
             },
             apis: ["./api/openapi.yaml"],
         };
-        const specs = swaggerJSDoc(options);
-        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+        // const specs = swaggerJSDoc(options);
+        // this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
     }
 
     private connectDb() {
@@ -84,7 +85,7 @@ class Server {
 const serv = new Server();
 
 serv.createApp();
-serv.listen();
+// serv.listen();
 
 // serv.app.post('/user', (req, res) => {
 //     createUser(req.body.username, req.body.email, req.body.password)

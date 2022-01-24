@@ -2,14 +2,12 @@ import {Schema, model } from 'mongoose';
 import { AreaModelSchema, IArea } from './Area';
 
 interface IUser {
-	_username: string;
 	_email: string;
 	_password: string;
 	_areas: IArea[]
 }
 
 const schema = new Schema<IUser>({
-	_username: {type: String, unique: true, required: true},
 	_email: {type: String, unique: true, required: true},
 	_password: {type: String, required: true},
 	_areas: [AreaModelSchema],
@@ -21,7 +19,6 @@ export default UserModel;
 
 export async function createUser(username: string, email: string, password: string): Promise<IUser> {
 	const user = new UserModel({
-		_username: username,
 		_email: email,
 		_password: password,
 		_areas: []
@@ -41,11 +38,6 @@ async function updateUser(email: string, update: object)
 
 export async function updateUserPassword(email: string, password: string) {
 	const update = { _password: password};
-	updateUser(email, update);
-}
-
-export async function updateUserUsername(email: string, username: string) {
-	const update = { _username: username};
 	updateUser(email, update);
 }
 
