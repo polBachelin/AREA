@@ -1,6 +1,7 @@
 import {Schema, model } from 'mongoose';
 import { IActionDB, ActionSchema} from './Action'
 import { IReactionDB, ReactionSchema } from './Reaction'
+import * as mongoose from 'mongoose';
 
 declare enum status {
 	DISABLE = 0,
@@ -16,7 +17,7 @@ export interface IArea {
 	_reaction: IReactionDB[];
 }
 
-export const AreaModelSchema = new Schema<IArea>({
+export const AreaModelSchema = new mongoose.Schema({
 	_name: {type: String, unique: true, required: true},
 	_status: Boolean,
 	_action: [ActionSchema],

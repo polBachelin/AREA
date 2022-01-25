@@ -12,10 +12,6 @@ import { APP_GUARD } from '@nestjs/core';
 @Module({
   imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MongooseModule.forRoot('mongodb://localhost:27017/nest'), ServicesModule],
   controllers: [AppController],
-  providers: [AppService, 
-  {
-    provide: APP_GUARD,
-    useClass: JwtAuthGuard,
-  },],
+  providers: [AppService, ],
 })
 export class AppModule {}
