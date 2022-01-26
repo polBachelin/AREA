@@ -6,16 +6,26 @@
 <!--      TOP APP BAR-->
       <v-app-bar
           absolute
-          style="background-color: black"
+          style="background-color: black; border-bottom: 1px solid darkorange"
       >
         <v-row>
           <v-col cols="3"/>
           <v-col cols="2">
             <router-link :to="'/home'">
-              <v-img
-                  src="./assets/area.jpeg"
-                  max-height="50"
-              />
+<!--              <v-img-->
+<!--                  src="./assets/area.jpeg"-->
+<!--                  max-height="50"-->
+<!--              />-->
+              <v-row>
+                <h1 style="color: antiquewhite">
+                  A
+                </h1>
+                <h1 class="area-title">
+                  REA
+                </h1>
+
+              </v-row>
+
             </router-link>
           </v-col>
           <v-col cols="4"/>
@@ -175,4 +185,10 @@ export default {
 a {
   text-decoration: none;
 }
+
+.area-title {
+  font-weight: bold;
+  color: darkorange;
+}
+
 </style>

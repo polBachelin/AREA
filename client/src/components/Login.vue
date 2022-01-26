@@ -11,7 +11,7 @@
       <v-card class="login-card"
               width="500"
               height="500"
-              :style="isError ? 'border: 10px solid red;' : 'border: 5px solid black;'"
+              :style="isError ? 'border: 10px solid red;' : 'border: 5px solid black'"
       >
         <v-card-title class="font-weight-bold">Veuillez vous connecter :</v-card-title>
         <v-card-text class="mt-3">
@@ -81,7 +81,7 @@ export default {
 .title_text {
   font-size: 50px;
   font-weight: bold;
-  color: darkorange;
+  color: black;
 }
 
 </style>
