@@ -17,7 +17,7 @@
           <v-card-text class="mt-3">
             <v-text-field
                 v-model="username"
-                label="Nom d'utilisateur"
+                label="E-mail"
                 prepend-icon="mdi-account-circle"
                 :rules="emailRules"
             />
