@@ -1,69 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import 'pages/home_screen.dart';
+import 'pages/register_screen.dart';
+import 'pages/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MyAppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SearchSection(),
-            HotelSection(),
-          ],
-        ),
-      ),
-    );
-  }
-}
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
 
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  Size get preferredSize => new Size.fromHeight(50);
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back,
-          color: Colors.grey[800],
-          size: 20,
-        ),
-        onPressed: null,
-      ),
-      centerTitle: true,
-      title: Text(
-        'Explore',
-        style: GoogleFonts.nunito(
-          color: Colors.black,
-          fontSize: 22,
-          fontWeight: FontWeight.w800,
-        ),
-      ),
-      actions: [
-        IconButton(
-          icon: Icon(
-            Icons.favorite_outline_rounded,
-            color: Colors.grey[800],
-            size: 20,
-          ),
-          onPressed: null,
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.place,
-            color: Colors.grey[800],
-            size: 20,
-          ),
-          onPressed: null,
-        ),
-      ],
-      backgroundColor: Colors.white,
+    return MaterialApp(
+      title: 'AREA',
+      // Start the app with the "/" named route. In this case, the app starts
+      // on the RegisterScreen widget.
+      initialRoute: '/',
+      debugShowCheckedModeBanner: false,
+      routes: {
+        // When navigating to the "/" route, build the RegisterScreen widget.
+        '/': (context) => const RegisterScreen(),
+        // When navigating to the "/second" route, build the HomeScreen widget.
+        '/home': (context) => const HomeScreen(),
+        '/login': (context) => const LoginScreen(),
+      }
     );
   }
 }
