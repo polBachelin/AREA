@@ -116,13 +116,13 @@
       </v-main>
 
       <v-footer
-          dark
+          style="color: darkorange; background-color: black; border-top: 1px solid darkorange"
           class="police-montserrat"
           absolute
       >
         Area All Rights Reserved ©
         <v-spacer></v-spacer>
-        Developed by
+        Developed by Evan, Killy, Polo, Zack and Omz
       </v-footer>
 
     </v-container>
