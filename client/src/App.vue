@@ -90,12 +90,14 @@
                 </v-list-item>
               </router-link>
 
-              <v-list-item link>
-                <v-list-item-icon>
-                  <v-icon style="color: darkorange">mdi-account-multiple</v-icon>
-                </v-list-item-icon>
-                <v-list-item-title style="color: darkorange">Mes apps</v-list-item-title>
-              </v-list-item>
+              <router-link :to="buttons[2].path">
+                <v-list-item link>
+                  <v-list-item-icon>
+                    <v-icon style="color: darkorange">mdi-account-multiple</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title style="color: darkorange">Mes apps</v-list-item-title>
+                </v-list-item>
+              </router-link>
 
               <v-list-item link>
                 <v-list-item-icon>
@@ -106,6 +108,7 @@
 
               <v-divider></v-divider>
 
+              <router-link :to="buttons[1].path">
               <v-list-item
                   link
                   class="justify-center"
@@ -114,6 +117,7 @@
                   <v-icon style="color: darkorange">mdi-plus</v-icon>
                 </v-list-item-icon>
               </v-list-item>
+              </router-link>
             </v-list>
           </v-navigation-drawer>
       </v-row>
@@ -158,6 +162,7 @@ export default {
       buttons: [
         {name: "Accueil", path: '/home'},
         {name: "Area", path: '/area'},
+        {name: "MyApps", path: '/myapps'},
         {name: "Profile", path: '/profile'},
         {name: "Login", path: '/login'},
         {name: "Register", path: '/register'},

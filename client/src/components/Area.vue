@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <v-container>
     Area
-  </div>
+  </v-container>
 </template>
 
 <script>

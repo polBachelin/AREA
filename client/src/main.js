@@ -7,6 +7,7 @@ import Login from "@/components/Login";
 import Register from "@/components/Register";
 import Profile from "@/components/Profile"
 import vuetify from './plugins/vuetify'
+import MyApps from "@/components/MyApps";
 
 Vue.use(VueRouter)
 
@@ -18,6 +19,7 @@ const router = new VueRouter({
 		{path: '/', component: Login},
 		{path: '/home', component: Home, name: 'home'},
 		{path: '/area', component: Area},
+		{path: '/myapps', component: MyApps},
 		{path: '/profile', component: Profile},
 		{path: '/login', component: Login},
 		{path: '/register', component: Register, name: 'register'},
