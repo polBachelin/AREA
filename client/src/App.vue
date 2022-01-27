@@ -16,7 +16,7 @@
 <!--                  src="./assets/area.jpeg"-->
 <!--                  max-height="50"-->
 <!--              />-->
-              <v-row>
+              <v-row class="mt-1">
                 <h1 style="color: antiquewhite">
                   A
                 </h1>

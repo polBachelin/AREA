@@ -68,9 +68,9 @@
     </v-row>
 
     <v-row style="margin-left: 200px">
-      <h1 style="margin-left: 100px"> Connect an app ...</h1>
+      <h1 style="margin-left: 100px; font-style: italic; font-size: medium"> Connect an app ...</h1>
       <v-spacer></v-spacer>
-      <h1 style="margin-left: 250px"> ... to another</h1>
+      <h1 style="margin-left: 300px; font-style: italic; font-size: medium"> ... to another</h1>
       <v-spacer></v-spacer>
     </v-row>
 
@@ -80,10 +80,10 @@
 
     <v-row justify="center">
 
-      <v-card width="800" height="400" style="background-color: white; border: 1px solid darkorange">
+      <v-card width="800" height="400" style="background-color: black; border: 3px solid darkorange">
         <v-row>
-          <v-card>
-            <v-card-text class="my-areas-title-text"> My Areas</v-card-text>
+          <v-card >
+            <v-card-text class="my-areas-title-text" style="color: darkorange; border: 1px solid darkorange"> My Areas</v-card-text>
           </v-card>
         </v-row>
 
@@ -93,7 +93,7 @@
             class="text-center justify-center align-center"
         >
           <v-card
-              style="background-color: black"
+              style="background-color: darkorange"
               class="mt-4 align-center justify-center"
               width="600px"
               height="70px"
@@ -154,8 +154,7 @@ export default {
 <style scoped>
 
 .my-areas-title-text {
-  background-color: darkorange;
-  color: white;
+  background-color: black;
   font-weight: bold;
   font-size: 30px
 }
