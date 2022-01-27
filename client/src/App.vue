@@ -53,7 +53,7 @@
                     v-on="on"
                     icon
                 >
-                  <router-link :to="buttons[2].path">
+                  <router-link :to="buttons[3].path">
                     <v-icon style="color: darkorange">
                       mdi-account
                     </v-icon>
