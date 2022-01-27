@@ -86,7 +86,7 @@ export default {
 .title_text {
   font-size: 50px;
   font-weight: bold;
-  color: darkorange;
+  color: black;
 }
 
 .login-card {
