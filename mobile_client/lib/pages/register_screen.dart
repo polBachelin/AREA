@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mobile_client/pages/login_screen.dart';
+import 'package:AREA/pages/login_screen.dart';
 
 
 import '../effects/delayed_animation.dart';

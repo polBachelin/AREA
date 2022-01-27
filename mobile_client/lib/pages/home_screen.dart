@@ -1,6 +1,6 @@
+import 'package:AREA/pages/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:AREA/widgets/create_area_widget.dart';
 
 
 
@@ -16,10 +16,7 @@ class HomeScreenState extends State<HomeScreen> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
+    Dashboard(),
     Text(
       'Index 1: Business',
       style: optionStyle,
@@ -44,7 +41,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+        title: const Text('AREA'),
         leading: IconButton(
           icon: const Icon(Icons.logout),
           onPressed:  () {

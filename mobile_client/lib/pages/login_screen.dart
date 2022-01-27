@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../effects/delayed_animation.dart';
-import '../main.dart';
 
+// ignore: constant_identifier_names
 const d_red = Color(0xFFE9717D);
-
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
