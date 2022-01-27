@@ -17,9 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any, done: VerifiedCallback) {
-    Logger.log("ERROR VALIDATE", payload);
     const user = await this.authService.validateUser(payload.email);
-    Logger.log("ERROR VALIDATE");
     if (!user) {
       return done(
         new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED),
