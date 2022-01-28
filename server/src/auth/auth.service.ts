@@ -17,4 +17,8 @@ export class AuthService {
     const payload = { email: user.email };
     return { access_token: this.jwtService.sign(payload) };
   }
+
+  public cookieLogout() {
+    return 'Authentification=; HttpOnly; Path=/; Max-Age=0';
+  }
 }

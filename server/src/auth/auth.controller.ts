@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Header, Post, Request, Body } from '@nestjs/common';
+import { Controller, Get, Param, Header, Post, Request, Body, Response, Res } from '@nestjs/common';
 import { Public } from 'src/custom.decorators';
 import { AuthService } from './auth.service';
 import { UseGuards } from '@nestjs/common';
@@ -60,5 +60,12 @@ export class AuthController {
         const user = await this.userService.createUser(RegisterDTO);
         const token = await this.authService.signUser(user);
         return { user, token };
+    }
+
+    @Post('/logout')
+    @ApiOperation({ summary: 'Logout user'})
+    async logout(@Request() req, @Res() res) {
+        res.setHeader('Set-Cookie', this.authService.cookieLogout())
+        return res.sendStatus(200);
     }
 }
