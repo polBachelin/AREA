@@ -67,6 +67,7 @@ export default {
         if (this.password === this.confirmPass) {
           //  call Api with both variables
           //   if (valid)
+          localStorage.setItem('isLogged', 'true')
           this.$router.push({name: 'home'})
         } else {
           this.isError = true

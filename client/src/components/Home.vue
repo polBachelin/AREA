@@ -1,7 +1,7 @@
 <template>
   <v-container style="color: white">
 
-    <v-row class="mt-10 text-center justify-center">
+    <v-row class="mt-10 text-center justify-center" style="color: antiquewhite">
       <h1>
         Create an area
       </h1>
@@ -80,10 +80,10 @@
 
     <v-row justify="center">
 
-      <v-card width="800" height="400" style="background-color: black; border: 3px solid darkorange">
+      <v-card width="800" style="background-color: black; border: 3px solid darkorange" class="mb-16">
         <v-row>
-          <v-card >
-            <v-card-text class="my-areas-title-text" style="color: darkorange; border: 1px solid darkorange"> My Areas</v-card-text>
+          <v-card style="background-color: antiquewhite">
+            <v-card-text class="my-areas-title-text" style="color: black; border: 1px solid darkorange; background-color: antiquewhite"> My Areas</v-card-text>
           </v-card>
         </v-row>
 
@@ -94,19 +94,19 @@
         >
           <v-card
               style="background-color: darkorange"
-              class="mt-4 align-center justify-center"
+              class="mt-2 mb-5"
               width="600px"
               height="70px"
           >
-            <v-row class="align-center ml-3">
+            <v-row class="align-center align-content-center ml-3">
               <v-col cols="1">
                 <v-img src="../assets/NuageShocked.png" max-width="50" max-height="50"/>
               </v-col>
               <v-col cols="1">
                 <v-img src="../assets/NuageShocked.png" max-width="50" max-height="50"/>
               </v-col>
-              <v-col cols="8" class="text-center justify-center">
-                <v-card-text class="text-center align-center" style="color: white">
+              <v-col cols="8">
+                <v-card-text class="text-center mt-1" style="color: white">
                   {{area.title}}
                 </v-card-text>
               </v-col>
@@ -144,7 +144,18 @@ export default {
           firstLogo: "../assetsdskndks/area.jpeg",
           secondLogo: "../assets/NuageShocked.png",
         },
-
+        {
+          id: 3,
+          title: "Send an email when repo is created",
+          firstLogo: "../assetsdskndks/area.jpeg",
+          secondLogo: "../assets/NuageShocked.png",
+        },
+        {
+          id: 3,
+          title: "Send an email when repo is created",
+          firstLogo: "../assetsdskndks/area.jpeg",
+          secondLogo: "../assets/NuageShocked.png",
+        },
       ]
     }
   },

@@ -12,10 +12,6 @@
           <v-col cols="3"/>
           <v-col cols="2">
             <router-link :to="'/home'">
-<!--              <v-img-->
-<!--                  src="./assets/area.jpeg"-->
-<!--                  max-height="50"-->
-<!--              />-->
               <v-row class="mt-1">
                 <h1 style="color: antiquewhite">
                   A
