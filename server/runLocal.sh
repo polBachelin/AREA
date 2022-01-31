@@ -3,7 +3,7 @@ export DB_HOST=127.0.0.1
 export DB_PORT=27017
 # export DB_USERNAME=root
 # export DB_PASSWORD=pass12345
-export PORT=8080
+export PORT=3000
 export DB_DEBUG=mongodb://localhost:27017/db
 # npm run build
 npm run start:dev

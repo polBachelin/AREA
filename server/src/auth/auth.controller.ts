@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Header, Post, Request, Body } from '@nestjs/common';
+import { Controller, Get, Param, Header, Post, Request, Body, Query } from '@nestjs/common';
 import { Public } from 'src/custom.decorators';
 import { AuthService } from './auth.service';
 import { UseGuards } from '@nestjs/common';
@@ -11,6 +11,8 @@ import { LoginDTO } from './login.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiBody, ApiHeader, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { LoginApiDTO } from './api.payload.dto';
+import { AxiosResponse } from 'axios';
+import { Observable, tap, map} from 'rxjs';
 
 @ApiTags('auth')
 @Controller('/auth')
@@ -60,5 +62,18 @@ export class AuthController {
         const user = await this.userService.createUser(RegisterDTO);
         const token = await this.authService.signUser(user);
         return { user, token };
+    }
+
+    @Get('/notion_callback')
+    @ApiOperation({ summary: "Get the access token from the authorization code"})
+    notionCallback(@Query() query) {
+        console.log("sending notion code");
+        const response = this.authService.sendNotionCode(query);
+        
+        //     response.then((res) => {
+    //         res.pipe(tap((resp) => console.log(resp)),map((resp) => resp.data),tap((data) => console.log(data)));
+    //     }).catch(res => {
+    //         console.log("got error" + res);
+    //     })
     }
 }

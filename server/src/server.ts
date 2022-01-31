@@ -15,6 +15,7 @@ export class Server {
 
     public async createApp() {
     	this.app = await NestFactory.create(AppModule);
+        this.app.enableCors();
 		this.initDoc();
 		this.listen();
     }
