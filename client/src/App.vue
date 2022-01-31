@@ -53,7 +53,7 @@
                     v-on="on"
                     icon
                 >
-                  <router-link :to="buttons[3].path">
+                  <router-link v-if="checkIfLogged()" :to="buttons[3].path">
                     <v-icon style="color: darkorange">
                       mdi-account
                     </v-icon>
@@ -72,6 +72,7 @@
 <!--      LEFT NAVIGATION DRAWER-->
       <v-row class="mt-4 mb-7">
           <v-navigation-drawer
+              v-if="checkIfLogged()"
               permanent
               absolute
               expand-on-hover
@@ -168,12 +169,20 @@ export default {
         {name: "Register", path: '/register'},
       ],
       drawer: false,
-      group: null
+      group: null,
     }
   },
 
   methods: {
+    checkIfLogged() {
+      let local = localStorage.getItem('isLogged')
 
+      if (local === 'true') {
+        return true
+      } else {
+        return false
+      }
+    }
   },
 }
 </script>
