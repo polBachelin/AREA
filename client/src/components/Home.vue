@@ -6,8 +6,9 @@
 
 <script>
 export default {
-  name: "Home.vue"
+  name: "Home.vue",
 }
+
 </script>
 
 <style scoped>
