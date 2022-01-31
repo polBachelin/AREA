@@ -11,7 +11,7 @@
       <v-card class="login-card"
               width="500"
               height="500"
-              :style="isError ? 'border: 10px solid red;' : 'border: 5px solid black'"
+              :style="isError !== 'none' ? 'border: 10px solid red;' : 'border: 5px solid black'"
       >
         <v-card-title class="font-weight-bold">Veuillez vous connecter :</v-card-title>
         <v-card-text class="mt-3">
@@ -28,6 +28,11 @@
               type="password"
           />
         </v-card-text>
+
+        <v-row v-if="isError !== 'none'" class="text-center justify-center" style="color: red">
+          <v-card-text>{{isError}}</v-card-text>
+        </v-row>
+
         <v-row style="margin-top: 150px">
           <v-col cols="5" class="ml-5">
             <v-btn color="black" style="color: darkorange; width: 200px" @click="confirmUserPass"> Confirmer </v-btn>
@@ -43,6 +48,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Login.vue",
 
@@ -53,7 +60,8 @@ export default {
       emailRules: [
         v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
       ],
-      isError: false,
+      isError: 'none',
+      info: [],
     }
   },
 
@@ -64,14 +72,27 @@ export default {
   methods: {
     confirmUserPass() {
       if (this.password.length !== 0 && this.username.length !== 0) {
-      //  call Api with both variables
-      //   if (valid)
-        localStorage.setItem('isLogged', 'true')
-        this.$router.push({name: 'home'})
+        axios.post('http://localhost:8081/auth/login',
+            {
+              params: {email: this.username, password: this.password},
+              headers: {'accept': '*/*', 'Content-Type': 'application/json'}
+            })
+            .then((response) => {
+              console.log(response);
+              this.info = response.data
+              localStorage.setItem('isLogged', 'true')
+            })
+            .catch( () => {
+              this.requestError()
+            })
       } else {
-        this.isError = true
-        alert("Veuillez entrer un nom et un mot de passe valide")
+        this.isError = 'Nom ou mot de passe non valide !'
       }
+    },
+
+    requestError() {
+      console.log("user doesnt exist");
+      this.isError = 'Utilisateur ' + this.username + ' n\'existe pas !'
     },
 
     goToRegister() {

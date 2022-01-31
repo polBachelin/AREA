@@ -20,6 +20,7 @@ export class Server {
     }
 
     public async listen() {
+        this.app.enableCors()
         await this.app.listen(this.port, () => {
             console.log(`listening on port ${this.port}`);
         })

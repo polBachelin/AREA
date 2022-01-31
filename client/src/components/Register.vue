@@ -11,7 +11,7 @@
         <v-card class="login-card"
                 width="500"
                 height="500"
-                :style="isError ? 'border: 10px solid red;' : 'border: 5px solid black;'"
+                :style="isError !== 'none' ? 'border: 10px solid red;' : 'border: 5px solid black;'"
         >
           <v-card-title class="font-weight-bold">Création de compte :</v-card-title>
           <v-card-text class="mt-3">
@@ -34,6 +34,11 @@
                 type="password"
             />
           </v-card-text>
+
+          <v-row v-if="isError !== 'none'" class="text-center justify-center" style="color: red">
+            <v-card-text>{{isError}}</v-card-text>
+          </v-row>
+
           <v-row class="mt-14">
             <v-col cols="12" class="mt-10 text-center">
               <v-btn color="black" style="color: darkorange" @click="confirmUserCreation"> Valider </v-btn>
@@ -46,6 +51,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Register.vue",
 
@@ -57,7 +64,7 @@ export default {
       emailRules: [
         v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
       ],
-      isError: false,
+      isError: 'none',
     }
   },
 
@@ -65,17 +72,23 @@ export default {
     confirmUserCreation() {
       if (this.password.length !== 0 && this.username.length !== 0) {
         if (this.password === this.confirmPass) {
-          //  call Api with both variables
-          //   if (valid)
-          localStorage.setItem('isLogged', 'true')
-          this.$router.push({name: 'home'})
+          axios.post('http://localhost:8081/auth/register',
+              {params: {'email': this.username, 'password': this.password}})
+              .then((response) => {
+                console.log(response);
+                this.info = response.data
+                localStorage.setItem('isLogged', 'true')
+                // this.$router.push({name: 'home'})
+              })
+              .catch( () => {
+                this.isError = "Utilisateur " + this.username + " existe déjà !"
+              })
+
         } else {
-          this.isError = true
-          alert("Votre deux mots de passes sont différents")
+          this.isError = "Les mots de passes sont différents !"
         }
       } else {
-        this.isError = true
-        alert("Veuillez entrer un nom et un mot de passe valide")
+        this.isError = 'Nom ou mot de passe non valide !'
       }
     },
   },
