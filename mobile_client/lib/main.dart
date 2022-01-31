@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'pages/home_screen.dart';
 import 'pages/register_screen.dart';
 import 'pages/login_screen.dart';
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'AREA',
       // Start the app with the "/" named route. In this case, the app starts
       // on the RegisterScreen widget.
-      initialRoute: '/home',
+      initialRoute: '/',
       debugShowCheckedModeBanner: false,
       routes: {
         // When navigating to the "/" route, build the RegisterScreen widget.
