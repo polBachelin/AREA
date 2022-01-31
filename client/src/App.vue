@@ -1,32 +1,43 @@
 <template>
+  <div id="app">
   <v-app class="police-montserrat">
     <v-container fluid>
 
 <!--      TOP APP BAR-->
       <v-app-bar
           absolute
-          dark
+          style="background-color: black; border-bottom: 1px solid darkorange"
       >
         <v-row>
           <v-col cols="3"/>
           <v-col cols="2">
             <router-link :to="'/home'">
-              <v-img
-                  src="./assets/area.jpeg"
-                  max-height="50"
-              />
+<!--              <v-img-->
+<!--                  src="./assets/area.jpeg"-->
+<!--                  max-height="50"-->
+<!--              />-->
+              <v-row class="mt-1">
+                <h1 style="color: antiquewhite">
+                  A
+                </h1>
+                <h1 class="area-title">
+                  REA
+                </h1>
+
+              </v-row>
+
             </router-link>
           </v-col>
           <v-col cols="4"/>
           <v-col cols="1" class="justify-end">
-            <v-tooltip bottom>
+            <v-tooltip bottom color="orange">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                     v-bind="attrs"
                     v-on="on"
                     icon
                 >
-                  <v-icon>
+                  <v-icon style="color: darkorange">
                     mdi-magnify
                   </v-icon>
                 </v-btn>
@@ -35,15 +46,15 @@
             </v-tooltip>
           </v-col>
           <v-col cols="1" class="justify-end">
-            <v-tooltip bottom>
+            <v-tooltip bottom color="orange">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                     v-bind="attrs"
                     v-on="on"
                     icon
                 >
-                  <router-link :to="buttons[2].path">
-                    <v-icon>
+                  <router-link :to="buttons[3].path">
+                    <v-icon style="color: darkorange">
                       mdi-account
                     </v-icon>
                   </router-link>
@@ -64,7 +75,7 @@
               permanent
               absolute
               expand-on-hover
-              dark
+              style="background-color: black"
           >
             <v-list
                 nav
@@ -73,34 +84,40 @@
               <router-link :to="buttons[0].path">
                 <v-list-item link>
                   <v-list-item-icon>
-                    <v-icon>mdi-home</v-icon>
+                    <v-icon style="color: darkorange">mdi-home</v-icon>
                   </v-list-item-icon>
-                  <v-list-item-title>Accueil</v-list-item-title>
+                  <v-list-item-title style="color: darkorange">Accueil</v-list-item-title>
+                </v-list-item>
+              </router-link>
+
+              <router-link :to="buttons[2].path">
+                <v-list-item link>
+                  <v-list-item-icon>
+                    <v-icon style="color: darkorange">mdi-account-multiple</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title style="color: darkorange">Mes apps</v-list-item-title>
                 </v-list-item>
               </router-link>
 
               <v-list-item link>
                 <v-list-item-icon>
-                  <v-icon>mdi-account-multiple</v-icon>
+                  <v-icon style="color: darkorange">mdi-star</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>Mes apps</v-list-item-title>
-              </v-list-item>
-
-              <v-list-item link>
-                <v-list-item-icon>
-                  <v-icon>mdi-star</v-icon>
-                </v-list-item-icon>
-                <v-list-item-title>Historique</v-list-item-title>
+                <v-list-item-title style="color: darkorange">Historique</v-list-item-title>
               </v-list-item>
 
               <v-divider></v-divider>
 
-              <v-list-item link class="justify-center">
+              <router-link :to="buttons[1].path">
+              <v-list-item
+                  link
+                  class="justify-center"
+              >
                 <v-list-item-icon>
-                  <v-icon>mdi-plus</v-icon>
+                  <v-icon style="color: darkorange">mdi-plus</v-icon>
                 </v-list-item-icon>
               </v-list-item>
-
+              </router-link>
             </v-list>
           </v-navigation-drawer>
       </v-row>
@@ -113,17 +130,18 @@
       </v-main>
 
       <v-footer
-          dark
+          style="color: darkorange; background-color: black; border-top: 1px solid darkorange"
           class="police-montserrat"
           absolute
       >
         Area All Rights Reserved ©
         <v-spacer></v-spacer>
-        Developed by
+        Developed by Evan, Killy, Polo, Zack and Omz
       </v-footer>
 
     </v-container>
   </v-app>
+  </div>
 </template>
 
 <script>
@@ -144,6 +162,7 @@ export default {
       buttons: [
         {name: "Accueil", path: '/home'},
         {name: "Area", path: '/area'},
+        {name: "MyApps", path: '/myapps'},
         {name: "Profile", path: '/profile'},
         {name: "Login", path: '/login'},
         {name: "Register", path: '/register'},
@@ -160,16 +179,21 @@ export default {
 </script>
 
 <style>
-.app {
+#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: black;
+  justify-items: center;
 }
 
 a {
   text-decoration: none;
 }
+
+.area-title {
+  font-weight: bold;
+  color: darkorange;
+}
+
 </style>

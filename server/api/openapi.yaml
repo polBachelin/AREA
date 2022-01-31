@@ -101,15 +101,6 @@ paths:
           description: successful operation
       x-swagger-router-controller: Area
   /area/create:
-    get:
-      tags:
-      - area
-      summary: Create an empty area
-      operationId: areaCreateGET
-      responses:
-        "200":
-          description: successful operation
-      x-swagger-router-controller: Area
     post:
       tags:
       - area
@@ -145,6 +136,9 @@ paths:
                   type: string
                 userEmail:
                   type: string
+      responses:
+        "200":
+          description: Successful operation
   /user/username:
     post:
       tags:
@@ -161,6 +155,9 @@ paths:
                   type: string
                 username:
                   type: string
+      responses:
+        "200":
+          description: Successful operation
   /user/password:
     post:
       tags:
@@ -177,8 +174,9 @@ paths:
                   type: string
                 userEmail:
                   type: string
-
-
+      responses:
+        "200":
+          description: Successful operation
   /user:
     put:
       tags:
@@ -223,14 +221,6 @@ paths:
       description: This can only be done by the logged in user. Delete user from database
         and log him out
       operationId: deleteUser
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string                
       responses:
         "200":
           description: User has been deleted
@@ -354,8 +344,11 @@ components:
     User:
       type: object
       properties:
-        username:
-          type: string
+        services:
+          type: array
+          items:
+            type: integer
+            $ref: '#/components/schemas/Oauth'
         email:
           type: string
         password:
@@ -405,12 +398,18 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Reaction'
-    Token:
+    Oauth:
       type: object
       properties:
-        id:
+        serviceId:
+          type: number
+        token:
           type: string
-          format: byte
+        refreshToken:
+          type: string
+        expirationDate:
+          type: string
+          format: date
     ApiResponse:
       type: object
       properties:

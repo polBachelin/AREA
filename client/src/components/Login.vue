@@ -1,5 +1,5 @@
-<template>
-  <v-container class="ml-14">
+<template style="background-color: black">
+  <v-container style="background-color: black">
     <v-img src="../assets/background.gif" max-height="800">
     <v-row class="justify-center">
       <v-card-text class="text-center title_text mt-10" >
@@ -8,13 +8,18 @@
     </v-row>
     <v-row class="justify-center">
 
-      <v-card class="justify-center elevation-4" width="500" height="500">
-        <v-card-title>Veuillez vous connecter :</v-card-title>
+      <v-card class="login-card"
+              width="500"
+              height="500"
+              :style="isError ? 'border: 10px solid red;' : 'border: 5px solid black'"
+      >
+        <v-card-title class="font-weight-bold">Veuillez vous connecter :</v-card-title>
         <v-card-text class="mt-3">
           <v-text-field
               v-model="username"
-              label="Nom d'utilisateur"
+              label="E-mail"
               prepend-icon="mdi-account-circle"
+              :rules="emailRules"
           />
           <v-text-field
               v-model="password"
@@ -23,12 +28,12 @@
               type="password"
           />
         </v-card-text>
-        <v-row class="align-end mt-14">
-          <v-col cols="6" class="mt-10 text-right">
-            <v-btn dark @click="confirmUserPass"> Confirmer </v-btn>
+        <v-row style="margin-top: 150px">
+          <v-col cols="5" class="ml-5">
+            <v-btn color="black" style="color: darkorange; width: 200px" @click="confirmUserPass"> Confirmer </v-btn>
           </v-col>
-          <v-col cols="6" class="text-left">
-            <v-btn dark @click="goToRegister"> Créer un compte </v-btn>
+          <v-col cols="6" class="ml-5">
+            <v-btn color="black" style="color: darkorange; width: 200px" @click="goToRegister"> Créer un compte </v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -45,6 +50,10 @@ export default {
     return {
       username: '',
       password: '',
+      emailRules: [
+        v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+      ],
+      isError: false,
     }
   },
 
@@ -55,6 +64,7 @@ export default {
       //   if (valid)
         this.$router.push({name: 'home'})
       } else {
+        this.isError = true
         alert("Veuillez entrer un nom et un mot de passe valide")
       }
     },
@@ -71,7 +81,7 @@ export default {
 .title_text {
   font-size: 50px;
   font-weight: bold;
-  color: orange;
+  color: black;
 }
 
 </style>
