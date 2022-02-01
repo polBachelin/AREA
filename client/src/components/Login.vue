@@ -72,15 +72,13 @@ export default {
   methods: {
     confirmUserPass() {
       if (this.password.length !== 0 && this.username.length !== 0) {
-        axios.post('http://localhost:8081/auth/login',
-            {
-              params: {email: this.username, password: this.password},
-              headers: {'accept': '*/*', 'Content-Type': 'application/json'}
-            })
+        axios.post('http://localhost:3000/auth/login', {email: this.username, password: this.password},)
             .then((response) => {
-              console.log(response);
               this.info = response.data
+              localStorage.setItem('username', this.info.user.email)
+              localStorage.setItem('accessToken', this.info.token.access_token)
               localStorage.setItem('isLogged', 'true')
+              this.$router.push({name: 'home'})
             })
             .catch( () => {
               this.requestError()

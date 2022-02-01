@@ -72,13 +72,14 @@ export default {
     confirmUserCreation() {
       if (this.password.length !== 0 && this.username.length !== 0) {
         if (this.password === this.confirmPass) {
-          axios.post('http://localhost:8081/auth/register',
-              {params: {'email': this.username, 'password': this.password}})
+          axios.post('http://localhost:3000/auth/register', {email: this.username, password: this.password,})
               .then((response) => {
                 console.log(response);
                 this.info = response.data
+                localStorage.setItem('username', this.info.user.email)
+                localStorage.setItem('accessToken', this.info.token.access_token)
                 localStorage.setItem('isLogged', 'true')
-                // this.$router.push({name: 'home'})
+                this.$router.push({name: 'home'})
               })
               .catch( () => {
                 this.isError = "Utilisateur " + this.username + " existe déjà !"
@@ -91,6 +92,10 @@ export default {
         this.isError = 'Nom ou mot de passe non valide !'
       }
     },
+
+    created() {
+      localStorage.setItem('isLogged', 'false')
+    }
   },
 }
 </script>
