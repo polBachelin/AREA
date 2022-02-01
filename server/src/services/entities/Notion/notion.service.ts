@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { AxiosRequestConfig } from "@nestjs/common/node_modules/axios";
-import axios from "axios";
+import axios, { AxiosPromise } from "axios";
 import type { GetUserResponse } from "@notionhq/client/build/src/api-endpoints"
 
 type NotionPersonUser = Extract<GetUserResponse, { type: "person" }>
@@ -34,7 +34,7 @@ export class NotionService {
 	}
 	constructor() {}
 
-	public authorize(code: string) {
+	public authorize(code: string): AxiosPromise<any> {
 		const options: AxiosRequestConfig = {
 			url: "https://api.notion.com/v1/oauth/token",
 			method: "post",
@@ -49,11 +49,6 @@ export class NotionService {
 			headers: { "Content-Type": "application/json",
 						"Access-Control-Allow-Origin": "*" },
 		};
-		axios(options).then((res) => {
-			return res.data;
-		}).catch((err) => {
-			//TODO CATCH ERRORS
-			console.log('error ', err);
-		})
+		return axios(options)
 	}
 }
