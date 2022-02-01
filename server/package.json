@@ -32,10 +32,12 @@
     "@nestjs/swagger": "^5.1.5",
     "axios": "^0.25.0",
     "dotenv": "^14.2.0",
+    "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "passport-notion": "^1.0.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

@@ -9,7 +9,7 @@ import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { HttpModule } from '@nestjs/axios';
+import { NotionModule } from 'src/services/entities/Notion/notion.module';
 
 @Module({
   imports: [UsersModule,
@@ -17,7 +17,7 @@ import { HttpModule } from '@nestjs/axios';
   JwtModule.register({
     secret: jwtSecret.secret,
     signOptions: { expiresIn: '3000000000s'},
-  }), HttpModule
+  }), NotionModule
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy,],
