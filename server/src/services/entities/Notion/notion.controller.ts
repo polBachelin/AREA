@@ -10,8 +10,8 @@ export class NotionController {
 	@Get('/auth')
 	@ApiOperation({ summary: "Get the access token from the authorization code"})
     notionCallback(@Query() query) {
-        console.log("sending notion code " + query.code);
-		this.notionService.authorize(query.code);
+		let token = this.notionService.authorize(query.code);
+		//TODO Killian save the token to DB
 	}
 	
 }
