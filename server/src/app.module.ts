@@ -10,7 +10,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 
 @Module({
-  imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MongooseModule.forRoot('mongodb://localhost:27017/nest'), ServicesModule],
+  imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MongooseModule.forRoot("mongodb://root:pass12345@mongodb:27017"), ServicesModule],
   controllers: [AppController],
   providers: [AppService, ],
 })

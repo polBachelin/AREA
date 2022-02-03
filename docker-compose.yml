@@ -3,6 +3,7 @@ version: '3'
 services:
   db:
     image: mongo:latest
+    container_name: mongodb
     volumes:
       - data:/data/db
     ports:
@@ -17,12 +18,13 @@ services:
   server:
     build: "./server"
     ports:
-      - "8080:8080"
-    # environment:
-    #   NM_DB_HOST: mongodb
-    #   NM_DB_PORT: 27017
-    #   NM_DB_USERNAME: root
-    #   NM_DB_PASSWORD: pass12345
+      - "3000:3000"
+    environment:
+      NM_DB_HOST: mongodb
+      NM_DB_PORT: 27017
+      NM_DB_USERNAME: root
+      NM_DB_PASSWORD: pass12345
+      PORT: 3000
     restart: "no"
     depends_on:
       - db
@@ -37,9 +39,9 @@ services:
   #     dockerfile: Dockerfile.android
 
   client_web:
-    build: client
+    build: ./client
     ports:
-      - "8081:8081"
+      - "8080:8080"
     volumes:
       - data:/data/www/apk:Z
     depends_on:

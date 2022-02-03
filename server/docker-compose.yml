@@ -3,6 +3,7 @@ version: '3'
 services:
   db:
     image: mongo:latest
+    container_name: db
     volumes:
       - data:/data/db
     ports:
@@ -17,13 +18,13 @@ services:
   server:
     build: "./"
     ports:
-      - "8080:8080"
+      - "3000:3000"
     environment:
       DB_HOST: 127.0.0.1
       DB_PORT: 27017
       DB_USERNAME: root
       DB_PASSWORD: pass12345
-      PORT: 8080
+      PORT: 3000
     restart: "no"
     depends_on:
       - db
@@ -36,4 +37,5 @@ volumes:
   data:
 networks:
   server-net:
+    driver: bridge
   
