@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <v-app class="police-montserrat">
+  <v-app class="font-dongle">
     <v-container fluid>
 
 <!--      TOP APP BAR-->
@@ -184,8 +184,15 @@ export default {
 </script>
 
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&display=swap');
+
+.font-dongle {
+  font-family: 'Dongle', sans-serif;
+  font-size: large;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: black;

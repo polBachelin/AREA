@@ -1,9 +1,9 @@
 <template>
-  <v-container>
+  <v-container class="font-dongle">
 
     <v-row class="mt-10 text-center justify-center">
-      <h1 class="mt-10" style="color: white">
-        My Apps
+      <h1 class="mt-10" style="color: white; font-size: 80px">
+        Mes Services
       </h1>
     </v-row>
 
@@ -21,14 +21,14 @@
           <v-img :src="app.logo"/>
         </v-col>
         <v-col cols="3">
-          <v-card-text style="font-size: large; font-weight: bold"> {{app.title}} </v-card-text>
+          <v-card-text style="font-size: 40px; font-weight: bold"> {{app.title}} </v-card-text>
         </v-col>
         <v-col cols="3" class="justify-center align-center">
           <v-col cols="12" class="mt-2">
             <v-card v-if="app.isConnected" style="background-color: darkorange">
               <v-row class="align-center justify-center">
                 <v-col cols="6">
-                  <v-card-text style="color: white"> connected </v-card-text>
+                  <v-card-text style="color: white; font-size: 30px"> connecté </v-card-text>
                 </v-col>
                 <v-col cols="4">
                   <v-icon style="color: white"> mdi-checkbox-marked-circle </v-icon>
@@ -38,7 +38,7 @@
             <v-card v-else style="background-color: black" hover="hover" @click="connectToService(app.id)">
               <v-row class="align-center justify-center">
                 <v-col cols="6">
-                  <v-card-text style="color: darkorange"> not connected </v-card-text>
+                  <v-card-text style="color: darkorange; font-size: 30px"> hors-ligne </v-card-text>
                 </v-col>
                 <v-col cols="4">
                   <v-icon style="color: darkorange"> mdi-cancel </v-icon>
@@ -49,12 +49,12 @@
         </v-col>
           <v-col cols="1">
             <v-card :style="app.isConnected ? 'background-color: darkorange' : 'background-color: black'">
-              <v-card-text :style="app.isConnected ? 'color: white' : 'color: darkorange'"> {{ app.actions }} actions </v-card-text>
+              <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{ app.actions }} actions </v-card-text>
             </v-card>
           </v-col>
           <v-col cols="1">
             <v-card :style="app.isConnected ? 'background-color: darkorange' : 'background-color: black'">
-            <v-card-text :style="app.isConnected ? 'color: white' : 'color: darkorange'"> {{ app.areas }} areas </v-card-text>
+            <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{ app.areas }} areas </v-card-text>
             </v-card>
           </v-col>
         </v-row>
