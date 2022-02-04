@@ -115,6 +115,7 @@ export default {
     },
 
     authorizeDiscord() {
+      console.log(discordUrl)
       this.connectOauth(discordUrl);
     }
   },
