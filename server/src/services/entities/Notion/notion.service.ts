@@ -1,7 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { AxiosRequestConfig } from "@nestjs/common/node_modules/axios";
 import axios, { AxiosPromise } from "axios";
 import type { GetUserResponse } from "@notionhq/client/build/src/api-endpoints"
+import { INotion } from "src/models/Notion";
+import { Model } from 'mongoose';
+import { UsersService } from "src/users/users.service";
+import { InjectModel } from '@nestjs/mongoose';
 
 type NotionPersonUser = Extract<GetUserResponse, { type: "person" }>
 
@@ -32,7 +36,10 @@ export class NotionService {
 		clientSecret: "secret_1IESesqQSQeNlXId1QfsnZrzc2z6a35aFpkUIOLyrEe",
 		callbackURL: "http%3A%2F%2Flocalhost%3A8080%2Fauth%2Fnotion_callback",
 	}
-	constructor() {}
+	constructor(
+		@InjectModel('Notion') private notionModel: Model<INotion>,
+		private userService: UsersService
+	) {}
 
 	public authorize(code: string): AxiosPromise<any> {
 		const options: AxiosRequestConfig = {
@@ -51,4 +58,12 @@ export class NotionService {
 		};
 		return axios(options)
 	}
+
+	async setNotionToken(email: string, notionToken: Object) {
+    	const user = await this.userService.findOne(email);
+    	const userNotion = new this.notionModel(notionToken);
+    	user.notion = userNotion;
+		user.save();
+		return this.userService.sanitizeUser(user);
+  }
 }
