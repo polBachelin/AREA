@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Query, UseGuards } from "@nestjs/common";
+import { Controller, Get, Logger, Query, UseGuards, Request } from "@nestjs/common";
 import { NotionService } from "./notion.service";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from "src/auth/auth.service";
@@ -34,5 +34,12 @@ export class NotionController {
 			const token = await this.authService.signUser(user);
 			return { user, token };
 		}
+	}
+
+	@Get('/token')
+	@UseGuards(AuthGuard('jwt'))
+	@ApiOperation({ summary: 'Retrieve the notion token from the db'})
+	async getNotionToken(@Request() req) {
+		return this.notionService.getNotionToken(req.user.email);
 	}
 }

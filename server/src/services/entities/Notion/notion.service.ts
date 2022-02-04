@@ -66,4 +66,9 @@ export class NotionService {
 		user.save();
 		return this.userService.sanitizeUser(user);
   }
+
+  async getNotionToken(email: string) {
+	  const user = await this.userService.findOne(email);
+	  return user.notion;
+  }
 }
