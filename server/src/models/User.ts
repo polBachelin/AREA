@@ -1,16 +1,20 @@
 import * as mongoose from 'mongoose';
 import { AreaModelSchema, IArea } from './Area';
+import { INotion, notionSchema } from './Notion';
 
 export interface IUser extends Document {
 	email: string;
 	password: string;
-	areas: IArea[]
+	notion: {type: INotion}
+	// areas: IArea[]
 }
+
+
 
 export const userSchema = new mongoose.Schema({
 	email: {type: String, unique: true, required: true},
-	password: {type: String, required: true},
-	// areas: [AreaModelSchema],
+	password: {type: String},
+	notion: {type: notionSchema , required: false}
 });
 
 // const UserModel = model<IUser>('User', schema);
