@@ -1,6 +1,7 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, Query, Redirect, Res, Response } from "@nestjs/common";
 import { NotionService } from "./notion.service";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { use } from "passport";
 
 @ApiTags('notion')
 @Controller('/notion')
@@ -9,6 +10,7 @@ export class NotionController {
 
 	@Get('/auth')
 	@ApiOperation({ summary: "Get the access token from the authorization code"})
+	@Redirect('http://localhost:8080')
     notionCallback(@Query() query) {
 		this.notionService.authorize(query.code).then((res) => {
 			let email = res.data.owner.user.person.email;

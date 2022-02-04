@@ -16,10 +16,10 @@ import { FrontendMiddleware } from './middlewares/frontend.middleware';
   providers: [AppService, ],
 })
 export class AppModule {
-  configure(frontEnd: MiddlewareConsumer) {
-    frontEnd.apply(FrontendMiddleware).forRoutes({
-      path: '/*/auth',
-      method: RequestMethod.ALL,
-    });
-  }
+  // configure(frontEnd: MiddlewareConsumer) {
+  //   frontEnd.apply(FrontendMiddleware).forRoutes({
+  //     path: '/*/auth',
+  //     method: RequestMethod.ALL,
+  //   });
+  // }
 }
