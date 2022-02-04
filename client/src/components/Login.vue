@@ -43,6 +43,9 @@
         <v-col cols="5" class="ml-5">
             <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeNotion"> Connect to Notion </v-btn>
         </v-col>
+        <v-col cols="5" class="ml-5">
+            <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeDiscord"> Connect to Discord </v-btn>
+        </v-col>
         </v-row>
       </v-card>
     </v-row>
@@ -53,7 +56,9 @@
 <script>
 import axios from "axios";
 
-import {connectNotion} from '../oauth/Notion'
+import {notionUrl} from '../oauth/Notion';
+import {discordUrl} from '../oauth/Discord';
+
 export default {
   name: "Login.vue",
 
@@ -101,9 +106,17 @@ export default {
       this.$router.push({name: 'register'})
     },
 
-    authorizeNotion() {
-      connectNotion();
+    connectOauth(url) {
+      window.location.replace(url);
     },
+
+    authorizeNotion() {
+      this.connectOauth(notionUrl);
+    },
+
+    authorizeDiscord() {
+      this.connectOauth(discordUrl);
+    }
   },
 }
 </script>
