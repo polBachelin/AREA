@@ -1,1 +1,3 @@
-.codetogether.ignore
+node-module/
+package-lock.json
+package.json
