@@ -48,14 +48,24 @@
           </v-col>
         </v-col>
           <v-col cols="1">
-            <v-card :style="app.isConnected ? 'background-color: darkorange' : 'background-color: black'">
-              <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.actions.length}} actions </v-card-text>
-            </v-card>
+            <v-tooltip bottom color="orange">
+              <template v-slot:activator="{ on, attrs }">
+                <v-card v-bind="attrs" v-on="on" :style="app.isConnected ? 'background-color: darkorange' : 'background-color: black'">
+                  <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.actions.length}} actions </v-card-text>
+                </v-card>
+              </template>
+              <span v-for="action in app.actions" v-bind:key="action.id"> - {{ action.name }}</span>
+            </v-tooltip>
           </v-col>
           <v-col cols="1">
-            <v-card :style="app.isConnected ? 'background-color: darkorange' : 'background-color: black'">
-            <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{ app.reactions.length }} areas </v-card-text>
-            </v-card>
+            <v-tooltip bottom color="orange">
+              <template v-slot:activator="{ on, attrs }">
+                <v-card v-bind="attrs" v-on="on" :style="app.isConnected ? 'background-color: darkorange' : 'background-color: black'">
+                  <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.reactions.length}} actions </v-card-text>
+                </v-card>
+              </template>
+              <span v-for="reaction in app.reactions" v-bind:key="reaction.id"> - {{ reaction.name }}</span>
+            </v-tooltip>
           </v-col>
         </v-row>
       </v-card>
