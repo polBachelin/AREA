@@ -2,9 +2,17 @@
   <v-container style="color: white; background-color: darkorange" class="font-dongle">
 
     <v-row class="mt-10 text-center justify-center" style="color: white">
-      <h1 style="font-size: 80px">
-        Créér une aréa
-      </h1>
+        <v-hover v-slot="{ hover }">
+          <v-btn
+              @click="goToArea"
+              elevation="5"
+              width="500"
+              height="100"
+              :style=" hover ? 'background-color: black; color: darkorange; font-size: 60px; border: 1px solid white' : 'background-color: black; color: white; font-size: 70px' "
+          >
+            Create Area
+          </v-btn>
+        </v-hover>
     </v-row>
 
     <v-row>
@@ -163,6 +171,11 @@ export default {
       ]
     }
   },
+  methods: {
+    goToArea() {
+      this.$router.push({name: 'area'})
+    }
+  }
 }
 
 </script>
