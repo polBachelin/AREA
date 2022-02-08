@@ -41,6 +41,5 @@ export class Area {
 		} catch (error) {
 			console.log(error);
 		}
-		//this.action.setup()
 	}
 }

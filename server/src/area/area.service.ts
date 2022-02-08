@@ -30,8 +30,9 @@ export class AreaService {
 	public async enableAnArea(areaName: string) {
 		let areaModel = await this.areaModel.findOne({areaName});
 		if (areaModel) {
-			let areaAction = ActionsFactory.buildTask(areaModel['actionName'] as actionKeys, "Add to database", 0) as ATrigger;
-			let areaReaction = ReactionsFactory.buildTask(areaModel['reactionName'] as reactionKeys) as ATask;
+			let areaAction = ActionsFactory.buildTask(areaModel['actionName'] as actionKeys, areaModel['actionName'], 0) as ATrigger;
+			//TODO find a way to create the properties map abstracly
+			let areaReaction = ReactionsFactory.buildTask(areaModel['reactionName'] as reactionKeys, 0, areaModel['reactionName'], undefined) as ATask;
 			const area: Area = new Area({
 				name: areaName,
 				action: areaAction,

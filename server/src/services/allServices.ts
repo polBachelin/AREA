@@ -64,7 +64,7 @@ type reactionSingleKeys<K> = [K] extends (K extends reactionKeys ? [K] : never) 
 type reactionClassType<A extends reactionKeys> = Extract<reactionTuples<reactionKeys>, [A, any]>[1];
 
 export class ReactionsFactory {
-	static buildTask<K extends reactionKeys>(k: reactionSingleKeys<K>, ...param: ConstructorParameters<ReactionMap[reactionKeys]>): reactionClassType<K> {
-		return new reactionsMap[k]();
+	static buildTask<K extends reactionKeys>(k: reactionSingleKeys<K>, ...params: ConstructorParameters<ReactionMap[reactionKeys]>): reactionClassType<K> {
+		return new reactionsMap[k](...params);
 	}
 }
