@@ -1,6 +1,6 @@
 import { Controller, Get, Redirect, Query } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { DiscordService } from "./discord.service";
+import { DiscordService, DiscordOauthToken } from "./discord.service";
 
 @ApiTags('discord')
 @Controller('/discord')
@@ -9,18 +9,16 @@ export class DiscordController {
 
 	@Get('/auth')
 	@ApiOperation({summary: "Get the access from the authorization"})
+	@Redirect('http://localhost:8080')
 	discordCallback(@Query() query) {
 		this.discordService.authorize(query.code).then((res) => {
-			let token = res.data.json();
-			console.log(res.data.json());
-		}).catch((err) => {
-			console.log(err.response);
-			//console.log(err.response.data.errors.redirect_uri._errors)
+			let token = res;
+			let email;
+			this.discordService.getUserEmail(token.access_token).then((res) => {
+				email = res;
+			}).catch(err => {
+				console.log(err);
+			})
 		})
-	}
-
-	@Get('/token')
-	discordTokenResponse(@Query() query) {
-		console.log(query);
 	}
 }
