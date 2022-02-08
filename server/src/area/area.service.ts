@@ -19,23 +19,25 @@ export class AreaService {
 		if (await this.areaModel.findOne({areaName})) {
 			throw new HttpException('area already exists', HttpStatus.BAD_REQUEST);
 		}
-		let areaAction = ActionsFactory.buildTask(actionName, "Add to database", 0) as ATrigger;
-		let areaReaction = ReactionsFactory.buildTask(reactionName) as ATask;
-		const area: Area = new Area({
-			name: areaName,
-			action: areaAction,
-			reaction: areaReaction,
-		});
 		const newArea = new this.areaModel({
 			name: areaName,
 			actionName: actionName,
 			reactionName: reactionName
 		});
 		await newArea.save();
-		return area;
 	}
 
-	public enableAnArea(areaName: string) {
-
+	public async enableAnArea(areaName: string) {
+		let areaModel = await this.areaModel.findOne({areaName});
+		if (areaModel) {
+			let areaAction = ActionsFactory.buildTask(areaModel['actionName'] as actionKeys, "Add to database", 0) as ATrigger;
+			let areaReaction = ReactionsFactory.buildTask(areaModel['reactionName'] as reactionKeys) as ATask;
+			const area: Area = new Area({
+				name: areaName,
+				action: areaAction,
+				reaction: areaReaction,
+			});
+			area.enable();
+		}
 	}
 }
