@@ -1,4 +1,4 @@
-import { IService } from "../../interfaces/service.interface";
+import { IService } from "../../../interfaces/service.interface";
 import { RecieveMessage } from "./actions/RecieveMessage";
 import { SendMessage } from "./reactions/SendMessage";
 

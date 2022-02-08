@@ -1,4 +1,4 @@
-import { IService } from './interfaces/service.interface';
+import { IService } from '../interfaces/service.interface';
 import { Notion } from './entities/Notion/notion.class';
 import { Discord } from './entities/Discord/Discord.class';
 

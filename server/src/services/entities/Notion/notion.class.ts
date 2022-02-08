@@ -1,13 +1,34 @@
-import { IService } from "../../interfaces/service.interface";
+import { IService, ExtractInstanceType } from "../../../interfaces/service.interface";
 import { AddToDB } from "./actions/AddToDB";
 
-require('dotenv').config()
+export class Notion implements IService {
+	id: number;
+	name: string;
+	icon: string;
+	actions: string[];
+	reactions: string[];
 
-export let Notion: IService = {
-	name: "Notion",
-	id: parseInt(process.env.NOTION),
-	icon: "https://img.icons8.com/ios/500/notion.png",
-	actions: [AddToDB],
-	reactions: []
+	constructor() {
+		this.id = parseInt(process.env.NOTION);
+		this.name = "Notion";
+		this.icon = "https://img.icons8.com/ios/500/notion.png";
+		this.actions = [
+			"Add to database"
+		];
+		this.reactions = [
+
+		];
+	}
 }
 
+const notionMap = {
+	"Add to database": AddToDB
+};
+type Keys = keyof typeof notionMap;
+type notionTypes = typeof notionMap[Keys];
+
+export class NotionFactory {
+	static buildTask(k: Keys): ExtractInstanceType<notionTypes> {
+		return new notionMap[k]();
+	}
+}
