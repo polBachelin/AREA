@@ -15,7 +15,7 @@ export class DiscordController {
 			console.log(res.data.json());
 		}).catch((err) => {
 			console.log(err.response);
-			console.log(err.response.data.errors.redirect_uri._errors)
+			//console.log(err.response.data.errors.redirect_uri._errors)
 		})
 	}
 

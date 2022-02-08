@@ -5,7 +5,7 @@ const DiscordOauth2 = require("discord-oauth2");
 const oauth = new DiscordOauth2();
 
 const CLIENT_ID = '286959581488480267'
-const REDIRECT_URI = "http%3A%2F%2Flocalhost%3A3000%2Fdiscord%2Fauth"
+const REDIRECT_URI = "http://localhost:3000/discord/auth"
 const CLIENT_SECRET = 'EmhaycziVCFdud6Awg91r-B1Dy7M8gbY'
 
 @Injectable()
@@ -15,8 +15,8 @@ export class DiscordService {
 			client_id: CLIENT_ID,
 			client_secret: CLIENT_SECRET,
 			grant_type: 'authorization_code',
-			code: code,
-			redirect_uri: REDIRECT_URI
+			code: code.toString(),
+			redirect_url: REDIRECT_URI
 		});
 		// param.append('client_id', CLIENT_ID);
 		// param.append('client_secret', CLIENT_SECRET);
@@ -28,14 +28,14 @@ export class DiscordService {
 				"Content-Type": 'application/x-www-form-urlencoded',				
 			}
 		};
-		return axios.post('https://discord.com/api/v8/oauth2/token', param.toString(), options);
+		return axios.post('https://discord.com/api/v8/oauth2/token', param, options);
 		// return oauth.tokenRequest({
 		// 	clientId: CLIENT_ID,
 		// 	clientSecret: CLIENT_SECRET,
 		// 	code: code,
 		// 	scope: "email",
 		// 	grantType: "authorization_code",
-		// 	redirectUri: "http%3A%2F%2Flocalhost%3A3000%2Fdiscord%2Fauth"
+		// 	redirectUri: "http://localhost:8080"
 		// });
 	}
 
