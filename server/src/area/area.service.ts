@@ -6,6 +6,7 @@ import { ATask } from "src/interfaces/task.interface";
 import { InjectModel } from "@nestjs/mongoose";
 import { IArea } from "src/models/Area";
 import { Model } from 'mongoose';
+import { AreaDTO } from "./area.dto";
 
 @Injectable()
 export class AreaService {
@@ -25,7 +26,11 @@ export class AreaService {
 			action: areaAction,
 			reaction: areaReaction,
 		});
-		const newArea = new this.areaModel();
+		const newArea = new this.areaModel({
+			name: areaName,
+			actionName: actionName,
+			reactionName: reactionName
+		});
 		await newArea.save();
 		return area;
 	}
