@@ -6,7 +6,6 @@ import Area from "@/components/Area";
 import Login from "@/components/Login";
 import Register from "@/components/Register";
 import Profile from "@/components/Profile"
-import NotionCallback from "@/components/Notion/NotionCallback";
 import vuetify from './plugins/vuetify'
 import MyApps from "@/components/MyApps";
 
@@ -24,7 +23,6 @@ const router = new VueRouter({
 		{path: '/profile', component: Profile},
 		{path: '/login', component: Login},
 		{path: '/register', component: Register, name: 'register'},
-		{path: '/auth/notion_callback', component: NotionCallback},
 	],
 })
 
@@ -32,4 +30,4 @@ new Vue({
 	router,
 	vuetify,
 	render: h => h(App)
-}).$mount('#app')
+}).$mount('#app')	

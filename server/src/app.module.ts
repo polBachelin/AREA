@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -8,10 +8,18 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { FrontendMiddleware } from './middlewares/frontend.middleware';
 
 @Module({
-  imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MongooseModule.forRoot("mongodb://root:pass12345@mongodb:27017"), ServicesModule],
+  imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MongooseModule.forRoot(process.env.DB_DEBUG), ServicesModule],
   controllers: [AppController],
   providers: [AppService, ],
 })
-export class AppModule {}
+export class AppModule {
+  // configure(frontEnd: MiddlewareConsumer) {
+  //   frontEnd.apply(FrontendMiddleware).forRoutes({
+  //     path: '/*/auth',
+  //     method: RequestMethod.ALL,
+  //   });
+  // }
+}
