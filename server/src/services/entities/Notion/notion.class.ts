@@ -1,4 +1,4 @@
-import { IService, ExtractInstanceType } from "../../../interfaces/service.interface";
+import { IService } from "../../../interfaces/service.interface";
 import { AddToDB } from "./actions/AddToDB";
 
 export class Notion implements IService {
@@ -21,14 +21,17 @@ export class Notion implements IService {
 	}
 }
 
-const notionMap = {
-	"Add to database": AddToDB
-};
-type Keys = keyof typeof notionMap;
-type notionTypes = typeof notionMap[Keys];
+// const notionMap = {
+// 	"Add to database": AddToDB
+// };
+// type Keys = keyof typeof notionMap;
+// type notionTypes = typeof notionMap[Keys];
 
-export class NotionFactory {
-	static buildTask(k: Keys): ExtractInstanceType<notionTypes> {
-		return new notionMap[k]();
-	}
-}
+// export class NotionFactory {
+// 	static buildTask(k: Keys): ExtractInstanceType<notionTypes> {
+// 		return new notionMap[k]();
+// 	}
+// }
+
+let notion = new Notion();
+export { notion };

@@ -1,10 +1,11 @@
-import { ITask, properties } from "../../../../interfaces/task.interface";
+import { ATask, properties } from "../../../../interfaces/task.interface";
 
-export class SendMessage extends ITask {
+export class SendMessage extends ATask {
 	id: number;
 	name: string;
+	data: properties;
 
-	run(callback: Promise<properties>): properties {
+	run(): Promise<any> {
 		return undefined;
 	}
 }
