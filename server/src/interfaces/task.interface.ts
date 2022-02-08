@@ -1,8 +1,8 @@
 export type properties = Map<string, any>
 
-export interface ITask {
+export abstract class ITask {
 	id: number;
 	name: string;
 	
-	run(callback: Promise<properties>): properties 
+	abstract run(callback: Promise<properties>): properties 
 }

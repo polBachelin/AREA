@@ -1,6 +1,3 @@
-import { ITask } from "src/interfaces/task.interface";
-import { ATrigger } from "./trigger.interface";
-
 export type ExtractInstanceType<T> = T extends new () => infer R ? R : never;
 
 export interface IService {
