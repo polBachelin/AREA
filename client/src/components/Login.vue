@@ -33,19 +33,21 @@
           <v-card-text>{{isError}}</v-card-text>
         </v-row>
 
-        <v-row style="margin-top: 150px">
+        <v-row style="margin-top: 120px">
           <v-col cols="5" class="ml-5">
             <v-btn color="black" style="color: darkorange; width: 200px" @click="confirmUserPass"> Confirmer </v-btn>
           </v-col>
           <v-col cols="6" class="ml-5">
             <v-btn color="black" style="color: darkorange; width: 200px" @click="goToRegister"> Créer un compte </v-btn>
           </v-col>
-        <v-col cols="5" class="ml-5">
-            <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeNotion"> Connect to Notion </v-btn>
-        </v-col>
-        <v-col cols="5" class="ml-5">
-            <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeDiscord"> Connect to Discord </v-btn>
-        </v-col>
+        </v-row>
+        <v-row style="">
+          <v-col cols="5" class="ml-5">
+              <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeNotion"> Connect to Notion </v-btn>
+          </v-col>
+          <v-col cols="5" class="ml-5">
+              <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeDiscord"> Connect to Discord </v-btn>
+          </v-col>
         </v-row>
       </v-card>
     </v-row>
@@ -56,8 +58,8 @@
 <script>
 import axios from "axios";
 
-import {notionUrl} from '../oauth/Notion';
-import {discordUrl} from '../oauth/Discord';
+import {notionUrl} from '@/oauth/Notion';
+import {discordUrl} from '@/oauth/Discord';
 
 export default {
   name: "Login.vue",
