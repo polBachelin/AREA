@@ -1,9 +1,7 @@
-import { ITask } from "../../../../tasks/interfaces/task.interface";
+import { ATask } from "src/interfaces/task.interface";
+import { ATrigger } from "src/interfaces/trigger.interface";
 
-export let AddToDB: ITask = {
-	id: 0,
-	name: "Add to database",
-	lastExec: undefined,
+export class AddToDB extends ATrigger {
 
-	run(callback: Promise<void>): void {}
+	setup(callback: (reaction: ATask) => Promise<void>): void {}
 }

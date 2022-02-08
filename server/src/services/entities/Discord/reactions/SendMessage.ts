@@ -1,9 +1,11 @@
-import { ITask } from "../../../../tasks/interfaces/task.interface";
+import { ATask, properties } from "../../../../interfaces/task.interface";
 
-export let SendMessage: ITask = {
-	id: 0,
-	name: "Send a message",
-	lastExec: undefined,
+export class SendMessage extends ATask {
+	id: number;
+	name: string;
+	data: properties;
 
-	run(callback: Promise<void>): void {}
+	run(): Promise<any> {
+		return undefined;
+	}
 }
