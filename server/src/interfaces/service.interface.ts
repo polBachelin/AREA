@@ -1,5 +1,3 @@
-export type ExtractInstanceType<T> = T extends new () => infer R ? R : never;
-
 export interface IService {
 	name: string;
 	id: number;
