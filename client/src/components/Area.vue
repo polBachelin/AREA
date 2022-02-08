@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    Area
+    <div>TEST</div>
   </v-container>
 </template>
 

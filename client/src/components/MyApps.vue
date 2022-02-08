@@ -8,20 +8,20 @@
     </v-row>
 
     <v-row
-        v-for="app in myApps"
+        v-for="app in services"
         :key="app.id"
         class="justify-center align-center mt-2"
     >
       <v-col cols="1"></v-col>
 
       <v-col cols="10">
-      <v-card class="justify-center align-center text-center mt-4" style="border: 3px solid darkorange" height="100px">
+      <v-card class="justify-center align-center text-center mt-4" style="border: 3px solid darkorange">
         <v-row class="justify-center align-center">
         <v-col cols="1">
-          <v-img :src="app.logo"/>
+          <v-img :src="app.icon"/>
         </v-col>
         <v-col cols="3">
-          <v-card-text style="font-size: 40px; font-weight: bold"> {{app.title}} </v-card-text>
+          <v-card-text style="font-size: 40px; font-weight: bold"> {{app.name}} </v-card-text>
         </v-col>
         <v-col cols="3" class="justify-center align-center">
           <v-col cols="12" class="mt-2">
@@ -35,7 +35,7 @@
                 </v-col>
               </v-row>
             </v-card>
-            <v-card v-else style="background-color: black" hover="hover" @click="connectToService(app.id)">
+            <v-card v-else style="background-color: black" hover="hover" @click="connectToService(app.name)">
               <v-row class="align-center justify-center">
                 <v-col cols="6">
                   <v-card-text style="color: darkorange; font-size: 30px"> hors-ligne </v-card-text>
@@ -49,12 +49,12 @@
         </v-col>
           <v-col cols="1">
             <v-card :style="app.isConnected ? 'background-color: darkorange' : 'background-color: black'">
-              <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{ app.actions }} actions </v-card-text>
+              <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.actions.length}} actions </v-card-text>
             </v-card>
           </v-col>
           <v-col cols="1">
             <v-card :style="app.isConnected ? 'background-color: darkorange' : 'background-color: black'">
-            <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{ app.areas }} areas </v-card-text>
+            <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{ app.reactions.length }} areas </v-card-text>
             </v-card>
           </v-col>
         </v-row>
@@ -68,42 +68,42 @@
 </template>
 
 <script>
+import axios from "axios";
+import {notionUrl} from '@/oauth/Notion';
+import {discordUrl} from '@/oauth/Discord';
+
 export default {
   name: "MyApps",
   data() {
     return {
-      myApps: [
-        {
-          id: 1,
-          title: "Outlook",
-          logo: require('@/assets/outlook-logo.jpg'),
-          isConnected: false,
-          actions: 2,
-          areas: 3,
-        },
-        {
-          id: 2,
-          title: "Epitech",
-          logo: require('@/assets/epitech-logo.png'),
-          isConnected: true,
-          actions: 3,
-          areas: 3,
-        },
-        {
-          id: 3,
-          title: "Github",
-          logo: require('@/assets/github-logo.jpg'),
-          isConnected: false,
-          actions: 4,
-          areas: 4,
-        },
-      ],
+      services: [],
     }
   },
+
   methods: {
-    connectToService(id) {
-     console.log(id)
+    connectToService(name) {
+     if (name === "Discord") {
+       window.location.replace(discordUrl);
+     }
+     if (name === "Notion") {
+       window.location.replace(notionUrl);
+     }
+    },
+
+    getNumber(arr) {
+      console.log(arr)
+      return arr.length
     }
+  },
+
+  mounted() {
+    axios.get('http://localhost:3000/services')
+        .then((response) => {
+          this.services = response.data
+        })
+        .catch( () => {
+          console.log("services fetch error")
+        })
   }
 
 }
