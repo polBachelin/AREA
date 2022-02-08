@@ -10,15 +10,25 @@ import { AreaDTO } from "./area.dto";
 
 @Injectable()
 export class AreaService {
+	areas: Map<string, Area[]> = new Map();
 
 	constructor(
 		@InjectModel('Area') private areaModel: Model<IArea>,
 	) {}
 
-	public async createArea(areaName: string, actionName: actionKeys, reactionName: reactionKeys) {
+	public async createArea(userEmail: string, areaName: string, actionName: actionKeys, reactionName: reactionKeys) {
 		if (await this.areaModel.findOne({areaName})) {
 			throw new HttpException('area already exists', HttpStatus.BAD_REQUEST);
 		}
+		let areaAction = ActionsFactory.buildTask(actionName, actionName, 0) as ATrigger;
+		let areaReaction = ReactionsFactory.buildTask(reactionName as reactionKeys, 0, reactionName, undefined) as ATask;
+		const area: Area = new Area({
+			name: areaName,
+			action: areaAction,
+			reaction: areaReaction,
+		});
+		let userAreas: Area[] = this.areas[userEmail];
+		userAreas.push(area);
 		const newArea = new this.areaModel({
 			name: areaName,
 			actionName: actionName,
@@ -27,18 +37,14 @@ export class AreaService {
 		await newArea.save();
 	}
 
-	public async enableAnArea(areaName: string) {
+	public async enableAnArea(userEmail: string, areaName: string) {
 		let areaModel = await this.areaModel.findOne({areaName});
 		if (areaModel) {
-			let areaAction = ActionsFactory.buildTask(areaModel['actionName'] as actionKeys, areaModel['actionName'], 0) as ATrigger;
-			//TODO find a way to create the properties map abstracly
-			let areaReaction = ReactionsFactory.buildTask(areaModel['reactionName'] as reactionKeys, 0, areaModel['reactionName'], undefined) as ATask;
-			const area: Area = new Area({
-				name: areaName,
-				action: areaAction,
-				reaction: areaReaction,
-			});
-			area.enable();
+			let userAreas: Area[] = this.areas.get(userEmail);
+			userAreas.forEach((j) => {
+				if (j.name == areaName)
+					j.enable();
+			})
 		}
 	}
 }
