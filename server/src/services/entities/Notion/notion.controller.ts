@@ -7,6 +7,8 @@ import { UsersService } from "src/users/users.service";
 import { RegisterDTO } from "src/users/register.dto";
 import { use } from "passport";
 
+//secret_WozMzMwc0e8jQzO1f4vGtytC36YTwVF2eWDdRDpgXez
+
 @ApiTags('notion')
 @Controller('/notion')
 export class NotionController {
@@ -16,7 +18,7 @@ export class NotionController {
 	// @UseGuards(AuthGuard('jwt'))
 	@ApiOperation({ summary: "Get the access token from the authorization code"})
     async notionCallback(@Query() query) {
-		let email = null;
+		let email: string = null;
 		let notionToken = null;
 		await this.notionService.authorize(query.code).then((res) => {
 			email = res.data.owner.user.person.email;
@@ -42,5 +44,12 @@ export class NotionController {
 	@ApiOperation({ summary: 'Retrieve the notion token from the db'})
 	async getNotionToken(@Request() req) {
 		return this.notionService.getNotionToken(req.user.email);
+	}
+
+	@Get('/databases')
+	@UseGuards(AuthGuard('jwt'))
+	@ApiOperation({summary: 'Retrieve notion user databases'})
+	async getNotionDatabases(@Request() req) {
+		return this.notionService.getDatabases(req.user.email);
 	}
 }

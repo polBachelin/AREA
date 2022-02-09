@@ -1,5 +1,4 @@
 import { IService } from "../../../interfaces/service.interface";
-import { AddToDB } from "./actions/AddToDB";
 
 export class Notion implements IService {
 	id: number;

@@ -6,6 +6,7 @@ import { INotion } from "src/models/Notion";
 import { Model } from 'mongoose';
 import { UsersService } from "src/users/users.service";
 import { InjectModel } from '@nestjs/mongoose';
+import { Client } from "@notionhq/client";
 
 type NotionPersonUser = Extract<GetUserResponse, { type: "person" }>
 
@@ -18,7 +19,6 @@ interface NotionOAuthToken {
 	workspace_icon?: string
 	owner: { type: "workspace" } | { type: "user"; user: NotionPersonUser }
 }
-
 
 interface NotionStrategyOptions {
 	clientID: string
@@ -36,6 +36,8 @@ export class NotionService {
 		clientSecret: "secret_1IESesqQSQeNlXId1QfsnZrzc2z6a35aFpkUIOLyrEe",
 		callbackURL: "http%3A%2F%2Flocalhost%3A8080%2Fauth%2Fnotion_callback",
 	}
+	private notionClient: Client = new Client();
+
 	constructor(
 		@InjectModel('Notion') private notionModel: Model<INotion>,
 		private userService: UsersService
@@ -59,16 +61,30 @@ export class NotionService {
 		return axios(options)
 	}
 
-	async setNotionToken(email: string, notionToken: Object) {
-    	const user = await this.userService.findOne(email);
-    	const userNotion = new this.notionModel(notionToken);
-    	user.notion = userNotion;
-		user.save();
-		return this.userService.sanitizeUser(user);
-  }
+	public setNotionToken(email: string, notionToken: Object) {
+    	this.userService.findOne(email).then(res => {
+			const userNotion = new this.notionModel(notionToken);
+			res.notion = userNotion;
+			res.save();
+			return this.userService.sanitizeUser(res);
+		});
+	}
 
-  async getNotionToken(email: string) {
-	  const user = await this.userService.findOne(email);
-	  return user.notion;
-  }
+	async getNotionToken(email: string) {
+		const user = await this.userService.findOne(email);
+		return user.notion;
+	}
+
+	public async getDatabases(email: string) {
+		let token = await this.getNotionToken(email);
+
+		this.notionClient.search({auth: token, filter: {
+			property: "object",
+			value: "database"
+		}}).then(res => {
+			console.log(res);
+		}).catch(err => {
+			console.log(err);
+		})
+	}
 }
