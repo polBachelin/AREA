@@ -1,5 +1,5 @@
 import { IService } from "../../../interfaces/service.interface";
-
+	
 export class Notion implements IService {
 	id: number;
 	name: string;

@@ -127,6 +127,9 @@
 export default {
   name: "Home.vue",
 
+  created() {
+  },
+
   data() {
     return {
       areas: [
