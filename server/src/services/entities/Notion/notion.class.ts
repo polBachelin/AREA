@@ -21,17 +21,5 @@ export class Notion implements IService {
 	}
 }
 
-// const notionMap = {
-// 	"Add to database": AddToDB
-// };
-// type Keys = keyof typeof notionMap;
-// type notionTypes = typeof notionMap[Keys];
-
-// export class NotionFactory {
-// 	static buildTask(k: Keys): ExtractInstanceType<notionTypes> {
-// 		return new notionMap[k]();
-// 	}
-// }
-
 let notion = new Notion();
 export { notion };
