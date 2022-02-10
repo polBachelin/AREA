@@ -60,7 +60,11 @@
               <span>Profil</span>
             </v-tooltip>
           </v-col>
-          <v-col cols="1"/>
+          <v-col class="mt-1">
+            <v-btn v-if="checkIfLogged()" @click="logOut" color="orange">
+              LOGOUT
+            </v-btn>
+          </v-col>
         </v-row>
       </v-app-bar>
 <!---->
@@ -179,6 +183,10 @@ export default {
       } else {
         return false
       }
+    },
+    logOut() {
+      localStorage.setItem('isLogged', 'false')
+      this.$router.push('/login')
     }
   },
 }
