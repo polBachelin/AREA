@@ -143,8 +143,6 @@
 
 <script>
 
-import {setUser} from '@/auth'
-
 export default {
   name: 'App',
 
