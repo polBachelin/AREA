@@ -77,7 +77,10 @@ export default {
   },
 
   created() {
-    localStorage.setItem('isLogged', 'false')
+    if (localStorage.getItem('isLogged') === 'true') {
+      this.$router.push({name: 'home'})
+    }
+
   },
 
   methods: {
