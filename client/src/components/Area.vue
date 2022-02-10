@@ -34,11 +34,11 @@
             </v-btn>
             <v-spacer></v-spacer>
           </v-row>
-          <v-row v-if="yes === true" class="text-center justify-center mt-5">
-            <v-icon color="orange"> mdi-plus </v-icon>
+          <v-row v-if="this.destinations[1].isConfirmed === true" class="text-center justify-center mt-5">
+            <v-icon color="green"> mdi-checkbox-marked-circle </v-icon>
           </v-row>
           <v-row v-else class="text-center justify-center mt-5">
-            <v-icon color="green"> mdi-checkbox-marked-circle </v-icon>
+            <v-icon color="orange"> mdi-plus </v-icon>
           </v-row>
           <v-row class="text-center justify-center">
             <v-icon color="orange"> mdi-arrow-down </v-icon>
@@ -54,11 +54,11 @@
             </v-btn>
             <v-spacer></v-spacer>
           </v-row>
-          <v-row v-if="yes === true" class="text-center justify-center mt-5">
-            <v-icon color="orange"> mdi-plus </v-icon>
+          <v-row v-if="this.destinations[2].isConfirmed === true" class="text-center justify-center mt-5">
+            <v-icon color="green"> mdi-checkbox-marked-circle </v-icon>
           </v-row>
           <v-row v-else class="text-center justify-center mt-5">
-            <v-icon color="green"> mdi-checkbox-marked-circle </v-icon>
+            <v-icon color="orange"> mdi-plus </v-icon>
           </v-row>
           <v-row class="text-center justify-center">
             <v-icon color="orange"> mdi-arrow-down </v-icon>
@@ -80,16 +80,22 @@
           <v-row class="mt-16">
             <v-spacer></v-spacer>
             <v-col>
-              <v-btn style="background-color: darkorange; color: black; font-size: 20px; width: 150px">
+              <v-btn @click="resetArea" style="background-color: darkorange; color: black; font-size: 20px; width: 150px">
                 REINITIALISER
               </v-btn>
             </v-col>
             <v-col>
-              <v-btn style="background-color: darkorange; color: black; font-size: 20px; width: 150px">
+              <v-btn @click="confirmArea" style="background-color: darkorange; color: black; font-size: 20px; width: 150px">
                 CONFIRMER
               </v-btn>
             </v-col>
             <v-spacer></v-spacer>
+          </v-row>
+
+          <v-row v-if="errorMsg !== ''">
+            <v-card-text style="font-style: italic; font-size: 25px; color: red">
+              {{errorMsg}}
+            </v-card-text>
           </v-row>
 
         </v-card>
@@ -99,9 +105,9 @@
 
 <!--      RIGHT CARD-->
       <v-col cols="7">
-        <v-card v-if="destination !== ''" style="background-color: white; height: 800px">
+        <v-card v-if="currentDestination !== 'none'" style="background-color: white; height: 800px">
           <v-card-text  class="card-title text-center" style="color: darkorange">
-            Choisissez des {{destination}}
+            Choisissez des {{currentDestination}}
             <v-row class="mt-16"></v-row>
           </v-card-text>
           <v-row
@@ -124,8 +130,19 @@
                 ></v-switch>
               </v-col>
               </v-row>
+
             </v-card>
             </v-col>
+          </v-row>
+          <v-row class="mt-10">
+            <v-spacer></v-spacer>
+            <v-btn
+                @click="goToNextDestination"
+                style="background-color: darkorange; color: black; font-size: 20px; width: 150px"
+            >
+              SUIVANT
+            </v-btn>
+            <v-spacer></v-spacer>
           </v-row>
         </v-card>
 
@@ -149,7 +166,13 @@ export default {
 
   data() {
     return {
-      destination: '',
+      destinations: [
+        {label: 'none'},
+        {label: 'services', isConfirmed: 'false', service: ''},
+        {label: 'actions', isConfirmed: 'false', service: ''},
+        {label: 'reactions', isConfirmed: 'false', service: ''},
+      ],
+      currentDestination: 'none',
       selectedInfo: [
         {
           id: 0,
@@ -163,21 +186,56 @@ export default {
         },
 
       ],
+      errorMsg: '',
     }
+  },
+
+  created() {
+    this.currentDestination = 'none'
   },
 
   methods: {
     servicesInbound() {
-      this.destination = 'services'
+      this.currentDestination = 'services'
     },
     actionsInbound() {
-      this.destination = 'actions'
+      this.currentDestination = 'actions'
     },
     reactionsInbound() {
-      this.destination = 'reactions'
+      this.currentDestination = 'reactions'
     },
     selectType(name) {
       console.log(name)
+    },
+    goToNextDestination() {
+      if (this.currentDestination === 'services') {
+        this.destinations[1].isConfirmed = true
+        this.currentDestination = 'actions'
+        return
+      }
+      if (this.currentDestination === 'actions') {
+        this.destinations[2].isConfirmed = true
+        this.currentDestination = 'reactions'
+        return
+      }
+      if (this.currentDestination === 'reactions') {
+        this.saveArea()
+      }
+    },
+    saveArea() {
+      console.log('done')
+    },
+    resetArea() {
+      this.destinations[1].isConfirmed = false
+      this.destinations[1].service = ''
+      this.destinations[2].isConfirmed = false
+      this.destinations[2].service = ''
+    },
+    confirmArea() {
+      if (this.destinations[1].isConfirmed === false || this.destinations[2].isConfirmed === false) {
+        console.log('error')
+        this.errorMsg = 'Veuillez remplir toutes les conditions !'
+      }
     }
   }
 }
