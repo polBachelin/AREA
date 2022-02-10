@@ -18,6 +18,7 @@
               <v-text-field
                   style="font-size: 25px"
                   label="Donnez un nom à votre Area"
+                  v-model="areaName"
               />
             <v-spacer></v-spacer>
           </v-row>
@@ -93,7 +94,7 @@
           </v-row>
 
           <v-row v-if="errorMsg !== ''">
-            <v-card-text style="font-style: italic; font-size: 25px; color: red">
+            <v-card-text class="text-center" style="font-style: italic; font-size: 25px; color: red">
               {{errorMsg}}
             </v-card-text>
           </v-row>
@@ -111,7 +112,7 @@
             <v-row class="mt-16"></v-row>
           </v-card-text>
           <v-row
-              v-for="item in selectedInfo"
+              v-for="item in selectInfo()"
               v-bind:key="item.id"
           >
             <v-col cols="1"></v-col>
@@ -126,6 +127,7 @@
               </v-col>
               <v-col cols="2">
                 <v-switch
+                    @change="isSelected = !isSelected"
                     label="Select"
                 ></v-switch>
               </v-col>
@@ -138,6 +140,7 @@
             <v-spacer></v-spacer>
             <v-btn
                 @click="goToNextDestination"
+                :disabled="!isSelected"
                 style="background-color: darkorange; color: black; font-size: 20px; width: 150px"
             >
               SUIVANT
@@ -161,6 +164,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Area.vue",
 
@@ -173,25 +178,24 @@ export default {
         {label: 'reactions', isConfirmed: 'false', service: ''},
       ],
       currentDestination: 'none',
-      selectedInfo: [
-        {
-          id: 0,
-          name: "Notion",
-          icon: "https://img.icons8.com/ios/500/notion.png"
-        },
-        {
-          id: 1,
-          name: "Discord",
-          icon: "https://banner2.cleanpng.com/20180716/gjb/kisspng-discord-computer-icons-logo-smiley-decal-avatar-discord-5b4c86db5cb894.5744109815317419153798.jpg"
-        },
-
-      ],
+      selectedID: -1,
+      isSelected: false,
+      services: [],
       errorMsg: '',
+      areaName: '',
     }
   },
 
   created() {
     this.currentDestination = 'none'
+
+    axios.get('http://localhost:3000/services')
+        .then((response) => {
+          this.services = response.data
+        })
+        .catch( () => {
+          console.log("services fetch error")
+        })
   },
 
   methods: {
@@ -222,6 +226,25 @@ export default {
         this.saveArea()
       }
     },
+
+    selectInfo() {
+      let info = []
+
+      if (this.currentDestination === 'services') {
+        info = this.services
+      }
+
+      if (this.selectedID < 0)
+        return info
+      if (this.currentDestination === 'actions') {
+        info = this.services[this.selectedID].actions
+      }
+      if (this.currentDestination === 'reactions') {
+        info = this.services[this.selectedID].reactions
+      }
+      return info
+    },
+
     saveArea() {
       console.log('done')
     },
@@ -232,8 +255,7 @@ export default {
       this.destinations[2].service = ''
     },
     confirmArea() {
-      if (this.destinations[1].isConfirmed === false || this.destinations[2].isConfirmed === false) {
-        console.log('error')
+      if (this.destinations[1].isConfirmed === false || this.destinations[2].isConfirmed === false || this.areaName === '') {
         this.errorMsg = 'Veuillez remplir toutes les conditions !'
       }
     }
