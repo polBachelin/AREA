@@ -1,5 +1,5 @@
 import { ATrigger } from "src/interfaces/trigger.interface";
-import { ATask, properties } from "../../../../interfaces/task.interface";
+import { ATask, properties } from "src/interfaces/task.interface";
 
 export class ReceiveMessage extends ATrigger {
 

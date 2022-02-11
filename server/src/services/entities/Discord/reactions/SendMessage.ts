@@ -1,4 +1,4 @@
-import { ATask, properties } from "../../../../interfaces/task.interface";
+import { ATask, properties } from "src/interfaces/task.interface";
 
 export class SendMessage extends ATask {
 	run(): Promise<any> {

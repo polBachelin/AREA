@@ -1,6 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { AxiosRequestConfig } from "@nestjs/common/node_modules/axios";
+import { InjectModel } from "@nestjs/mongoose";
 import axios, {AxiosPromise} from 'axios';
+import { Model } from "mongoose";
+import { User, UsersService } from "src/users/users.service";
+import { IDiscord } from "src/models/Discord";
+
 const DiscordOauth2 = require("discord-oauth2");
 const oauth = new DiscordOauth2();
 
@@ -18,6 +23,12 @@ export interface DiscordOauthToken {
 
 @Injectable()
 export class DiscordService {
+
+	constructor(
+		@InjectModel('Discord') private discordModel: Model<IDiscord>,
+		private userService: UsersService
+	) {}
+
 	public async authorize(code: string): Promise<DiscordOauthToken> {
 		let token: DiscordOauthToken;
 
@@ -70,5 +81,12 @@ export class DiscordService {
 		};
 		return axios.post("https://discord.com/api/oauth2/token", param, options);
 
+	}
+
+	public setDiscordToken(user: User, discordToken: Object) {
+		const userDiscord = new this.discordModel(discordToken)
+		user.discord = userDiscord;
+		user.save();
+		return this.userService.sanitizeUser(user)
 	}
 }
