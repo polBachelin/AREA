@@ -17,12 +17,14 @@ class MyApp extends StatelessWidget {
       title: 'AREA',
       // Start the app with the "/" named route. In this case, the app starts
       // on the RegisterScreen widget.
-      initialRoute: '/',
+      initialRoute: '/login',
       debugShowCheckedModeBanner: false,
       routes: {
         // When navigating to the "/" route, build the RegisterScreen widget.
         '/': (context) => const RegisterScreen(),
         // When navigating to the "/second" route, build the HomeScreen widget.
+        // '/welcome': (context) => const WelcomeScreen(),
+        // '/register': (context) => const RegisterScreen(),
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginScreen(),
       }
