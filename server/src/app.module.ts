@@ -11,7 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { FrontendMiddleware } from './middlewares/frontend.middleware';
 
 @Module({
-  imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MongooseModule.forRoot(process.env.DB_DEBUG), ServicesModule],
+  imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MongooseModule.forRoot(process.env.DB_URL), ServicesModule],
   controllers: [AppController],
   providers: [AppService, ],
 })

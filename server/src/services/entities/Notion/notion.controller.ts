@@ -17,7 +17,7 @@ export class NotionController {
 	@Get('/auth')
 	@Redirect('http://localhost:8080/home')
 	@ApiOperation({ summary: "Get the access token from the authorization code"})
-    async notionCallback(@Query() query, @Response() res) {
+    async notionCallback(@Query() query) {
 		let email: string = null;
 		let notionToken = null;
 		await this.notionService.authorize(query.code).then((res) => {
@@ -39,6 +39,8 @@ export class NotionController {
 		}
 	}
 
+
+
 	@Get('/token')
 	@UseGuards(AuthGuard('jwt'))
 	@ApiOperation({ summary: 'Retrieve the notion token from the db'})
@@ -46,9 +48,9 @@ export class NotionController {
 		return this.notionService.getNotionToken(req.user.email);
 	}
 
+	@ApiOperation({summary: 'Retrieve notion user databases'})
 	@Get('/databases')
 	@UseGuards(AuthGuard('jwt'))
-	@ApiOperation({summary: 'Retrieve notion user databases'})
 	async getNotionDatabases(@Request() req) {
 		return this.notionService.getDatabases(req.user.email);
 	}
