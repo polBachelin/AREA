@@ -12,7 +12,9 @@ import { use } from "passport";
 @ApiTags('notion')
 @Controller('/notion')
 export class NotionController {
-	constructor(private notionService: NotionService, private authService: AuthService, private userService: UsersService) {}
+	constructor(private notionService: NotionService,
+				private authService: AuthService,
+				private userService: UsersService) {}
 
 	@Get('/auth')
 	@Redirect('http://localhost:8080/home')
@@ -27,11 +29,11 @@ export class NotionController {
 			console.log(err);
 		})
 		if (email) {
-			const user = await this.userService.findOne(email);
+			let user = await this.userService.findOne(email);
 			if (!user) {
 				let RegisterDTO: RegisterDTO;
 				RegisterDTO = {email:email, password: ''};
-				let user = this.userService.createUser(RegisterDTO);
+				user = this.userService.createUser(RegisterDTO);
 			}
 			this.notionService.setNotionToken(email, notionToken);
 			const token = await this.authService.signUser(user);

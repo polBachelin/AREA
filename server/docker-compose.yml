@@ -20,6 +20,7 @@ services:
     ports:
       - "3000:3000"
     environment:
+      DB_DEBUG: 'mongodb://db:27017/db'
       DB_HOST: 127.0.0.1
       DB_PORT: 27017
       DB_USERNAME: root
@@ -38,4 +39,3 @@ volumes:
 networks:
   server-net:
     driver: bridge
-  

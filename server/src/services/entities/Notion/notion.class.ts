@@ -1,4 +1,4 @@
-import { IService } from "../../../interfaces/service.interface";
+import { IService } from "src/interfaces/service.interface";
 	
 export class Notion implements IService {
 	id: number;
