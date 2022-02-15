@@ -20,29 +20,18 @@ export class DiscordController {
 		let discordToken = null;
 		await this.discordService.authorize(query.code).then((res) => {
 			discordToken = res;
-			// Logger.log("2");
-			// Logger.log(discordToken)
-			// this.discordService.getUserEmail(discordToken.access_token).then((res) => {
-			// 	email = res;
-			// 	Logger.log(res)
-			// }).catch(err => {
-			// 	console.log(err);
-			// })
 		})
 		if (discordToken) {
 			email = await this.discordService.getUserEmail(discordToken.access_token)
 		}
 		if (email) {
-			let user = await this.userService.findOne(email);
-			Logger.log("4");
+			let user = await this.userService.findOne(email);			
 			if (!user) {
 				let RegisterDTO: RegisterDTO;
 				RegisterDTO = {email:email, password:''};
-				user = this.userService.createUser(RegisterDTO);
-				Logger.log("5");
+				user = this.userService.createUser(RegisterDTO);				
 			}
-			this.discordService.setDiscordToken(email, discordToken);
-			Logger.log("6");
+			this.discordService.setDiscordToken(email, discordToken);			
 			const token = await this.authService.signUser(user);
 			return { url: 'http://localhost:8080/home?email=' + email + '&token=' + token.access_token};
 		}
