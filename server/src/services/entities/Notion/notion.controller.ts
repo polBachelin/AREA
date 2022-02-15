@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Query, UseGuards, Request, Response, Redirect } from "@nestjs/common";
+import { Controller, Get, Logger, Query, UseGuards, Request, Response, Redirect, Param } from "@nestjs/common";
 import { NotionService } from "./notion.service";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from "src/auth/auth.service";
@@ -55,5 +55,12 @@ export class NotionController {
 	@UseGuards(AuthGuard('jwt'))
 	async getNotionDatabases(@Request() req) {
 		return this.notionService.getDatabases(req.user.email);
+	}
+
+	@ApiOperation({summary: 'Retrieve notion user databases titles'})
+	@Get('/databases/title')
+	@UseGuards(AuthGuard('jwt'))
+	async getNotionDatabaseTitle(@Request() req) {
+		return this.notionService.getAllDatabaseTitles(req.user.email)
 	}
 }

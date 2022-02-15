@@ -6,7 +6,7 @@ import { INotion } from "src/models/Notion";
 import { Model } from 'mongoose';
 import { UsersService } from "src/users/users.service";
 import { InjectModel } from '@nestjs/mongoose';
-import { Client } from "@notionhq/client";
+import { Client } from "@notionhq/client";	
 
 type NotionPersonUser = Extract<GetUserResponse, { type: "person" }>
 
@@ -67,6 +67,8 @@ export class NotionService {
 			res.notion = userNotion;
 			res.save();
 			return this.userService.sanitizeUser(res);
+		}).catch(err => {
+			console.log("SetNotionTOken == ", err);
 		});
 	}
 
@@ -75,16 +77,28 @@ export class NotionService {
 		return user.notion;
 	}
 
-	public async getDatabases(email: string) {
-		let token = await this.getNotionToken(email);
 
-		this.notionClient.search({auth: token, filter: {
+	public async getDatabases(email: string) {
+		let token = await this.getNotionToken(email)
+		return this.notionClient.search({auth: token.access_token, filter: {
 			property: "object",
 			value: "database"
-		}}).then(res => {
-			console.log(res);
-		}).catch(err => {
-			console.log(err);
-		})
+		}})
+	}
+
+	public async getAllDatabaseTitles(email: string) {
+		let token = await this.getNotionToken(email)
+		let dbs = await this.getDatabases(email);
+		let ret: Array<string> = [];
+		for (let key in dbs.results) {
+			let t = await this.getADatabase(token, dbs.results[key].id)
+			ret.push(t.title[0].plain_text);
+		}
+		return ret
+	}
+
+
+	public async getADatabase(token, database: string) {
+		return this.notionClient.databases.retrieve({auth: token.access_token, database_id: database})
 	}
 }
