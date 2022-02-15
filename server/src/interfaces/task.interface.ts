@@ -1,12 +1,10 @@
 export type properties = Map<string, any>
 
 export abstract class ATask {
-	id: number;
 	name: string;
 	data: properties;
 
-	constructor(id: number, name: string, data: properties) {
-		this.id = id;
+	constructor(name: string, data: properties) {
 		this.name = name;
 		this.data = data;
 	}

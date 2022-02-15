@@ -1,14 +1,14 @@
-import { ATask } from "./task.interface";
+import { ATask, properties } from "./task.interface";
 
 export abstract class ATrigger {
 	name: string;
-	id: number;
 	lastExec: Date | undefined;
+	data: properties
 	intervalObj: NodeJS.Timeout;
 
-	public constructor(name: string, id: number) {
+	public constructor(name: string, props: properties) {
 		this.name = name;
-		this.id = id;
+		this.data = props
 	}
 
 	public abstract setup(callback: (reaction: ATask) => Promise<void>): void;

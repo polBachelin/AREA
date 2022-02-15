@@ -3,5 +3,7 @@ import { ATrigger } from "src/interfaces/trigger.interface";
 
 export class AddToDB extends ATrigger {
 
-	setup(callback: (reaction: ATask) => Promise<void>): void {}
+	setup(callback: (reaction: ATask) => Promise<void>): void {
+		console.log(super.data);
+	}
 }

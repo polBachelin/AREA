@@ -97,7 +97,6 @@ export class NotionService {
 		return ret
 	}
 
-
 	public async getADatabase(token, database: string) {
 		return this.notionClient.databases.retrieve({auth: token.access_token, database_id: database})
 	}

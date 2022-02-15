@@ -7,7 +7,7 @@ export interface IUser extends Document {
 	email: string;
 	password: string;
 	notion: {type: INotion};
-	areas: IArea[];
+	areas: [IArea];
 }
 
 export const userSchema = new mongoose.Schema({
@@ -15,7 +15,7 @@ export const userSchema = new mongoose.Schema({
 	password: {type: String},
 	notion: {type: notionSchema , required: false},
 	discord: {type: discordSchema, required: false},
-	areas: {type: areaSchema, required: false}
+	areas: { type: [areaSchema], required: false}
 });
 
 // const UserModel = model<IUser>('User', schema);

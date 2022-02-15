@@ -41,8 +41,6 @@ export class NotionController {
 		}
 	}
 
-
-
 	@Get('/token')
 	@UseGuards(AuthGuard('jwt'))
 	@ApiOperation({ summary: 'Retrieve the notion token from the db'})
@@ -63,4 +61,6 @@ export class NotionController {
 	async getNotionDatabaseTitle(@Request() req) {
 		return this.notionService.getAllDatabaseTitles(req.user.email)
 	}
+
+	//TODO add db id getter from db title
 }
