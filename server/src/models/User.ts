@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import { INotion, notionSchema } from './Notion';
 import {IArea, areaSchema} from './Area';
+import { discordSchema } from './Discord';
 
 export interface IUser extends Document {
 	email: string;
@@ -13,6 +14,7 @@ export const userSchema = new mongoose.Schema({
 	email: {type: String, unique: true, required: true},
 	password: {type: String},
 	notion: {type: notionSchema , required: false},
+	discord: {type: discordSchema, required: false},
 	areas: {type: areaSchema, required: false}
 });
 

@@ -80,7 +80,7 @@ export default {
   created() {
     const urlParams = new URLSearchParams(window.location.search);
     
-    if (localStorage.getItem('isLogged') == 'true')
+    if (localStorage.getItem('isLogged') === 'true')
       this.$router.push({name: 'home'})
 
     if (urlParams.get('token')) {

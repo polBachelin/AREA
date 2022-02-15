@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { RegisterDTO } from './register.dto';
-import { IUser, userSchema } from '../models/User';
+import { IUser, userSchema } from 'src/models/User';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { HttpStatus, HttpException } from '@nestjs/common';
