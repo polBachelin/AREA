@@ -38,6 +38,10 @@ export class UsersService {
     return await this.userModel.findOne({ email });
   }
 
+  async findArea(user: any, areaName: string): Promise<User | undefined> {
+    return await user.areas.find(element => element.name == areaName);
+  }
+
   async findByLogin(UserDTO: LoginDTO) {
     const { email, password } = UserDTO;
     const user = await this.userModel.findOne({ email });

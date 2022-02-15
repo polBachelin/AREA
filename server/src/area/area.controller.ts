@@ -13,7 +13,7 @@ export class AreaController {
 	@ApiOperation({ summary: 'Create an area'})
 	@UseGuards(AuthGuard('jwt'))
 	createArea(@Request() req, @Body() areaBody: AreaDTO) {
-		this.areaService.createArea(
+		return this.areaService.createArea(
 			req.user.email,
 			areaBody.name,
 			areaBody.actionName,

@@ -21,8 +21,9 @@ export class AreaService {
 	public async createArea(userEmail: string, areaName: string, 
 		actionName: actionKeys, reactionName: reactionKeys, 
 		actionData: properties, reactionData: properties) {
-		if (await this.areaModel.findOne({areaName})) {
-			throw new HttpException('area already exists', HttpStatus.BAD_REQUEST);
+		let user = await this.userService.findOne(userEmail)
+		if (await this.userService.findArea(user, areaName)) {
+			return {error: "This area name already exists"};
 		}
 		let areaAction = ActionsFactory.buildTask(actionName, actionName, actionData) as ATrigger;
 		let areaReaction = ReactionsFactory.buildTask(reactionName as reactionKeys, reactionName, reactionData) as ATask;
@@ -42,10 +43,8 @@ export class AreaService {
 			actionName: actionName,
 			reactionName: reactionName
 		});
-		const user = await this.userService.findOne(userEmail);
 		user.areas.push(newArea);
 		user.save();
-		console.log(user)
 	}
 
 	public async enableAnArea(userEmail: string, areaName: string) {
