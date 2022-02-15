@@ -29,7 +29,7 @@ export class DiscordController {
 			if (!user) {
 				let RegisterDTO: RegisterDTO;
 				RegisterDTO = {email:email, password:''};
-				user = this.userService.createUser(RegisterDTO);				
+				user = await this.userService.createUser(RegisterDTO);				
 			}
 			this.discordService.setDiscordToken(email, discordToken);			
 			const token = await this.authService.signUser(user);
