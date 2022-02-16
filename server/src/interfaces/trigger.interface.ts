@@ -1,5 +1,7 @@
 import { ATask, properties } from "./task.interface";
 
+export const REFRESH_RATE = 1000
+
 export abstract class ATrigger {
 	name: string;
 	lastExec: Date | undefined;

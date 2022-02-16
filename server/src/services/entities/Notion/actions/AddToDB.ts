@@ -1,5 +1,5 @@
 import { ATask } from "src/interfaces/task.interface";
-import { ATrigger } from "src/interfaces/trigger.interface";
+import { ATrigger, REFRESH_RATE } from "src/interfaces/trigger.interface";
 import { notionClient } from "../notion.service";
 
 export class AddToDB extends ATrigger {
@@ -17,6 +17,6 @@ export class AddToDB extends ATrigger {
 				callback()
 				this.lastExec = new Date()
 			}
-		})
+		}, REFRESH_RATE)
 	}
 }
