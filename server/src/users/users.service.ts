@@ -5,9 +5,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { HttpStatus, HttpException } from '@nestjs/common';
 import { LoginDTO } from 'src/auth/login.dto';
+import { AreaDTO } from 'src/area/area.dto';
 
 // This should be a real class/interface representing a user entity
 export type User = any;
+
 
 @Injectable()
 export class UsersService {
@@ -27,13 +29,17 @@ export class UsersService {
   }
 
   sanitizeUser(user: User) {
-    const sanitized = user.toObject();
+    const sanitized = user;
     delete sanitized['password'];
     return sanitized;
   }
 
   async findOne(email: string): Promise<User | undefined> {
     return await this.userModel.findOne({ email });
+  }
+
+  async findArea(user: any, areaName: string): Promise<User | undefined> {
+    return await user.areas.find(element => element.name == areaName);
   }
 
   async findByLogin(UserDTO: LoginDTO) {

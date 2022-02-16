@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Query, UseGuards, Request, Response, Redirect } from "@nestjs/common";
+import { Controller, Get, Logger, Query, UseGuards, Request, Response, Redirect, Param } from "@nestjs/common";
 import { NotionService } from "./notion.service";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from "src/auth/auth.service";
@@ -19,7 +19,7 @@ export class NotionController {
 	@Get('/auth')
 	@Redirect('http://localhost:8080/home')
 	@ApiOperation({ summary: "Get the access token from the authorization code"})
-    async notionCallback(@Query() query, @Response() res) {
+    async notionCallback(@Query() query) {
 		let email: string = null;
 		let notionToken = null;
 		await this.notionService.authorize(query.code).then((res) => {
@@ -51,10 +51,19 @@ export class NotionController {
 		return this.notionService.getNotionToken(req.user.email);
 	}
 
+	@ApiOperation({summary: 'Retrieve notion user databases'})
 	@Get('/databases')
 	@UseGuards(AuthGuard('jwt'))
-	@ApiOperation({summary: 'Retrieve notion user databases'})
 	async getNotionDatabases(@Request() req) {
 		return this.notionService.getDatabases(req.user.email);
 	}
+
+	@ApiOperation({summary: 'Retrieve notion user databases titles'})
+	@Get('/databases/title')
+	@UseGuards(AuthGuard('jwt'))
+	async getNotionDatabaseTitle(@Request() req) {
+		return this.notionService.getAllDatabaseTitles(req.user.email)
+	}
+
+	//TODO add db id getter from db title
 }

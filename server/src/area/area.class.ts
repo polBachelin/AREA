@@ -30,9 +30,9 @@ export class Area {
 	
 	launch(): void {
 		try {
-			this.action.setup(async (reaction: ATask) => {
+			this.action.setup(async () => {
 				try {
-					await reaction.run();
+					await this.reaction.run();
 				} catch (errror) {
 					this.status = AreaState.CRASHED;
 					this.disable();
