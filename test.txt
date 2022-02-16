@@ -1,11 +1,11 @@
-HTTP/1.1 500 Internal Server Error
+HTTP/1.1 201 Created
 X-Powered-By: Express
 Access-Control-Allow-Origin: *
 Content-Type: application/json; charset=utf-8
-Content-Length: 52
-ETag: W/"34-rlKccw1E+/fV8niQk4oFitDfPro"
-Date: Mon, 14 Feb 2022 14:57:08 GMT
+Content-Length: 300
+ETag: W/"12c-qdG8pKFmEWAQuPeOHd5QlBlSm9U"
+Date: Wed, 16 Feb 2022 14:24:11 GMT
 Connection: keep-alive
 Keep-Alive: timeout=5
 
-{"statusCode":500,"message":"Internal server error"}
+{"user":{"email":"totou@gmail.com","password":"toto123","_id":"620d090bbd91a80b1b099814","areas":[],"__v":0},"token":{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvdG91QGdtYWlsLmNvbSIsImlhdCI6MTY0NTAyMTQ1MSwiZXhwIjo0NjQ1MDIxNDUxfQ.3o4E2kAlV7hPACZNTPZeM3-Vln3a-zVgNDIw73q_f6E"}}

@@ -1,17 +1,19 @@
-import { ATask } from "./task.interface";
+import { ATask, properties } from "./task.interface";
+
+export const REFRESH_RATE = 1000
 
 export abstract class ATrigger {
 	name: string;
-	id: number;
 	lastExec: Date | undefined;
+	data: properties
 	intervalObj: NodeJS.Timeout;
 
-	public constructor(name: string, id: number) {
+	public constructor(name: string, props: properties) {
 		this.name = name;
-		this.id = id;
+		this.data = props
 	}
 
-	public abstract setup(callback: (reaction: ATask) => Promise<void>): void;
+	public abstract setup(callback: () => Promise<void>): void;
 	
 	public stop(): void {
 		clearInterval(this.intervalObj);

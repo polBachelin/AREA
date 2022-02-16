@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { AxiosRequestConfig } from "@nestjs/common/node_modules/axios";
 import { InjectModel } from "@nestjs/mongoose";
 import axios, {AxiosPromise} from 'axios';
@@ -64,7 +64,7 @@ export class DiscordService {
 				resolve(res.email);
 			})
 		} catch(error) {
-			console.log(error);
+			Logger.log(error);
 		}
 	}
 
@@ -83,10 +83,12 @@ export class DiscordService {
 
 	}
 
-	public setDiscordToken(user: User, discordToken: Object) {
-		const userDiscord = new this.discordModel(discordToken)
-		user.discord = userDiscord;
-		user.save();
-		return this.userService.sanitizeUser(user)
+	public setDiscordToken(email: string, discordToken: Object) {
+		this.userService.findOne(email).then(res => {
+			const userDiscord = new this.discordModel(discordToken);
+			res.discord = userDiscord;
+			res.save();
+		return this.userService.sanitizeUser(res)
+		});
 	}
 }
