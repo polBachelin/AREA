@@ -1,4 +1,4 @@
-sudo curl -s -i -X 'POST' 'http://localhost:3000/auth/login' -H 'accept: */*' -H 'Content-Type: application/json' \
+curl -s -i -X 'POST' 'http://localhost:3000/auth/login' -H 'accept: */*' -H 'Content-Type: application/json' \
   -d '{
   "email": "toto@gmail.com",
   "password": "toto123"
