@@ -18,6 +18,13 @@ export class AreaService {
 		private userService: UsersService
 	) {}
 
+	public async areaExists(userEmail: string, areaName: string) {
+		let user = await this.userService.findOne(userEmail);
+		if (await this.userService.findArea(user, areaName))
+			return true;
+		return false;
+	}
+
 	public async createArea(userEmail: string, areaName: string, 
 		actionName: actionKeys, reactionName: reactionKeys, 
 		actionData: properties, reactionData: properties) {
@@ -26,7 +33,7 @@ export class AreaService {
 			return {error: "This area name already exists"};
 		}
 		let areaAction = ActionsFactory.buildTask(actionName, actionName, actionData) as ATrigger;
-		let areaReaction = ReactionsFactory.buildTask(reactionName as reactionKeys, reactionName, reactionData) as ATask;
+		let areaReaction = ReactionsFactory.buildTask(reactionName, reactionName, reactionData) as ATask;
 		const area: Area = new Area({
 			name: areaName,
 			action: areaAction,
@@ -48,13 +55,16 @@ export class AreaService {
 	}
 
 	public async enableAnArea(userEmail: string, areaName: string) {
-		let areaModel = await this.areaModel.findOne({areaName});
-		if (areaModel) {
+		if (await this.areaExists(userEmail, areaName)) {
 			let userAreas: Area[] = this.areas.get(userEmail);
 			userAreas.forEach((j) => {
 				if (j.name == areaName)
 					j.enable();
 			})
 		}
+	}
+
+	public async getUserAreas(email: string): Promise<Area[]> {
+		return this.areas.get(email)
 	}
 }

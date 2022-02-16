@@ -29,6 +29,9 @@ interface NotionStrategyOptions {
 	state?: string
 }
 
+const notionClient: Client = new Client();
+export {notionClient}
+
 @Injectable()
 export class NotionService {
 	private notionStrategyOptions: NotionStrategyOptions = {
@@ -36,7 +39,7 @@ export class NotionService {
 		clientSecret: "secret_1IESesqQSQeNlXId1QfsnZrzc2z6a35aFpkUIOLyrEe",
 		callbackURL: "http%3A%2F%2Flocalhost%3A8080%2Fauth%2Fnotion_callback",
 	}
-	private notionClient: Client = new Client();
+	//private notionClient: Client = new Client();
 
 	constructor(
 		@InjectModel('Notion') private notionModel: Model<INotion>,
@@ -80,7 +83,7 @@ export class NotionService {
 
 	public async getDatabases(email: string) {
 		let token = await this.getNotionToken(email)
-		return this.notionClient.search({auth: token.access_token, filter: {
+		return notionClient.search({auth: token.access_token, filter: {
 			property: "object",
 			value: "database"
 		}})
@@ -98,6 +101,6 @@ export class NotionService {
 	}
 
 	public async getADatabase(token, database: string) {
-		return this.notionClient.databases.retrieve({auth: token.access_token, database_id: database})
+		return notionClient.databases.retrieve({auth: token.access_token, database_id: database})
 	}
 }

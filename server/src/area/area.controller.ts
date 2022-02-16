@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, Request} from "@nestjs/common";
+import { Body, Controller, Post, UseGuards, Request, Get, Param} from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AreaService } from "./area.service";
 import {AreaDTO} from './area.dto' 
@@ -20,5 +20,19 @@ export class AreaController {
 			areaBody.reactionName,
 			areaBody.actionData,
 			areaBody.reactionData);
+	}
+
+	@Get(':name/enable')
+	@ApiOperation({summary: 'Enable an area with name for logged in user'})
+	@UseGuards(AuthGuard('jwt'))
+	enableArea(@Request() req, @Param('name') name: string) {
+		return this.areaService.enableAnArea(req.user.email, name);
+	}
+
+	@Get()
+	@ApiOperation({summary: 'Get logged in user areas'})
+	@UseGuards(AuthGuard('jwt'))
+	getArea(@Request() req) {
+		return this.areaService.getUserAreas(req.user.email);
 	}
 }

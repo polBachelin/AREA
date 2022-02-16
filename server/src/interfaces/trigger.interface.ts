@@ -11,7 +11,7 @@ export abstract class ATrigger {
 		this.data = props
 	}
 
-	public abstract setup(callback: (reaction: ATask) => Promise<void>): void;
+	public abstract setup(callback: () => Promise<void>): void;
 	
 	public stop(): void {
 		clearInterval(this.intervalObj);
