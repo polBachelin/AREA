@@ -39,7 +39,6 @@ export class NotionService {
 		clientSecret: "secret_1IESesqQSQeNlXId1QfsnZrzc2z6a35aFpkUIOLyrEe",
 		callbackURL: "http%3A%2F%2Flocalhost%3A8080%2Fauth%2Fnotion_callback",
 	}
-	//private notionClient: Client = new Client();
 
 	constructor(
 		@InjectModel('Notion') private notionModel: Model<INotion>,
