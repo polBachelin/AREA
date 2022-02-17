@@ -67,4 +67,12 @@ export class AreaService {
 	public async getUserAreas(email: string): Promise<Area[]> {
 		return this.areas.get(email)
 	}
+
+	public async getArea(email: string, areaName: string): Promise<Area> {
+		return this.areas.get(email).find((j) => {
+			if (j.name === areaName) {
+				return j;
+			}
+		})
+	}
 }
