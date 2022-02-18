@@ -8,6 +8,7 @@ import { IArea } from "src/models/Area";
 import { Model } from 'mongoose';
 import { AreaDTO } from "./area.dto";
 import { UsersService } from "src/users/users.service";
+import { IUser } from "src/models/User";
 
 @Injectable()
 export class AreaService {
@@ -82,6 +83,19 @@ export class AreaService {
 			reactionData: reactionData
 		});
 		user.areas.push(newArea);
+		user.save();
+	}
+
+	public async deleteAnArea(userEmail: string, areaName: string) {
+		let area = await this.getArea(userEmail, areaName);
+		
+		if (!area) return "No area with this name"
+		let user = await this.userService.findOne(userEmail);
+		user.areas.forEach(el => {
+			if (el.name == areaName) {
+				user.areas.splice(user.areas.indexOf(el), 1);
+			}
+		})
 		user.save();
 	}
 

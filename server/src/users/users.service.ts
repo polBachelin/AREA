@@ -42,6 +42,9 @@ export class UsersService {
     return await user.areas.find(element => element.name == areaName);
   }
 
+  async removeArea(email: string, areaName: string) {
+  }
+
   async findByLogin(UserDTO: LoginDTO) {
     const { email, password } = UserDTO;
     const user = await this.userModel.findOne({ email });

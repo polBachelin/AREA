@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, Request, Get, Param} from "@nestjs/common";
+import { Body, Controller, Post, UseGuards, Request, Get, Param, Delete} from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AreaService } from "./area.service";
 import {AreaDTO} from './area.dto' 
@@ -41,5 +41,12 @@ export class AreaController {
 	@UseGuards(AuthGuard('jwt'))
 	getArea(@Request() req, @Param('name') name: string) {
 		return this.areaService.getArea(req.user.email, name);
+	}
+
+	@Delete(':name')
+	@ApiOperation({summary: 'Delete an area with name'})
+	@UseGuards(AuthGuard('jwt'))
+	deleteArea(@Request() req, @Param('name') name: string) {
+		return this.areaService.deleteAnArea(req.user.email, name);
 	}
 }
