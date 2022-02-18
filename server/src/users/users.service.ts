@@ -54,4 +54,11 @@ export class UsersService {
       throw new HttpException('Invalid credentials', HttpStatus.BAD_REQUEST);
     }
   }
+
+  getCursor() {
+    return this.userModel.find().cursor();
+  }
+  getallUsers() {
+    return this.userModel.find();
+  }
 }
