@@ -5,9 +5,6 @@ import { AuthService } from "src/auth/auth.service";
 import { AuthGuard } from "@nestjs/passport";
 import { UsersService } from "src/users/users.service";
 import { RegisterDTO } from "src/users/register.dto";
-import { use } from "passport";
-
-//secret_WozMzMwc0e8jQzO1f4vGtytC36YTwVF2eWDdRDpgXez
 
 @ApiTags('notion')
 @Controller('/notion')

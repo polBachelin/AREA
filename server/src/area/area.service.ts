@@ -102,9 +102,9 @@ export class AreaService {
 	public async enableAnArea(userEmail: string, areaName: string) {
 		if (await this.areaExists(userEmail, areaName)) {
 			let userAreas: Area[] = this.areas.get(userEmail);
-			userAreas.forEach((j) => {
+			userAreas.forEach(async (j) => {
 				if (j.name == areaName)
-					j.enable();
+					j.enable(await this.userService.findOne(userEmail));
 			})
 		}
 	}
