@@ -48,4 +48,26 @@ export class UsersService {
       throw new HttpException('Invalid credentials', HttpStatus.BAD_REQUEST);
     }
   }
+
+  async getSpecificService(service: string, email: string) {
+      const user = await this.findOne(email);
+      if (!user || !user[service]) {
+        return null;
+      }
+      return user[service];
+  }
+
+  async getAllLoggedService(email: string) {
+      const user = await this.findOne(email);
+      if (!user)
+        return null;
+      let res = {};
+      if (user.notion)
+        res['notion'] = user.notion;
+      if (user.discord)
+        res['discord'] = user.discord;
+      Logger.log(res);
+      return res;
+  }
+
 }

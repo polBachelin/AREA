@@ -30,14 +30,11 @@ export class NotionController {
 		})
 		if (email) {
 			let user = await this.userService.findOne(email);
-			Logger.log(user)
 			if (!user) {
-				Logger.log("We gonna create a user")
 				let RegisterDTO: RegisterDTO;
 				RegisterDTO = {email:email, password: ''};
 				user = await this.userService.createUser(RegisterDTO);
 			}
-			Logger.log("Set token")
 			this.notionService.setNotionToken(email, notionToken);
 			const token = await this.authService.signUser(user);
 			return { url: 'http://localhost:8080/home?email=' + email + '&token=' + token.access_token};
