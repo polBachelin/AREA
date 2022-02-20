@@ -9,5 +9,5 @@ export abstract class ATask {
 		this.data = data;
 	}
 
-	abstract run(): Promise<any> 
+	abstract run(user: any): Promise<any> 
 }

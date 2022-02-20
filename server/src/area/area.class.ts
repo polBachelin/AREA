@@ -33,7 +33,7 @@ export class Area {
 		try {
 			this.action.setup(async () => {
 				try {
-					await this.reaction.run();
+					await this.reaction.run(user);
 					this.action.setChecking();
 				} catch (errror) {
 					this.status = AreaState.CRASHED;
