@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Query, UseGuards, Request, Response, Redirect, Param } from "@nestjs/common";
+import { Controller, Get, Logger, Query, UseGuards, Request, Response, Redirect, Req, Param } from "@nestjs/common";
 import { NotionService } from "./notion.service";
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from "src/auth/auth.service";
@@ -16,7 +16,7 @@ export class NotionController {
 	@Get('/auth')
 	@Redirect('http://localhost:8080/home')
 	@ApiOperation({ summary: "Get the access token from the authorization code"})
-    async notionCallback(@Query() query) {
+    async notionCallback(@Req() req, @Query() query, @Response() res) {
 		let email: string = null;
 		let notionToken = null;
 		await this.notionService.authorize(query.code).then((res) => {
@@ -25,20 +25,12 @@ export class NotionController {
 		}).catch((err) => {
 			console.log(err);
 		})
-		if (email) {
-			let user = await this.userService.findOne(email);
-			Logger.log(user)
-			if (!user) {
-				Logger.log("We gonna create a user")
-				let RegisterDTO: RegisterDTO;
-				RegisterDTO = {email:email, password: ''};
-				user = await this.userService.createUser(RegisterDTO);
-			}
-			Logger.log("Set token")
-			this.notionService.setNotionToken(email, notionToken);
-			const token = await this.authService.signUser(user);
-			return { url: 'http://localhost:8080/home?email=' + email + '&token=' + token.access_token};
-		}
+		if (req.headers.authorization) {
+			let result = this.authService.verify(req.headers.authorization);
+			this.notionService.setNotionToken(result.email, notionToken)
+			return {notion: notionToken};
+		} else
+			return await this.notionService.loginByNotion(email, notionToken);
 	}
 
 	@Get('/token')

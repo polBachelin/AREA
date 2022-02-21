@@ -1,4 +1,5 @@
-import { Controller, Get, Redirect, Query, Logger } from "@nestjs/common";
+import { Controller, Get, Redirect, Query, Logger, Req } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AuthService } from "src/auth/auth.service";
 import { RegisterDTO } from "src/users/register.dto";
@@ -15,7 +16,7 @@ export class DiscordController {
 	@Get('/auth')
 	@ApiOperation({summary: "Get the access from the authorization"})
 	@Redirect('http://localhost:8080')
-	async discordCallback(@Query() query) {
+	async discordCallback(@Query() query, @Req() req) {
 		let email: string = null;
 		let discordToken = null;
 		await this.discordService.authorize(query.code).then((res) => {
@@ -24,16 +25,11 @@ export class DiscordController {
 		if (discordToken) {
 			email = await this.discordService.getUserEmail(discordToken.access_token)
 		}
-		if (email) {
-			let user = await this.userService.findOne(email);			
-			if (!user) {
-				let RegisterDTO: RegisterDTO;
-				RegisterDTO = {email:email, password:''};
-				user = await this.userService.createUser(RegisterDTO);				
-			}
-			this.discordService.setDiscordToken(email, discordToken);			
-			const token = await this.authService.signUser(user);
-			return { url: 'http://localhost:8080/home?email=' + email + '&token=' + token.access_token};
-		}
+		if (req.headers.authorization) {
+			let res = this.authService.verify(req.headers.authorization);
+			this.discordService.setDiscordToken(res.email, discordToken)
+			return {discord: discordToken};
+		} else
+			return await this.discordService.LoginByDiscord(email, discordToken);
 	}
 }
