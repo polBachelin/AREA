@@ -1,25 +1,25 @@
+import 'package:area/widgets/register_form.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:area/theme.dart' as theme;
 import '../components/delayed_animation.dart';
-import '../widgets/login_form.dart';
 
 // ignore: constant_identifier_names
 const d_red = Color(0xFFE9717D);
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterEmailScreen extends StatelessWidget {
+  const RegisterEmailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white.withOpacity(0),
+        backgroundColor: theme.background,
         leading: IconButton(
           icon: const Icon(
             Icons.close,
-            color: Colors.black,
+            color: Colors.white,
             size: 30,
           ),
           onPressed: () {
@@ -54,8 +54,8 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 35),
-            const LoginForm(),
-            const SizedBox(height: 90),
+            const RegisterForm(),
+            const SizedBox(height: 30),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
@@ -67,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                   child: DelayedAnimation(
                     delay: 500,
                     child: Text(
-                      "Or register",
+                      "Or Log In",
                       style: GoogleFonts.poppins(
                         color: Colors.black,
                         fontSize: 18,

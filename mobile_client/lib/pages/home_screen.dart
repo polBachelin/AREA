@@ -1,8 +1,7 @@
-import 'package:AREA/pages/dashboard.dart';
+import 'package:area/pages/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:AREA/widgets/create_area_widget.dart';
-
-
+import 'package:area/widgets/create_area_widget.dart';
+import 'package:area/theme.dart' as theme;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,15 +17,15 @@ class HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
     Text(
-      'Index 1: Business',
+      'Areas',
       style: optionStyle,
     ),
     Text(
-      'Index 2: School',
+      'Services',
       style: optionStyle,
     ),
     Text(
-      'Index 3: Settings',
+      'Settings',
       style: optionStyle,
     ),
   ];
@@ -43,10 +42,10 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('AREA'),
         leading: IconButton(
-          icon: const Icon(Icons.logout),
-          onPressed:  () {
-            Navigator.pop(context);
-          }),
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -55,17 +54,17 @@ class HomeScreenState extends State<HomeScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Dashboard',
             backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
-            label: 'Business',
+            label: 'Areas',
             backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'School',
+            label: 'Services',
             backgroundColor: Colors.purple,
           ),
           BottomNavigationBarItem(
@@ -75,7 +74,7 @@ class HomeScreenState extends State<HomeScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: theme.primaryColor,
         onTap: _onItemTapped,
       ),
     );

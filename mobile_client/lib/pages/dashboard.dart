@@ -1,6 +1,5 @@
-import 'package:AREA/widgets/create_area_widget.dart';
+import 'package:area/widgets/create_area_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class DashboardState extends State<Dashboard> {
     return Column(children: [
       const Text('Create an AREA',
           textDirection: TextDirection.ltr,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 32,
             color: Colors.black87,
           )),
@@ -29,7 +28,7 @@ class DashboardState extends State<Dashboard> {
       //CreateAREAWidget(hint: "Search for actions..."),
       const Text('do',
           textDirection: TextDirection.ltr,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 15,
             color: Colors.black87,
           )),
@@ -40,7 +39,7 @@ class DashboardState extends State<Dashboard> {
 }
 
 Widget buildFloatingSearchBar() {
-  return Container(
+  return SizedBox(
     height: 70.0,
     child: Card(
       margin: const EdgeInsets.all(8.0),

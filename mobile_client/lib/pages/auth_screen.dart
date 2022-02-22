@@ -1,44 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:AREA/pages/login_screen.dart';
+import 'package:area/pages/login_screen.dart';
+import 'package:area/theme.dart' as theme;
 
+import '../components/delayed_animation.dart';
 
-import '../effects/delayed_animation.dart';
-
-class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+class AuthScreen extends StatelessWidget {
+  const AuthScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white.withOpacity(0),
-        ),
+      backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Column(
           children: [
             DelayedAnimation(
               delay: 1500,
               child: SizedBox(
-                height: 280,
+                height: 180,
                 child: Image.asset('./images/AREA.png'),
               ),
             ),
             DelayedAnimation(
-              delay: 2500,
+              delay: 300,
               child: Container(
                 margin: const EdgeInsets.symmetric(
-                  vertical: 40,
+                  vertical: 0,
                   horizontal: 30,
                 ),
                 child: Column(
                   children: [
                     Text(
-                      "AREA",
+                      "Log in to AREA",
                       style: GoogleFonts.poppins(
-                        color: d_red,
+                        color: theme.primaryColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -57,7 +54,7 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
             DelayedAnimation(
-              delay: 3500,
+              delay: 500,
               child: Container(
                 margin: const EdgeInsets.symmetric(
                   vertical: 14,
@@ -67,11 +64,11 @@ class RegisterScreen extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/login');
+                        Navigator.pushNamed(context, '/register_email');
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
-                        primary: d_red,
+                        primary: theme.primaryColor,
                         padding: const EdgeInsets.all(13),
                       ),
                       child: Row(
@@ -80,7 +77,7 @@ class RegisterScreen extends StatelessWidget {
                           const Icon(Icons.mail_outline_outlined),
                           const SizedBox(width: 10),
                           Text(
-                            'EMAIL',
+                            'Email',
                             style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 16,
@@ -97,16 +94,42 @@ class RegisterScreen extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
-                        primary: const Color(0xFF576dff),
+                        primary: const Color.fromARGB(255, 105, 123, 241),
                         padding: const EdgeInsets.all(13),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const FaIcon(FontAwesomeIcons.facebook),
+                          const FaIcon(FontAwesomeIcons.discord),
                           const SizedBox(width: 10),
                           Text(
-                            'FACEBOOK',
+                            'Discord',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/register_email");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: const StadiumBorder(),
+                        primary: const Color.fromARGB(255, 152, 153, 236),
+                        padding: const EdgeInsets.all(13),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const FaIcon(FontAwesomeIcons.github),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Github',
                             style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 16,
@@ -123,21 +146,18 @@ class RegisterScreen extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
-                        primary: Colors.white,
+                        primary: const Color.fromARGB(255, 18, 22, 212),
                         padding: const EdgeInsets.all(13),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(
-                            'images/google.png',
-                            height: 20,
-                          ),
+                          const FaIcon(FontAwesomeIcons.instagram),
                           const SizedBox(width: 10),
                           Text(
-                            'GOOGLE',
+                            'Intra Epitech',
                             style: GoogleFonts.poppins(
-                              color: Colors.black,
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),

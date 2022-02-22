@@ -1,16 +1,54 @@
+import 'package:area/components/roundedFlatButtonLarge.dart';
+import 'package:area/components/toast.dart';
+import 'package:area/service/api.dart';
+import 'package:area/theme.dart' as theme;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../effects/delayed_animation.dart';
+import '../components/delayed_animation.dart';
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key}) : super(key: key);
+class RegisterForm extends StatefulWidget {
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _RegisterFormState createState() => _RegisterFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _RegisterFormState extends State<RegisterForm> {
   var _obscureText = true;
+  String _email = "";
+  String _password = "";
+
+  void _getEmail(String email) {
+    setState(() {
+      _email = email;
+    });
+  }
+
+  void _getPassword(String password) {
+    setState(() {
+      _password = password;
+    });
+  }
+
+  void register(BuildContext context) {
+    Manager.of(context).api.register({
+      "email": _email,
+      "password": _password,
+    }).then((success) {
+      print("Logged in! :D " + success.toString());
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil("/home", (Route<dynamic> route) => false);
+    }).catchError((msg) {
+      toast(context, 'Error while registering');
+      if (kDebugMode) {
+        print(msg.toString());
+      }
+    });
+  }
+
+//TODO: check email + password
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,11 +66,12 @@ class _LoginFormState extends State<LoginForm> {
                   color: Colors.grey[400],
                 ),
               ),
+              onChanged: _getEmail,
             ),
           ),
           const SizedBox(height: 30),
           DelayedAnimation(
-            delay: 4500,
+            delay: 400,
             child: TextField(
               obscureText: _obscureText,
               decoration: InputDecoration(
@@ -52,7 +91,18 @@ class _LoginFormState extends State<LoginForm> {
                   },
                 ),
               ),
+              onChanged: _getPassword,
             ),
+          ),
+          const SizedBox(height: 30),
+          DelayedAnimation(
+            delay: 500,
+            child: RFLargeButton(
+              backgroundColor: theme.primaryColor,
+              buttonIcon: Icons.login,
+              passedFunction: register,
+              buttonText: 'Register',
+              ),
           ),
         ],
       ),

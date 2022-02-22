@@ -44,10 +44,10 @@ class Place {
   String toString() => 'Place(name: $name, state: $state, country: $country)';
 
   @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
 
-    return o is Place && o.name == name && o.state == state && o.country == country;
+    return other is Place && other.name == name && other.state == state && other.country == country;
   }
 
   @override
