@@ -23,7 +23,7 @@ class RegisterScreen extends StatelessWidget {
               delay: 1500,
               child: SizedBox(
                 height: 280,
-                child: Image.asset('images/yoga_3.png'),
+                child: Image.asset('./images/AREA.png'),
               ),
             ),
             DelayedAnimation(

@@ -60,6 +60,7 @@ import axios from "axios";
 
 import {notionUrl} from '@/oauth/Notion';
 import {discordUrl} from '@/oauth/Discord';
+import {setUser} from '@/auth'
 
 export default {
   name: "Login.vue",
@@ -77,19 +78,24 @@ export default {
   },
 
   created() {
+    const urlParams = new URLSearchParams(window.location.search);
+    
     if (localStorage.getItem('isLogged') === 'true')
       this.$router.push({name: 'home'})
+
+    if (urlParams.get('token')) {
+      setUser(urlParams.get('email'), urlParams.get('token'))
+      this.$router.push({name: 'home'})
+    }
   },
 
   methods: {
     confirmUserPass() {
-      if (this.password.length !== 0 && this.username.length !== 0) {
+     if (this.password.length !== 0 && this.username.length !== 0) {
         axios.post('http://localhost:3000/auth/login', {email: this.username, password: this.password},)
             .then((response) => {
-              this.info = response.data
-              localStorage.setItem('username', this.info.user.email)
-              localStorage.setItem('accessToken', this.info.token.access_token)
-              localStorage.setItem('isLogged', 'true')
+              this.info = response.data;
+              setUser(this.info.user.email, this.info.token.access_token);
               this.$router.push({name: 'home'})
             })
             .catch( () => {
@@ -118,7 +124,6 @@ export default {
     },
 
     authorizeDiscord() {
-      console.log(discordUrl)
       this.connectOauth(discordUrl);
     }
   },

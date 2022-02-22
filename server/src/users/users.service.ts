@@ -1,13 +1,15 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { RegisterDTO } from './register.dto';
-import { IUser, userSchema } from '../models/User';
+import { IUser, userSchema } from 'src/models/User';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { HttpStatus, HttpException } from '@nestjs/common';
 import { LoginDTO } from 'src/auth/login.dto';
+import { AreaDTO } from 'src/area/area.dto';
 
 // This should be a real class/interface representing a user entity
 export type User = any;
+
 
 @Injectable()
 export class UsersService {
@@ -27,13 +29,20 @@ export class UsersService {
   }
 
   sanitizeUser(user: User) {
-    const sanitized = user.toObject();
+    const sanitized = user;
     delete sanitized['password'];
     return sanitized;
   }
 
   async findOne(email: string): Promise<User | undefined> {
     return await this.userModel.findOne({ email });
+  }
+
+  async findArea(user: any, areaName: string): Promise<User | undefined> {
+    return await user.areas.find(element => element.name == areaName);
+  }
+
+  async removeArea(email: string, areaName: string) {
   }
 
   async findByLogin(UserDTO: LoginDTO) {
@@ -48,4 +57,33 @@ export class UsersService {
       throw new HttpException('Invalid credentials', HttpStatus.BAD_REQUEST);
     }
   }
+
+  getCursor() {
+    return this.userModel.find().cursor();
+  }
+  getallUsers() {
+    return this.userModel.find();
+  }
+  
+  async getSpecificService(service: string, email: string) {
+      const user = await this.findOne(email);
+      if (!user || !user[service]) {
+        return null;
+      }
+      return user[service];
+  }
+
+  async getAllLoggedService(email: string) {
+      const user = await this.findOne(email);
+      if (!user)
+        return null;
+      let res = {};
+      if (user.notion)
+        res['notion'] = user.notion;
+      if (user.discord)
+        res['discord'] = user.discord;
+      Logger.log(res);
+      return res;
+  }
+
 }

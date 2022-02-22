@@ -1,13 +1,24 @@
-import { IService } from "../../interfaces/service.interface";
-import { AddToDB } from "./actions/AddToDB";
+import { IService } from "src/interfaces/service.interface";
+	
+export class Notion implements IService {
+	id: number;
+	name: string;
+	icon: string;
+	actions: string[];
+	reactions: string[];
 
-require('dotenv').config()
+	constructor() {
+		this.id = parseInt(process.env.NOTION);
+		this.name = "Notion";
+		this.icon = "https://img.icons8.com/ios/500/notion.png";
+		this.actions = [
+			"Add to database"
+		];
+		this.reactions = [
 
-export let Notion: IService = {
-	name: "Notion",
-	id: parseInt(process.env.NOTION),
-	icon: "https://img.icons8.com/ios/500/notion.png",
-	actions: [AddToDB],
-	reactions: []
+		];
+	}
 }
 
+let notion = new Notion();
+export { notion };

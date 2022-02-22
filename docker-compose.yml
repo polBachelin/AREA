@@ -20,10 +20,11 @@ services:
     ports:
       - "3000:3000"
     environment:
-      NM_DB_HOST: mongodb
-      NM_DB_PORT: 27017
-      NM_DB_USERNAME: root
-      NM_DB_PASSWORD: pass12345
+      DB_URL: "mongodb://root:pass12345@db:27017"
+      DB_HOST: 127.0.0.1
+      DB_PORT: 27017
+      DB_USERNAME: root
+      DB_PASSWORD: pass12345
       PORT: 3000
     restart: "no"
     depends_on:
@@ -51,4 +52,5 @@ volumes:
   data:
 networks:
   server-net:
+    driver: bridge
   
