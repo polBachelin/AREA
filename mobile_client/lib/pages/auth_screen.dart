@@ -90,7 +90,7 @@ class AuthScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, "/login");
+                        Navigator.pushNamed(context, '/discord_oauth');
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),

@@ -1,12 +1,16 @@
 import 'package:area/pages/register_email_screen.dart';
 import 'package:area/pages/select_server.dart';
 import 'package:area/service/api.dart';
+import 'package:area/service/discord_api%20copy.dart';
+import 'package:area/service/discord_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'pages/home_screen.dart';
 import 'pages/auth_screen.dart';
 import 'pages/login_screen.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: "credentials.env");
   runApp(const MyApp());
 }
 
@@ -28,6 +32,7 @@ class MyApp extends StatelessWidget {
           // When navigating to the "/second" route, build the HomeScreen widget.
           // '/welcome': (context) => const WelcomeScreen(),
           '/register': (context) => const AuthScreen(),
+          '/discord_oauth': (context) => RootPage(),
           '/register_email': (context) => const RegisterEmailScreen(),
           '/home': (context) => const HomeScreen(),
           '/login': (context) => const LoginScreen(),

@@ -42,6 +42,8 @@ dependencies:
   http: ^0.13.4
   oauth2_client: ^2.3.2
   fluttertoast: ^8.0.8
+  flutter_dotenv: ^5.0.2
+  url_launcher: ^6.0.20
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +58,8 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - credentials.env
+
 
 flutter_icons:
   android: true # can specify file name here e.g. "ic_launcher"
