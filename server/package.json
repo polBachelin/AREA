@@ -32,6 +32,7 @@
     "@nestjs/swagger": "^5.1.5",
     "axios": "^0.25.0",
     "discord-oauth2": "^2.9.0",
+    "discord.js": "^13.6.0",
     "dotenv": "^14.2.0",
     "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",

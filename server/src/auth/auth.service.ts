@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 
@@ -21,5 +21,9 @@ export class AuthService {
 
   public cookieLogout() {
     return 'Authentification=; HttpOnly; Path=/; Max-Age=0';
+  }
+
+  public verify(token: string) {
+    return this.jwtService.verify(token);
   }
 }

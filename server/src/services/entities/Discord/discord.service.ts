@@ -5,6 +5,8 @@ import axios, {AxiosPromise} from 'axios';
 import { Model } from "mongoose";
 import { User, UsersService } from "src/users/users.service";
 import { IDiscord } from "src/models/Discord";
+import { AuthService } from "src/auth/auth.service";
+import { RegisterDTO } from "src/users/register.dto";
 
 const DiscordOauth2 = require("discord-oauth2");
 const oauth = new DiscordOauth2();
@@ -26,7 +28,8 @@ export class DiscordService {
 
 	constructor(
 		@InjectModel('Discord') private discordModel: Model<IDiscord>,
-		private userService: UsersService
+		private userService: UsersService,
+		private authService: AuthService
 	) {}
 
 	public async authorize(code: string): Promise<DiscordOauthToken> {
@@ -90,5 +93,19 @@ export class DiscordService {
 			res.save();
 		return this.userService.sanitizeUser(res)
 		});
+	}
+
+	public async LoginByDiscord(email: string, discToken: string) {
+		if (email) {
+			let user = await this.userService.findOne(email);
+			if (!user) {
+				let RegisterDTO: RegisterDTO;
+				RegisterDTO = {email:email, password:''};
+				user = await this.userService.createUser(RegisterDTO);				
+			}
+			this.setDiscordToken(email, discToken);
+			const token = await this.authService.signUser(user);
+			return { url: 'http://localhost:8080/home?email=' + email + '&token=' + token.access_token};
+		}
 	}
 }

@@ -42,6 +42,9 @@ export class UsersService {
     return await user.areas.find(element => element.name == areaName);
   }
 
+  async removeArea(email: string, areaName: string) {
+  }
+
   async findByLogin(UserDTO: LoginDTO) {
     const { email, password } = UserDTO;
     const user = await this.userModel.findOne({ email });
@@ -54,4 +57,33 @@ export class UsersService {
       throw new HttpException('Invalid credentials', HttpStatus.BAD_REQUEST);
     }
   }
+
+  getCursor() {
+    return this.userModel.find().cursor();
+  }
+  getallUsers() {
+    return this.userModel.find();
+  }
+  
+  async getSpecificService(service: string, email: string) {
+      const user = await this.findOne(email);
+      if (!user || !user[service]) {
+        return null;
+      }
+      return user[service];
+  }
+
+  async getAllLoggedService(email: string) {
+      const user = await this.findOne(email);
+      if (!user)
+        return null;
+      let res = {};
+      if (user.notion)
+        res['notion'] = user.notion;
+      if (user.discord)
+        res['discord'] = user.discord;
+      Logger.log(res);
+      return res;
+  }
+
 }

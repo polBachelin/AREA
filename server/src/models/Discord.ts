@@ -9,7 +9,7 @@ export const discordSchema = new mongoose.Schema({
 });
 
 export interface IDiscord extends Document {
-  access_token: {type: String},
+    access_token: {type: String},
     token_type: {type: String},
     expires_in: {type: Number},
     refresh_token: {type: String},

@@ -6,7 +6,10 @@ import { INotion } from "src/models/Notion";
 import { Model } from 'mongoose';
 import { UsersService } from "src/users/users.service";
 import { InjectModel } from '@nestjs/mongoose';
-import { Client } from "@notionhq/client";	
+import { Client } from "@notionhq/client";
+import { AuthService } from "src/auth/auth.service";
+import { RegisterDTO } from "src/users/register.dto";
+
 
 type NotionPersonUser = Extract<GetUserResponse, { type: "person" }>
 
@@ -42,7 +45,8 @@ export class NotionService {
 
 	constructor(
 		@InjectModel('Notion') private notionModel: Model<INotion>,
-		private userService: UsersService
+		private userService: UsersService,
+		private authService: AuthService
 	) {}
 
 	public authorize(code: string): AxiosPromise<any> {
@@ -72,6 +76,20 @@ export class NotionService {
 		}).catch(err => {
 			console.log("SetNotionTOken == ", err);
 		});
+	}
+
+	public async loginByNotion(email: string, notionToken: string) {
+		if (email) {
+			let user = await this.userService.findOne(email);
+			if (!user) {
+				let RegisterDTO: RegisterDTO;
+				RegisterDTO = {email:email, password: ''};
+				user = await this.userService.createUser(RegisterDTO);
+			}
+			this.setNotionToken(email, notionToken);
+			const token = await this.authService.signUser(user);
+			return { url: 'http://localhost:8080/home?email=' + email + '&token=' + token.access_token};
+		}
 	}
 
 	async getNotionToken(email: string) {

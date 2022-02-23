@@ -1,5 +1,6 @@
 import { ATask } from "src/interfaces/task.interface";
 import { ATrigger } from "src/interfaces/trigger.interface";
+import { IUser } from "src/models/User";
 
 enum AreaState {
 	STOPPED,
@@ -18,9 +19,9 @@ export class Area {
 		Object.assign(this, init);
 	}
 
-	public enable() {
+	public enable(user: any) {
 		this.status = AreaState.ENABLED;
-		this.launch();
+		this.launch(user);
 	}
 
 	public disable() {
@@ -28,16 +29,17 @@ export class Area {
 		this.action.stop();
 	}
 	
-	launch(): void {
+	launch(user: any): void {
 		try {
 			this.action.setup(async () => {
 				try {
-					await this.reaction.run();
+					await this.reaction.run(user);
+					this.action.setChecking();
 				} catch (errror) {
 					this.status = AreaState.CRASHED;
 					this.disable();
 				}
-			})
+			}, user)
 		} catch (error) {
 			console.log(error);
 		}
