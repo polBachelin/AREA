@@ -1,122 +1,74 @@
 <template>
   <v-container style="color: white; background-color: darkorange" class="font-dongle">
 
-    <v-row class="mt-10 text-center justify-center" style="color: white">
-      <h1 style="font-size: 80px">
-        Créér une aréa
-      </h1>
-    </v-row>
-
-    <v-row>
-      <div class="mt-10 mb-10"></div>
-    </v-row>
-
-<!--    left search field-->
-    <v-row>
-      <v-spacer></v-spacer>
-      <v-tooltip bottom color="black">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              class="mt-3"
-              v-bind="attrs"
-              v-on="on"
-              icon
-          >
-            <v-icon style="color: black">
-              mdi-magnify
-            </v-icon>
-          </v-btn>
-        </template>
-        <span>Rechercher</span>
-      </v-tooltip>
-      <v-text-field
-          background-color="white"
-          style="max-width: 450px; font-size: 30px"
-      />
-
-      <v-spacer>  </v-spacer>
-      <h1 style="color: black" class="mt-2">
-        . . .
-      </h1>
-      <v-icon large style="color: black">mdi-arrow-right</v-icon>
-      <h1 style="color: black" class="mt-2">
-        . . .
-      </h1>
-      <v-spacer>  </v-spacer>
-
-      <!--    right search field-->
-      <v-tooltip bottom color="black">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              v-bind="attrs"
-              v-on="on"
-              class="mt-3"
-              icon
-          >
-            <v-icon style="color: black">
-              mdi-magnify
-            </v-icon>
-          </v-btn>
-        </template>
-        <span>Rechercher</span>
-      </v-tooltip>
-      <v-text-field
-
-          background-color="white"
-          style="max-width: 450px; font-size: 30px"
-      />
-      <v-spacer></v-spacer>
-    </v-row>
-
-    <v-row style="margin-left: 200px">
-      <h1 style="margin-left: 100px; font-style: italic; color: black"> Connectez une app ...</h1>
-      <v-spacer></v-spacer>
-      <h1 style="margin-left: 300px; font-style: italic; color: black"> ... à une autre</h1>
-      <v-spacer></v-spacer>
-    </v-row>
-
-    <v-row>
-      <div class="mt-10 mb-10"></div>
-    </v-row>
-
     <v-row justify="center">
 
-      <v-card width="800" style="background-color: black; border: 3px solid white">
-        <v-row>
-          <v-card class="mb-3">
-            <v-card-text class="my-areas-title-text" style="color: black; border: 1px solid black; background-color: darkorange"> Mes Aréas</v-card-text>
-          </v-card>
+      <v-card width="800" style=" background-color: white; margin:0px;  border-radius: 0px 0px 10px 10px; margin-bottom:-110px">
+        <v-row class="mt-1 mb-1"></v-row>
+        <v-row v-if="areas.length == 0">
+            <v-card-text class="text-center mt-10 mb-10" style=" color: grey; font-size: 40px; border-radius: 0px">Aucune Aréa</v-card-text>
         </v-row>
-
-        <v-row
+        <v-row v-else
             v-for="area in areas"
             :key="area.id"
             class="text-center justify-center align-center"
         >
-          <v-card
+          
+          <v-card 
               style="background-color: white; border: 1px solid darkorange"
-              class="mt-1 mb-16"
+              class="mt-2 mb-2"
               width="600px"
-              height="70px"
+              height="60px"
               elevation="10"
 
           >
             <v-row class="align-center align-content-center ml-3">
-              <v-col cols="1">
-                <v-img src="../assets/NuageShocked.png" max-width="50" max-height="50"/>
+              <v-col cols="4">
+                 <v-img 
+                  :src="area.icon"
+                  max-height="50"
+                  max-width="50"
+                />
               </v-col>
-              <v-col cols="1">
-                <v-img src="../assets/NuageShocked.png" max-width="50" max-height="50"/>
-              </v-col>
-              <v-col cols="8">
-                <v-card-text class="text-center mt-1" style="color: black; font-size: 35px">
-                  {{area.title}}
+              <v-col cols="4">
+                <v-card-text class="text-center mt-1 mb-1" style="color: black; font-size: 35px">
+                  {{area.name}}
                 </v-card-text>
+              </v-col>
+              <v-col cols="4">
               </v-col>
             </v-row>
           </v-card>
         </v-row>
+        <v-card-text class="text-center mt-13 mb-13"> </v-card-text>
       </v-card>
+    </v-row>
+  
+    <v-row >
+        <v-card  width="100%" style="color: white;  background-color: black; border-radius: 0px; margin-bottom:50vh">
+          <v-row justify="center">
+            <v-col  cols="4">
+            </v-col>
+            <v-col  cols="4">
+              <v-card-text class="text-center mt-4 mb-4" style="color: white; font-size: 60px; border-radius: 0px"> Mes Aréas</v-card-text>
+            </v-col>
+            <v-col cols="4" class="text-right d-flex justify-center align-center">
+              <v-hover v-slot="{ hover }">
+                <router-link 
+                    to="/Area" 
+                    >
+                    <v-img 
+                      src="@/assets/addIcon.png"
+                      max-height="100"
+                      max-width="100"
+                      :style=" hover ? 'margin-top:-10px; margin-bottom:-10px; margin-left:100px' : 'margin-top:-10px; margin-bottom:-10px; margin-left:100px' "
+                    />
+                  </router-link>
+              </v-hover>
+            </v-col>
+          </v-row>
+        </v-card>
+    
     </v-row>
 
     <v-row class="mb-10"></v-row>
@@ -124,47 +76,39 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Home.vue",
 
   created() {
-  },
+    },
 
   data() {
     return {
       areas: [
-        {
-          id: 1,
-          title: "Envoyer un email lorsque le repo est push",
-          firstLogo: "../assets/NuageShocked.png",
-          secondLogo: "../assets/NuageShocked.png",
-        },
-        {
-          id: 2,
-          title: "Envoyer un email lorsque le repo est pull",
-          firstLogo: "../assets/NuageShocked.png",
-          secondLogo: "../assets/NuageShocked.png",
-        },
-        {
-          id: 3,
-          title: "Envoyer un email lorsque le repo est créé",
-          firstLogo: "../assetsdskndks/area.jpeg",
-          secondLogo: "../assets/NuageShocked.png",
-        },
-        {
-          id: 4,
-          title: "Envoyer un email lorsque le repo est créé",
-          firstLogo: "../assetsdskndks/area.jpeg",
-          secondLogo: "../assets/NuageShocked.png",
-        },
-        {
-          id: 5,
-          title: "Envoyer un email lorsque le repo est créé",
-          firstLogo: "../assetsdskndks/area.jpeg",
-          secondLogo: "../assets/NuageShocked.png",
-        },
       ]
     }
+  },
+  methods: {
+    goToArea() {
+      
+      localStorage.setItem('isLogged', 'false')
+      this.$router.push('/login')
+    }
+  },
+  
+    mounted() {
+    axios.get('http://localhost:3000/area', { 'headers': { 'Authorization': 'Bearer' + localStorage.getItem('accessToken') }} ) 
+    
+        .then((response) => {
+          this.areas = response.data
+          console.log(response.data)
+        })
+        
+        .catch( () => {
+          console.log("services fetch error")
+        })
   },
 }
 
