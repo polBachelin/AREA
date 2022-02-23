@@ -24,7 +24,6 @@ export class AuthService {
   }
 
   public verify(token: string) {
-    token = token.replace("Bearer ", "");
     return this.jwtService.verify(token);
   }
 }

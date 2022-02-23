@@ -25,8 +25,8 @@ export class NotionController {
 		}).catch((err) => {
 			console.log(err);
 		})
-		if (req.headers.authorization) {
-			let result = this.authService.verify(req.headers.authorization);
+		if (query.state) {
+			let result = this.authService.verify(query.state);
 			this.notionService.setNotionToken(result.email, notionToken)
 			return {notion: notionToken};
 		} else
