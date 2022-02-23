@@ -15,12 +15,14 @@ export class DiscordController {
 
 	@Get('/auth')
 	@ApiOperation({summary: "Get the access from the authorization"})
-	@Redirect('http://localhost:8080')
+	//@Redirect('http://localhost:8080')
 	async discordCallback(@Query() query, @Req() req) {
 		let email: string = null;
 		let discordToken = null;
+
 		await this.discordService.authorize(query.code).then((res) => {
 			discordToken = res;
+			console.log(discordToken)
 		})
 		if (discordToken) {
 			email = await this.discordService.getUserEmail(discordToken.access_token)

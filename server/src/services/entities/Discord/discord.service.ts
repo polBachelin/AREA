@@ -40,7 +40,7 @@ export class DiscordService {
 				clientId: CLIENT_ID,
 				clientSecret: CLIENT_SECRET,
 				code: code,
-				scope: ["identify", "email", "applications.commands", "activites.write"],
+				scope: ["identify", "email", "applications.commands"],
 				grantType: "authorization_code",
 				redirectUri: REDIRECT_URI
 			});
