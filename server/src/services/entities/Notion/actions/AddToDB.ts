@@ -25,4 +25,4 @@ export class AddToDB extends ATrigger {
 			}
 		}, REFRESH_RATE)
 	}
-}
+} export type properties = Map<string, any>

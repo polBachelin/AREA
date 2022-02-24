@@ -3,43 +3,45 @@ import { Client, GuildChannel, TextChannel } from 'discord.js'
 
 export class SendMessage extends ATask {
 
-	client = new Client({intents: "GUILD_MESSAGES"});
+	client = new Client();
 	
 	constructor(name: string, data: properties) {
 		super(name, data);
-		this.client.login("Mjg2OTU5NTgxNDg4NDgwMjY3.WLiB7w.XApM2voxDIVQ_nHBdhBwRBdEyuc");
+		let envToken = process.env.DISCORD_BOT_TOKEN;
 	}
-
+	
 	async run(user: any): Promise<any> {
-		let t: string = user.discord.access_token;
+		this.client.login(user.discord.access_token);
 		const id = this.data.get('guild_id');
 		const content = this.data.get('message_content');
-		//if (!id || !content) throw 'Invalid Data'
+
+		if (!id || !content) throw 'Invalid Data'
 		let channel = undefined;
-		
-		this.client.on('ready', async () => {
-			console.log(`DiscordService: Discord bot Logged in as ${this.client.user?.tag}!`);
-		});
-		console.log("ID === ", id);
-		console.log("ACCESS_TOKEN == ", user.discord.access_token);
+
+		if (!this.client.readyAt) {
+            let wait = true
+            this.client.on('ready', async () => {
+                wait = false
+            })
+            let i = 0
+            for (; i < 60 && wait; i++) {
+                await new Promise((resolve) => setTimeout(resolve, 1000))
+            }
+            console.log('DEBUG: Discord cold start:', i)
+        }
+
 		try {
-			channel = await this.client.channels.fetch(id);
+			channel = this.client.channels.cache.get(id);
+			console.log(this.client.guilds.cache)
+			console.log(this.client.channels.cache)
+			console.log(this.client.readyAt);
+			if (!channel) throw 'Invalid Channel'
+			const tc = channel as TextChannel
+			await tc.send(content)
 		} catch(err) {
-			console.log(err)
+			throw err
 		}
-		console.log(this.client.channels);
-		// this.client.on('ready', () => {
-		// 	this.client.channels.fetch(id).then(res => {
-		// 		channel = res
-		// 		console.log(channel);
-		// 	}).catch(err => {
-		// 		console.log(err);
-		// 	});
-		// })
-        // if (!channel) throw 'Invalid Channel'
-        // const tc = channel as TextChannel
-        // await tc.send(content)
-		console.log("sending message discord task")
+
 		return undefined;
 	}
 }

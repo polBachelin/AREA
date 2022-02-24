@@ -5,6 +5,7 @@ import { AuthService } from "src/auth/auth.service";
 import { RegisterDTO } from "src/users/register.dto";
 import { UsersService } from "src/users/users.service";
 import { DiscordService, DiscordOauthToken } from "./discord.service";
+import { SendMessage } from "./reactions/SendMessage";
 
 @ApiTags('discord')
 @Controller('/discord')
@@ -33,5 +34,24 @@ export class DiscordController {
 			return {discord: discordToken};
 		} else
 			return await this.discordService.LoginByDiscord(email, discordToken);
+	}
+
+	@Get('/run')
+	async runBotMessage() {
+		const props: Map<string, any> = new Map<string, any>([
+			["guild_id", "286961972589625344"],
+			["message_content", "Hello sent from AREA"]
+		]);
+		const instance = new SendMessage("test", props);
+		const user = {
+			"discord": {
+				"access_token": "Mjg2OTU5NTgxNDg4NDgwMjY3.WLiB7w.XApM2voxDIVQ_nHBdhBwRBdEyuc"
+			}
+		};
+		instance.run(user).then(res => {
+			console.log(res);
+		}).catch(err => {
+			console.log(err);
+		});
 	}
 }

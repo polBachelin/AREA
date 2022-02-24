@@ -33,7 +33,7 @@
           <v-card-text>{{isError}}</v-card-text>
         </v-row>
 
-        <v-row style="margin-top: 120px">
+        <v-row style="margin-top: 0px">
           <v-col cols="5" class="ml-5">
             <v-btn color="black" style="color: darkorange; width: 200px" @click="confirmUserPass"> Confirmer </v-btn>
           </v-col>
@@ -49,6 +49,11 @@
               <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeDiscord"> Connect to Discord </v-btn>
           </v-col>
         </v-row>
+        <v-row style="">
+          <v-col cols="5" class="ml-5">
+              <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeGoogle"> Connect to Google </v-btn>
+          </v-col>
+        </v-row>
       </v-card>
     </v-row>
     </v-img>
@@ -60,6 +65,7 @@ import axios from "axios";
 
 import {notionUrl} from '@/oauth/Notion';
 import {discordUrl} from '@/oauth/Discord';
+import {googleCalendarUrl} from '@/oauth/GoogleCalendar';
 import {setUser} from '@/auth'
 
 export default {
@@ -125,6 +131,10 @@ export default {
 
     authorizeDiscord() {
       this.connectOauth(discordUrl);
+    },
+
+    authorizeGoogle() {
+      this.connectOauth(googleCalendarUrl);
     }
   },
 }

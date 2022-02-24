@@ -4,9 +4,9 @@ import { InjectModel } from "@nestjs/mongoose";
 import axios, {AxiosPromise} from 'axios';
 import { Model } from "mongoose";
 import { User, UsersService } from "src/users/users.service";
-import { IDiscord } from "src/models/Discord";
 import { AuthService } from "src/auth/auth.service";
 import { RegisterDTO } from "src/users/register.dto";
+import { IOauthToken } from "src/models/OauthToken";
 
 const DiscordOauth2 = require("discord-oauth2");
 const oauth = new DiscordOauth2();
@@ -27,7 +27,7 @@ export interface DiscordOauthToken {
 export class DiscordService {
 
 	constructor(
-		@InjectModel('Discord') private discordModel: Model<IDiscord>,
+		@InjectModel('Discord') private discordModel: Model<IOauthToken>,
 		private userService: UsersService,
 		private authService: AuthService
 	) {}
@@ -40,7 +40,7 @@ export class DiscordService {
 				clientId: CLIENT_ID,
 				clientSecret: CLIENT_SECRET,
 				code: code,
-				scope: ["identify", "email", "applications.commands"],
+				scope: ["identify", "email"],
 				grantType: "authorization_code",
 				redirectUri: REDIRECT_URI
 			});
@@ -57,6 +57,10 @@ export class DiscordService {
 		} catch(error) {
 			console.log(error);
 		}
+	}
+
+	public async addBot(code: string): Promise<any> {
+		
 	}
 
 	public async getUserEmail(token: string): Promise<string> {
