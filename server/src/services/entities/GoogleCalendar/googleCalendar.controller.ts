@@ -21,7 +21,6 @@ export class GoogleCalendarController {
 			token = res;
 		});
 		if (token) {
-			console.log("TOKEN == ", token);
 			email = await this.googleService.getUserEmail(token);
 		}
 		return await this.googleService.loginByGoogleCalendar(email, token);

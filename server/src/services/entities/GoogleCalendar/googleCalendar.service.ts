@@ -54,11 +54,11 @@ export class GoogleCalendarService {
 			version: 'v2'
 		});
 		await profile.userinfo.get().then(res => {
-			console.log(res);
+			return res.data.email;
 		}).catch(err => {
 			console.log(err);
 		});
-		return ""
+		return "";
 	}
 
 	public async loginByGoogleCalendar(email: string, token: string) {
