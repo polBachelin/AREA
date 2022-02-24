@@ -1,5 +1,6 @@
-import { Controller, Get, Redirect, Query, Logger, Req } from "@nestjs/common";
+import { Controller, Get, Redirect, Query, Logger, Req, UseGuards, Request } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
+import { AuthGuard } from "@nestjs/passport";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AuthService } from "src/auth/auth.service";
 import { RegisterDTO } from "src/users/register.dto";
@@ -34,6 +35,13 @@ export class DiscordController {
 			return {discord: discordToken};
 		} else
 			return await this.discordService.LoginByDiscord(email, discordToken);
+	}
+
+	@Get('/getChannels')
+	@ApiOperation({summary: "Get the channels of the bot"})
+	@UseGuards(AuthGuard('jwt'))
+	async getChannels(@Request() req) {
+		return this.discordService.getChannels(req.user.email);
 	}
 
 	@Get('/run')

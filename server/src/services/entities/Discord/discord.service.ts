@@ -7,6 +7,7 @@ import { User, UsersService } from "src/users/users.service";
 import { AuthService } from "src/auth/auth.service";
 import { RegisterDTO } from "src/users/register.dto";
 import { IOauthToken } from "src/models/OauthToken";
+import { Client, GuildChannel, TextChannel } from 'discord.js'
 
 const DiscordOauth2 = require("discord-oauth2");
 const oauth = new DiscordOauth2();
@@ -21,6 +22,21 @@ export interface DiscordOauthToken {
 	expires_in: number,
 	refresh_token: string,
 	scope: string,
+}
+
+let client = new Client();
+export {client};
+
+export async function readyBot() {
+	if (!client.readyAt) {
+		let wait = true
+		client.on('ready', async () => {
+			wait = false;
+		})
+		while(wait == true) {
+			await new Promise((res) => setTimeout(res, 1000))
+		}
+	}
 }
 
 @Injectable()
@@ -64,7 +80,6 @@ export class DiscordService {
 	}
 
 	public async getUserEmail(token: string): Promise<string> {
-		
 		try {
 			let res = await oauth.getUser(token);
 			return new Promise<string>((resolve, rej) => {
@@ -73,6 +88,21 @@ export class DiscordService {
 		} catch(error) {
 			Logger.log(error);
 		}
+	}
+
+	public async getDiscordToken(email: string) {
+		let user = await this.userService.findOne(email).catch(err => {
+			console.log("Could not find user - ", err);
+		});
+		return user.discord;
+	}
+
+	public async getChannels(email: string): Promise<any> {
+		let token = await this.getDiscordToken(email);
+		client.login("Mjg2OTU5NTgxNDg4NDgwMjY3.WLiB7w.XApM2voxDIVQ_nHBdhBwRBdEyuc");
+
+		await readyBot();
+		return client.channels.cache;
 	}
 
 	public refreshToken(token: string): AxiosPromise<any> {
