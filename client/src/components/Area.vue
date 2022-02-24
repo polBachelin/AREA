@@ -137,7 +137,7 @@
 
 <!--      RIGHT CARD-->
       <v-col cols="7">
-        <v-card v-if="currentDestination.label !== 'none'"  style="background-color: white; height: 800px">
+        <v-card v-if="currentDestination.label !== 'none'"  style="background-color: white" class="mb-15">
           <v-card-text
               class="card-title text-center"
               style="color: darkorange"
@@ -151,7 +151,7 @@
           >
             <v-col cols="1"></v-col>
             <v-col cols="10">
-            <v-card height="100" width="800">
+            <v-card class="mt-1" width="800">
               <v-row v-if="currentDestination.label === 'services pour actions' || currentDestination.label === 'services pour reactions'">
                 <v-col cols="4">
                   <v-card-text class="text-center" style="font-size: 30px"> {{ item.name }} </v-card-text>
@@ -188,19 +188,116 @@
                   </v-btn>
                 </v-col>
               </v-row>
+
+<!--              ACTIONS ADDITIONAL OPTIONS-->
+              <v-row v-if="currentDestination.label === 'actions' && currentDestination.isClicked">
+
+                <!--              NOTION -->
+                <v-row v-if="selectedActionService.name === 'Notion'" class="text-center justify-center mb-5">
+                    <v-menu
+                        v-if="selectedAction === 'Add to database'"
+                        rounded
+                        offset-y
+                    >
+                      <template v-slot:activator="{ attrs, on }">
+                        <v-btn
+                            v-bind="attrs"
+                            v-on="on"
+                            color="orange"
+                        >
+                          Choose Database
+                        </v-btn>
+                      </template>
+
+                      <v-list>
+                        <v-list-item
+                            v-for="item in databases"
+                            :key="item.id"
+                            @click="selectDatabase(item.id)"
+                            link
+                        >
+                          <v-list-item-title v-text="item.title[0].text.content"></v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </v-row>
+
+                </v-row>
+
+
+<!--              REACTIONS-->
+              <v-row v-if="currentDestination.label === 'reactions' && currentDestination.isClicked">
+
+                <!--              DISCORD -->
+                <v-row v-if="selectedReactionService.name === 'Discord'" class="text-center justify-center mb-5">
+
+                  <v-row v-if="selectedReaction === 'Send a message'">
+                    <v-col cols="4" class="text-center justify-center">
+                      <v-menu
+                          rounded
+                          offset-y
+                      >
+                        <template v-slot:activator="{ attrs, on }">
+                          <v-btn
+                              v-bind="attrs"
+                              v-on="on"
+                              color="orange"
+                          >
+                            Choose Guild
+                          </v-btn>
+                        </template>
+
+                        <v-list>
+                          <v-list-item
+                              v-for="item in guilds"
+                              :key="item.id"
+                              @click="selectGuild(item.id)"
+                              link
+                          >
+                            <v-list-item-title v-text="item.title[0].text.content"></v-list-item-title>
+                          </v-list-item>
+                        </v-list>
+                      </v-menu>
+                    </v-col>
+                    <v-col cols="7">
+                      <v-text-field
+                          v-model="discordMessage"
+                          prepend-icon="mdi-pen"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-row>
+
+
+              </v-row>
+
             </v-card>
             </v-col>
           </v-row>
           <v-row class="mt-10">
             <v-spacer></v-spacer>
             <v-btn
+                v-if="currentDestination.label === 'reactions'"
+                :disabled="!currentDestination.isConfirmed"
+                @click="saveArea"
+                style="background-color: darkorange; color: black; font-size: 20px"
+                class="mb-3"
+            >
+              SAUVEGARDER
+            </v-btn>
+            <v-btn
+                v-else
                 :disabled="!currentDestination.isConfirmed"
                 @click="goToNextDestination"
-                style="background-color: darkorange; color: black; font-size: 20px; width: 150px"
+                style="background-color: darkorange; color: black; font-size: 20px"
+                class="mb-3"
             >
               SUIVANT
             </v-btn>
             <v-spacer></v-spacer>
+          </v-row>
+          <v-row v-if="rightCardError.length > 0">
+            <v-card-text style="color: red">{{rightCardError}}</v-card-text>
           </v-row>
         </v-card>
 
@@ -228,12 +325,12 @@ export default {
     return {
       destinations: [
         {label: 'none'},
-        {label: 'services pour actions', isConfirmed: false, service: ''},
-        {label: 'actions', isConfirmed: false, service: ''},
-        {label: 'services pour reactions', isConfirmed: false, service: ''},
-        {label: 'reactions', isConfirmed: false, service: ''},
+        {label: 'services pour actions', isConfirmed: false, isClicked: false, service: ''},
+        {label: 'actions', isConfirmed: false, isClicked: false, service: ''},
+        {label: 'services pour reactions', isConfirmed: false, isClicked: false, service: ''},
+        {label: 'reactions', isConfirmed: false, isClicked: false, service: ''},
       ],
-      currentDestination: {},
+      currentDestination: {label: 'none'},
       selectedActionService: [],
       selectedAction: '',
       selectedReactionService: [],
@@ -241,21 +338,47 @@ export default {
       isSelected: false,
       services: [],
       errorMsg: '',
+      rightCardError: '',
       areaName: '',
+      databases: [],
+      accessToken: '',
+      selectedDatabase: '',
+      guilds: [],
+      selectedGuild: '',
+      discordMessage: 'Message'
     }
   },
 
   created() {
-    this.currentDestination = {}
+    this.currentDestination = {label: 'none'}
     this.resetArea()
-
-    axios.get('http://localhost:3000/services', {headers: {'Authorization': 'Bearer' + localStorage.getItem('accessToken') }})
+    this.accessToken = localStorage.getItem('accessToken')
+    axios.get('http://localhost:3000/services', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
         .then((response) => {
           this.services = response.data
         })
         .catch( () => {
           console.log("services fetch error")
         })
+
+    axios.get('http://localhost:3000/notion/databases', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+        .then((response) => {
+          this.databases = response.data.results
+        })
+        .catch( () => {
+          console.log("databases fetch error")
+        })
+
+    axios.get('http://localhost:3000/discord/getGuilds', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+        .then((response) => {
+          this.guilds = response.data
+          console.log(response.data)
+        })
+        .catch( () => {
+          console.log("databases fetch error")
+        })
+
+
   },
 
   methods: {
@@ -290,10 +413,6 @@ export default {
         this.currentDestination = this.destinations[4]
         return
       }
-      if (this.currentDestination.label === 'reactions') {
-        this.destinations[4].isConfirmed = true
-        this.saveArea()
-      }
     },
 
     selectInfo() {
@@ -302,10 +421,8 @@ export default {
       if (this.currentDestination.label === 'services pour actions' || this.currentDestination.label === 'services pour reactions') {
         info = this.services
       }
-
       if (this.currentDestination.label === 'actions') {
         info = this.selectedActionService.actions
-        console.log(info)
       }
       if (this.currentDestination.label === 'reactions') {
         info = this.selectedReactionService.reactions
@@ -320,7 +437,7 @@ export default {
 
     selectAction(id) {
       this.selectedAction = this.selectedActionService.actions[id]
-      this.currentDestination.isConfirmed = true
+      this.currentDestination.isClicked = true
     },
 
     selectReactionService(id) {
@@ -330,10 +447,16 @@ export default {
 
     selectReaction(id) {
       this.selectedReaction = this.selectedReactionService.reactions[id]
-      this.currentDestination.isConfirmed = true
+      this.currentDestination.isClicked = true
     },
 
     saveArea() {
+      if (this.selectedReaction === 'Send a message') {
+        if (this.discordMessage.length < 1) {
+          this.rightCardError = 'Please fill a message'
+          return
+        }
+      }
       console.log('done')
     },
 
@@ -357,8 +480,6 @@ export default {
     },
 
     isButtonIndexSigma(index, which) {
-      console.log(this.selectedAction)
-      console.log(this.selectedActionService.actions[index])
       if (which === 1) {
         if (this.selectedActionService.actions[index] === this.selectedAction) {
           return true
@@ -373,10 +494,17 @@ export default {
           return false
         }
       }
+    },
 
+    selectDatabase(id) {
+      this.selectedDatabase = id
+      this.currentDestination.isConfirmed = true
+    },
+
+    selectGuild(id) {
+      this.selectedGuild = id
+      this.currentDestination.isConfirmed = true
     }
-
-
   }
 }
 </script>
