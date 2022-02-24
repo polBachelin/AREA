@@ -32,7 +32,7 @@
           <v-card-text>{{isError}}</v-card-text>
         </v-row>
 
-        <v-row style="margin-top: 120px">
+        <v-row style="margin-top: 0px">
           <v-col cols="5" class="ml-5">
             <v-btn color="orange" style="color: black; width: 200px" @click="confirmUserPass"> Confirmer </v-btn>
           </v-col>
@@ -58,6 +58,9 @@
           <v-col cols="5" class="ml-5 mt-2">
             <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeEpitech"> Connect to Intra </v-btn>
           </v-col>
+          <v-col cols="5" class="ml-5">
+              <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeGoogle"> Connect to Google </v-btn>
+          </v-col>
         </v-row>
       </v-card>
     </v-row>
@@ -70,6 +73,7 @@ import axios from "axios";
 
 import {notionUrl} from '@/oauth/Notion';
 import {discordUrl} from '@/oauth/Discord';
+import {googleCalendarUrl} from '@/oauth/GoogleCalendar';
 import {setUser} from '@/auth'
 
 export default {
@@ -150,6 +154,10 @@ export default {
           .catch( () => {
             this.isError = "Intra connection failed"
           })
+    },
+
+    authorizeGoogle() {
+      this.connectOauth(googleCalendarUrl);
     }
   },
 }

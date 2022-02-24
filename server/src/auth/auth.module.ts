@@ -12,6 +12,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { NotionModule } from 'src/services/entities/Notion/notion.module';
 import { DiscordModule } from 'src/services/entities/Discord/discord.module';
 import { IntraModule } from 'src/services/entities/Intra/intra.module';
+import { GoogleCalendarModule } from 'src/services/entities/GoogleCalendar/googleCalendar.module';
 
 @Module({
   imports: [UsersModule,
@@ -19,7 +20,7 @@ import { IntraModule } from 'src/services/entities/Intra/intra.module';
   JwtModule.register({
     secret: jwtSecret.secret,
     signOptions: { expiresIn: '3000000000s'},
-  }), NotionModule, DiscordModule, IntraModule
+  }), NotionModule, DiscordModule, IntraModule, GoogleCalendarModule
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy,],
