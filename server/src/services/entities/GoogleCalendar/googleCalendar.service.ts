@@ -6,10 +6,13 @@ import { RegisterDTO } from "src/users/register.dto";
 import { AuthService } from "src/auth/auth.service";
 import { InjectModel } from "@nestjs/mongoose";
 import { IOauthToken } from "src/models/OauthToken";
-import { OAuth2Client } from 'google-auth-library';
+import { OAuth2Client, Credentials} from 'google-auth-library';
+
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly',
+				'https://www.googleapis.com/auth/userinfo.email',
+				'https://www.googleapis.com/auth/userinfo.profile',
 				'https://www.googleapis.com/auth/calendar.app.created',
 				'https://www.googleapis.com/auth/calendar.calendarlist.readonly',
 				'https://www.googleapis.com/auth/calendar',
@@ -32,13 +35,30 @@ export class GoogleCalendarService {
 		)
   	}
 	
-	public authorize(code) {
-		this.oAuth2Client.getToken(code, (err, token) => {
-			if (err) return console.error('Error retrieving access token', err);
-			return new Promise<any>((res, rej) => {
-				res(token);
-			})
+	public async authorize(code): Promise<Credentials> {
+		let token;
+		await this.oAuth2Client.getToken(code).then(res => {
+			token = res;
+		}).catch(err => {
+			return console.error('Error retrieving access token', err);
 		});
+		return new Promise<Credentials>((res, rej) => {
+			res(token.tokens);
+		})
+	}
+	public async getUserEmail(token: Credentials): Promise<string> {
+		console.log("EMAIL: ", token);
+		this.oAuth2Client.setCredentials(token);
+		const profile = google.oauth2({
+			auth: this.oAuth2Client,
+			version: 'v2'
+		});
+		await profile.userinfo.get().then(res => {
+			console.log(res);
+		}).catch(err => {
+			console.log(err);
+		});
+		return ""
 	}
 
 	public async loginByGoogleCalendar(email: string, token: string) {
