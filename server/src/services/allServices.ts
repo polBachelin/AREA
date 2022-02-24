@@ -1,6 +1,7 @@
 import { IService } from 'src/interfaces/service.interface';
 import { notion } from './entities/Notion/notion.class';
 import { discord } from './entities/Discord/discord.class';
+import { intra } from './entities/Intra/Intra.class';
 import { AddToDB } from './entities/Notion/actions/AddToDB';
 import { SendMessage } from './entities/Discord/reactions/SendMessage';
 import { ReceiveMessage } from './entities/Discord/actions/ReceiveMessage';
@@ -8,6 +9,7 @@ import { ReceiveMessage } from './entities/Discord/actions/ReceiveMessage';
 export let allServices: IService[] = [];
 allServices.push(notion);
 allServices.push(discord);
+allServices.push(intra);
 
 const actionsMap = {
 	//NOTION
