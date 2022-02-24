@@ -1,8 +1,8 @@
 <template style="background-color: black">
   <v-container style="background-color: black">
-    <v-img src="../assets/background.gif" max-height="800">
+    <v-img src="../assets/background2.gif" max-height="800">
     <v-row class="justify-center">
-      <v-card-text class="text-center title_text mt-10" >
+      <v-card-text class="text-center title_text mt-10" style="color: darkorange">
         Bienvenue sur l'area
       </v-card-text>
     </v-row>
@@ -10,7 +10,6 @@
 
       <v-card class="login-card"
               width="500"
-              height="500"
               :style="isError !== 'none' ? 'border: 10px solid red;' : 'border: 5px solid black'"
       >
         <v-card-title class="font-weight-bold">Veuillez vous connecter :</v-card-title>
@@ -35,18 +34,29 @@
 
         <v-row style="margin-top: 120px">
           <v-col cols="5" class="ml-5">
-            <v-btn color="black" style="color: darkorange; width: 200px" @click="confirmUserPass"> Confirmer </v-btn>
+            <v-btn color="orange" style="color: black; width: 200px" @click="confirmUserPass"> Confirmer </v-btn>
           </v-col>
           <v-col cols="6" class="ml-5">
-            <v-btn color="black" style="color: darkorange; width: 200px" @click="goToRegister"> Créer un compte </v-btn>
+            <v-btn color="orange" style="color: black; width: 200px" @click="goToRegister"> Créer un compte </v-btn>
           </v-col>
         </v-row>
-        <v-row style="">
+        <v-row>
           <v-col cols="5" class="ml-5">
               <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeNotion"> Connect to Notion </v-btn>
           </v-col>
           <v-col cols="5" class="ml-5">
               <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeDiscord"> Connect to Discord </v-btn>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="5" class="ml-5">
+            <v-text-field
+                v-model="autoLogin"
+                prepend-icon="mdi-account-circle"
+            />
+          </v-col>
+          <v-col cols="5" class="ml-5 mt-2">
+            <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeEpitech"> Connect to Intra </v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -74,6 +84,7 @@ export default {
       ],
       isError: 'none',
       info: [],
+      autoLogin: ''
     }
   },
 
@@ -125,6 +136,20 @@ export default {
 
     authorizeDiscord() {
       this.connectOauth(discordUrl);
+    },
+
+    authorizeEpitech() {
+      if (this.autoLogin.length < 1) {
+        this.isError = "Please enter an autologin link"
+        return
+      }
+      axios.post('http://localhost:3000/intra/token', {body: {link: this.autoLogin}},)
+          .then((response) => {
+            console.log(response.data)
+          })
+          .catch( () => {
+            this.isError = "Intra connection failed"
+          })
     }
   },
 }
