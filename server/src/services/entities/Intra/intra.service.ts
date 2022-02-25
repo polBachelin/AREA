@@ -49,7 +49,7 @@ export class IntraService {
             }
             this.setIntraLink(email, info);
             const token = await this.authService.signUser(user);
-            return {token:token};
+            return {email: email, token:token};
         }
     }
 }

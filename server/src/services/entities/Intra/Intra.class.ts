@@ -11,7 +11,7 @@ export class Intra implements IService {
         this.name = "Intra",
         this.id = parseInt(process.env.INTRA_EPITECH),
         this.icon = "https://w1.pngwing.com/pngs/993/450/png-transparent-science-organization-epitech-logo-computer-science-school-toulouse-lyon.png"
-        this.actions = [""];
+        this.actions = ["GPA changes"];
         this.reactions = [""];
     }
 }
