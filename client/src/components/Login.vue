@@ -147,9 +147,10 @@ export default {
         this.isError = "Please enter an autologin link"
         return
       }
-      axios.post('http://localhost:3000/intra/token', {body: {link: this.autoLogin}},)
+      axios.post('http://localhost:3000/intra/token', {link: this.autoLogin},)
           .then((response) => {
-            console.log(response.data)
+            setUser(response.data.user.email, response.data.token.access_token);
+            this.$router.push({name: 'home'})
           })
           .catch( () => {
             this.isError = "Intra connection failed"
