@@ -249,20 +249,22 @@
 
                         <v-list>
                           <v-list-item
-                              v-for="item in guilds"
+                              v-for="item in channels"
                               :key="item.id"
                               @click="selectGuild(item.id)"
                               link
                           >
-                            <v-list-item-title v-text="item.title[0].text.content"></v-list-item-title>
+                            <v-list-item-title v-text="item.name"></v-list-item-title>
                           </v-list-item>
                         </v-list>
                       </v-menu>
                     </v-col>
                     <v-col cols="7">
                       <v-text-field
+                          label="Message"
                           v-model="discordMessage"
                           prepend-icon="mdi-pen"
+                          clearable
                       />
                     </v-col>
                   </v-row>
@@ -297,7 +299,7 @@
             <v-spacer></v-spacer>
           </v-row>
           <v-row v-if="rightCardError.length > 0">
-            <v-card-text style="color: red">{{rightCardError}}</v-card-text>
+            <v-card-text class="text-center" style="color: red; font-size: 30px">{{rightCardError}}</v-card-text>
           </v-row>
         </v-card>
 
@@ -343,9 +345,16 @@ export default {
       databases: [],
       accessToken: '',
       selectedDatabase: '',
-      guilds: [],
+      channels: [],
       selectedGuild: '',
-      discordMessage: 'Message'
+      discordMessage: '',
+      areaBody: {
+        name: '',
+        actionName: '',
+        actionData: {},
+        reactionName: '',
+        reactionData: {}
+      }
     }
   },
 
@@ -369,9 +378,10 @@ export default {
           console.log("databases fetch error")
         })
 
-    axios.get('http://localhost:3000/discord/getGuilds', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+    axios.get('http://localhost:3000/discord/getChannels', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
-          this.guilds = response.data
+          this.channels = response.data
+          this.filterChannels()
           console.log(response.data)
         })
         .catch( () => {
@@ -451,13 +461,36 @@ export default {
     },
 
     saveArea() {
+      if (this.selectedActionService === 'Notion')
+        this.selectedActionService = 'NotionDB'
+      if (this.selectedReactionService === 'Notion')
+        this.selectedReactionService = 'NotionDB'
+
+      this.areaBody.name = this.selectedActionService
+      this.areaBody.actionName = this.selectedAction
+      this.areaBody.reactionName = this.selectedReaction
+
       if (this.selectedReaction === 'Send a message') {
-        if (this.discordMessage.length < 1) {
+        if (!this.discordMessage) {
           this.rightCardError = 'Please fill a message'
           return
         }
+        this.areaBody.actionData = {database_id: this.selectedDatabase}
+        this.areaBody.reactionData = {message_content: this.discordMessage, guild_id: this.selectedGuild}
+        this.sendAreaToBack(this.areaBody)
       }
+
       console.log('done')
+    },
+
+    sendAreaToBack(body) {
+      axios.post('http://localhost:3000/area/create', {headers: {'Authorization': 'Bearer ' + this.accessToken}, body:{body}})
+          .then((response) => {
+            console.log(response.data)
+          })
+          .catch( () => {
+            console.log("post to area error")
+          })
     },
 
     resetArea() {
@@ -504,7 +537,11 @@ export default {
     selectGuild(id) {
       this.selectedGuild = id
       this.currentDestination.isConfirmed = true
-    }
+    },
+
+    filterChannels() {
+      this.channels = this.channels.filter(channel => channel.type === 'text')
+    },
   }
 }
 </script>
