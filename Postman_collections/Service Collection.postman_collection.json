@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "0b146ac4-73f2-483e-a729-9a9108412014",
+		"name": "Service Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Discord",
+			"item": [
+				{
+					"name": "Get channels",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBvbC5iYWNoZWxpbkBnbWFpbC5jb20iLCJpYXQiOjE2NDU3Mjk2MzIsImV4cCI6NDY0NTcyOTYzMn0.YBLx-PLy7dqYtBkLDJ2b6JzMHMz34RaGuCmrZ2cyW20",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "htpp://localhost:3000/discord/getChannels",
+							"protocol": "htpp",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"discord",
+								"getChannels"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notion",
+			"item": [
+				{
+					"name": "Get all db names",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Google",
+			"item": [
+				{
+					"name": "Create Event",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "List calendars",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Check logged in services",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
