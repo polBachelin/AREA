@@ -36,7 +36,7 @@ export class GoogleCalendarController {
 	@Get('/createEvent')
 	async createGoogleEvent() {
 		const props: Map<string, any> = new Map<string, any>([
-			["calendar_id", "primary"],
+			["calendar_id", "gomh0bmtd1hjt1hnd9u80tvscc@group.calendar.google.com"],
 			["event", {"summary": "Test event", "start": {dateTime: new Date(), timeZone:"Asia/Kolkata"}, "end": {dateTime: new Date(), timeZone: "Asia/Kolkata"}}]
 		])
 		const instance = new CreateEvent("test", props);
