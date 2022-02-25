@@ -11,3 +11,7 @@ export interface IIntra extends Document {
     autologin: {type: String},
     gpa: {type: Number}
 }
+
+export interface Intra {
+    autologin: string
+}
