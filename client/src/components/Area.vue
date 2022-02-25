@@ -461,12 +461,12 @@ export default {
     },
 
     saveArea() {
-      if (this.selectedActionService === 'Notion')
-        this.selectedActionService = 'NotionDB'
-      if (this.selectedReactionService === 'Notion')
-        this.selectedReactionService = 'NotionDB'
+      if (this.selectedActionService.name === 'Notion')
+        this.selectedActionService.name = 'NotionDB'
+      if (this.selectedReactionService.name === 'Notion')
+        this.selectedReactionService.name = 'NotionDB'
 
-      this.areaBody.name = this.selectedActionService
+      this.areaBody.name = this.selectedActionService.name
       this.areaBody.actionName = this.selectedAction
       this.areaBody.reactionName = this.selectedReaction
 
@@ -483,8 +483,9 @@ export default {
       console.log('done')
     },
 
-    sendAreaToBack(body) {
-      axios.post('http://localhost:3000/area/create', {headers: {'Authorization': 'Bearer ' + this.accessToken}, body:{body}})
+    sendAreaToBack() {
+      let body = this.areaBody
+      axios.post('http://localhost:3000/area/create', {headers: {'Authorization': 'Bearer ' + this.accessToken}, body: {body}})
           .then((response) => {
             console.log(response.data)
           })
