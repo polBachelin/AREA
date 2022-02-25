@@ -13,14 +13,12 @@
             :key="area.id"
             class="text-center justify-center align-center"
         >
-          
           <v-card 
               style="background-color: white; border: 1px solid darkorange"
               class="mt-2 mb-2"
               width="600px"
               height="60px"
               elevation="10"
-
           >
             <v-row class="align-center align-content-center ml-3">
               <v-col cols="4">
@@ -86,16 +84,10 @@ export default {
 
   data() {
     return {
-      areas: [
-      ]
+      areas: []
     }
   },
   methods: {
-    goToArea() {
-      
-      localStorage.setItem('isLogged', 'false')
-      this.$router.push('/login')
-    }
   },
   
     mounted() {
@@ -106,7 +98,7 @@ export default {
           console.log(response.data)
         })
         
-        .catch( () => {
+        .catch(() => {
           console.log("services fetch error")
         })
   },
@@ -115,11 +107,5 @@ export default {
 </script>
 
 <style scoped>
-
-.my-areas-title-text {
-  background-color: black;
-  font-weight: bold;
-  font-size: 50px
-}
 
 </style>
