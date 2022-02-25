@@ -47,7 +47,6 @@ export class GoogleCalendarService {
 		})
 	}
 	public async getUserEmail(token: Credentials): Promise<string> {
-		console.log("EMAIL: ", token);
 		this.oAuth2Client.setCredentials(token);
 		const profile = google.oauth2({
 			auth: this.oAuth2Client,
