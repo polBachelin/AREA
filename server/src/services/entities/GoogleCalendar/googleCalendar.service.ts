@@ -50,12 +50,14 @@ export class GoogleCalendarService {
 			auth: this.oAuth2Client,
 			version: 'v2'
 		});
+		let email = null;
 		await profile.userinfo.get().then(res => {
-			return res.data.email;
+			email = res.data.email;
 		}).catch(err => {
 			console.log(err);
 		});
-		return "";
+		if (email)
+			return email;
 	}
 
 	public async loginByGoogleCalendar(email: string, token: string) {
@@ -66,6 +68,7 @@ export class GoogleCalendarService {
 				registerDTO = {email: email, password: ''};
 				user = await this.userService.createUser(registerDTO);
 			}
+			console.log(token);
 			this.setToken(email, token);
 			const t = await this.authService.signUser(user);
 			console.log(t);
