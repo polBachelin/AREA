@@ -18,6 +18,7 @@ export class SendMessage extends ATask {
 		let channel = undefined;		
 
 		readyBot();
+		
 		try {
 			channel = client.channels.cache.get(id);
 			console.log(client.guilds.cache)

@@ -98,11 +98,10 @@ export class DiscordService {
 	}
 
 	public async getChannels(email: string): Promise<any> {
-		let token = await this.getDiscordToken(email);
 		client.login("Mjg2OTU5NTgxNDg4NDgwMjY3.WLiB7w.XApM2voxDIVQ_nHBdhBwRBdEyuc");
 
 		await readyBot();
-		return client.channels.cache;
+		return client.channels.cache	;
 	}
 
 	public refreshToken(token: string): AxiosPromise<any> {
