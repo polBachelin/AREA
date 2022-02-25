@@ -508,12 +508,13 @@ export default {
 
     sendAreaToBack() {
       let body = this.areaBody
-      axios.post('http://localhost:3000/area/create', {headers: {'Authorization': 'Bearer ' + this.accessToken}, body: {body}})
+
+      axios.post('http://localhost:3000/area/create', body, {headers: {'Authorization': 'Bearer ' + this.accessToken}})
           .then((response) => {
             console.log(response.data)
           })
-          .catch( () => {
-            console.log("post to area error")
+          .catch((error) => {
+            console.log(error)
           })
     },
 
