@@ -29,10 +29,10 @@
             <v-col cols="1"></v-col>
 <!--            ACTION BUTTONS-->
             <v-col cols="5">
-              <v-row class="mt-10">
+              <v-row class="mt-10 justify-center text-center">
                 <v-btn
                     @click="actionServicesInbound"
-                    style="background-color: black; color: darkorange; width: 300px; height: 70px; font-size: 35px"
+                    style="background-color: black; color: darkorange; width: 170px ;height: 70px; font-size: 35px"
                 >
                   Services
                 </v-btn>
@@ -47,10 +47,10 @@
                 <v-icon color="orange"> mdi-arrow-down </v-icon>
               </v-row>
 
-              <v-row class="mt-7">
+              <v-row class="mt-7 justify-center text-center">
                 <v-btn
                     @click="actionsInbound"
-                    style="background-color: black; color: darkorange; width: 300px; height: 70px; font-size: 35px"
+                    style="background-color: black; color: darkorange; height: 70px; width: 170px ; font-size: 35px"
                 >
                   Actions
                 </v-btn>
@@ -68,10 +68,10 @@
 
             <v-col cols="5">
 <!--              REACTION BUTTONS-->
-                <v-row class="mt-10">
+                <v-row class="mt-10 text-center justify-center">
                   <v-btn
                       @click="reactionServicesInbound"
-                      style="background-color: black; color: darkorange; width: 300px; height: 70px; font-size: 35px"
+                      style="background-color: black; color: darkorange; height: 70px; width: 170px; font-size: 35px"
                   >
                     Services
                   </v-btn>
@@ -86,10 +86,10 @@
                   <v-icon color="orange"> mdi-arrow-down </v-icon>
                 </v-row>
 
-                <v-row class="mt-7">
+                <v-row class="mt-7 justify-center text-center">
                   <v-btn
                       @click="reactionsInbound"
-                      style="background-color: black; color: darkorange; width: 300px; height: 70px; font-size: 35px"
+                      style="background-color: black; color: darkorange; height: 70px; width: 170px; font-size: 35px"
                   >
                     Reactions
                   </v-btn>
@@ -122,6 +122,12 @@
               </v-btn>
             </v-col>
             <v-spacer></v-spacer>
+          </v-row>
+
+          <v-row>
+            <v-card-text class="text-center" style="font-style: italic; font-size: 20px" v-if="this.areaName && this.selectedReactionService.name && this.selectedActionService.name">
+              Your area: {{this.areaName}} has this action: {{this.selectedAction}} from {{this.selectedActionService.name}} and gets this reaction: {{this.selectedReaction}} from {{this.selectedReactionService.name}}
+            </v-card-text>
           </v-row>
 
           <v-row v-if="errorMsg !== ''">
@@ -171,7 +177,7 @@
                 </v-col>
               </v-row>
               <v-row v-if="currentDestination.label === 'actions' || currentDestination.label === 'reactions'">
-                <v-col cols="4">
+                <v-col cols="5">
                   <v-card-text class="text-center" style="font-size: 30px"> {{ item }} </v-card-text>
                 </v-col>
                 <v-col cols="2">
@@ -193,9 +199,9 @@
               <v-row v-if="currentDestination.label === 'actions' && currentDestination.isClicked">
 
                 <!--              NOTION -->
-                <v-row v-if="selectedActionService.name === 'Notion'" class="text-center justify-center mb-5">
+                <v-row v-if="selectedActionService.name === 'Notion'" >
+                  <v-row v-if="selectedAction === 'Add to database'" class="text-center justify-center mb-2">
                     <v-menu
-                        v-if="selectedAction === 'Add to database'"
                         rounded
                         offset-y
                     >
@@ -213,13 +219,18 @@
                         <v-list-item
                             v-for="item in databases"
                             :key="item.id"
-                            @click="selectDatabase(item.id)"
+                            @click="selectDatabase(item.id, item.title[0].text.content)"
                             link
                         >
                           <v-list-item-title v-text="item.title[0].text.content"></v-list-item-title>
                         </v-list-item>
                       </v-list>
                     </v-menu>
+                      <v-card-text class="text-center" style="font-size: 20px; font-weight: bold">
+                        {{databaseName}}
+                      </v-card-text>
+                  </v-row>
+
                   </v-row>
 
                 </v-row>
@@ -232,7 +243,7 @@
                 <v-row v-if="selectedReactionService.name === 'Discord'" class="text-center justify-center mb-5">
 
                   <v-row v-if="selectedReaction === 'Send a message'">
-                    <v-col cols="4" class="text-center justify-center">
+                    <v-col cols="5" class="text-center justify-center mt-3">
                       <v-menu
                           rounded
                           offset-y
@@ -251,7 +262,7 @@
                           <v-list-item
                               v-for="item in channels"
                               :key="item.id"
-                              @click="selectGuild(item.id)"
+                              @click="selectGuild(item.id, item.name)"
                               link
                           >
                             <v-list-item-title v-text="item.name"></v-list-item-title>
@@ -259,7 +270,7 @@
                         </v-list>
                       </v-menu>
                     </v-col>
-                    <v-col cols="7">
+                    <v-col cols="6">
                       <v-text-field
                           label="Message"
                           v-model="discordMessage"
@@ -267,10 +278,20 @@
                           clearable
                       />
                     </v-col>
+                    <v-row>
+                      <v-col cols="5">
+                      <v-card-text class="text-right" style="font-size: 20px">
+                        Selected channel:
+                      </v-card-text>
+                      </v-col>
+                      <v-col cols="3" class="text-left">
+                        <v-card-text class="text-left" style="color: darkorange; font-size: 25px">
+                          {{guildName}}
+                        </v-card-text>
+                      </v-col>
+                    </v-row>
                   </v-row>
                 </v-row>
-
-
               </v-row>
 
             </v-card>
@@ -300,6 +321,9 @@
           </v-row>
           <v-row v-if="rightCardError.length > 0">
             <v-card-text class="text-center" style="color: red; font-size: 30px">{{rightCardError}}</v-card-text>
+          </v-row>
+          <v-row v-if="goodMessage.length > 0">
+            <v-card-text class="text-center" style="color: green; font-size: 40px">{{goodMessage}}</v-card-text>
           </v-row>
         </v-card>
 
@@ -341,12 +365,15 @@ export default {
       services: [],
       errorMsg: '',
       rightCardError: '',
+      goodMessage: '',
       areaName: '',
       databases: [],
       accessToken: '',
       selectedDatabase: '',
+      databaseName: '',
       channels: [],
       selectedGuild: '',
+      guildName: '',
       discordMessage: '',
       areaBody: {
         name: '',
@@ -382,7 +409,6 @@ export default {
         .then((response) => {
           this.channels = response.data
           this.filterChannels()
-          console.log(response.data)
         })
         .catch( () => {
           console.log("databases fetch error")
@@ -403,9 +429,6 @@ export default {
     },
     reactionsInbound() {
       this.currentDestination = this.destinations[4]
-    },
-    selectType(name) {
-      console.log(name)
     },
     goToNextDestination() {
       if (this.currentDestination.label === 'services pour actions') {
@@ -461,12 +484,12 @@ export default {
     },
 
     saveArea() {
-      if (this.selectedActionService.name === 'Notion')
-        this.selectedActionService.name = 'NotionDB'
-      if (this.selectedReactionService.name === 'Notion')
-        this.selectedReactionService.name = 'NotionDB'
 
-      this.areaBody.name = this.selectedActionService.name
+      if (!this.areaName) {
+        this.rightCardError = 'Veuillez entrer un nom pour votre aréa !'
+        return
+      }
+      this.areaBody.name = this.areaName
       this.areaBody.actionName = this.selectedAction
       this.areaBody.reactionName = this.selectedReaction
 
@@ -479,8 +502,8 @@ export default {
         this.areaBody.reactionData = {message_content: this.discordMessage, guild_id: this.selectedGuild}
         this.sendAreaToBack(this.areaBody)
       }
-
-      console.log('done')
+      this.rightCardError = ''
+      this.goodMessage = "Area created!"
     },
 
     sendAreaToBack() {
@@ -501,7 +524,7 @@ export default {
       this.selectedReaction = ''
     },
     confirmArea() {
-      if (this.destinations[1].isConfirmed === false || this.destinations[2].isConfirmed === false || this.areaName === '') {
+      if (this.destinations[1].isConfirmed === false || this.destinations[2].isConfirmed === false || !this.areaName) {
         this.errorMsg = 'Veuillez remplir toutes les conditions !'
       }
     },
@@ -530,12 +553,14 @@ export default {
       }
     },
 
-    selectDatabase(id) {
+    selectDatabase(id, name) {
+      this.databaseName = name
       this.selectedDatabase = id
       this.currentDestination.isConfirmed = true
     },
 
-    selectGuild(id) {
+    selectGuild(id, name) {
+      this.guildName = name
       this.selectedGuild = id
       this.currentDestination.isConfirmed = true
     },
