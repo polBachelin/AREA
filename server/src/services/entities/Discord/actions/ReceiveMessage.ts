@@ -4,7 +4,7 @@ import { Client } from 'discord.js'
 
 export class ReceiveMessage extends ATrigger {
 
-	client = new Client({intents: "DIRECT_MESSAGES"});
+	client = new Client();
 
 	setup(callback: () => Promise<void>): void {
 		const userTarget = this.data.get('target')

@@ -15,7 +15,7 @@ export class Notion implements IService {
 			"Add to database"
 		];
 		this.reactions = [
-
+			"Update page"
 		];
 	}
 }
