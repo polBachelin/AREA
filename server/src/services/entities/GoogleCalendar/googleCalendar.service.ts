@@ -5,7 +5,7 @@ import { Model } from 'mongoose'
 import { RegisterDTO } from "src/users/register.dto";
 import { AuthService } from "src/auth/auth.service";
 import { InjectModel } from "@nestjs/mongoose";
-import { IOauthToken } from "src/models/OauthToken";
+import { OauthTokenDoc } from "src/models/OauthToken";
 import { OAuth2Client, Credentials} from 'google-auth-library';
 
 
@@ -27,7 +27,7 @@ export class GoogleCalendarService {
 	private oAuth2Client: OAuth2Client;
 
 	constructor(private userService: UsersService, private authService: AuthService, 
-		@InjectModel('Google') private googleModel: Model<IOauthToken>) {
+		@InjectModel('Google') private googleModel: Model<OauthTokenDoc>) {
 		this.oAuth2Client = new google.auth.OAuth2(
 			process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, REDIRECT_URI
 		)
