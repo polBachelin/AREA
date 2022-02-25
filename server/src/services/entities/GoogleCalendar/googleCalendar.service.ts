@@ -19,8 +19,6 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly',
 				'https://www.googleapis.com/auth/calendar.events',
 				'https://www.googleapis.com/auth/calendar.events.owned'];
 
-const CLIENT_ID = "338854183277-1u6esadfcuu84km6jvh9pd1adnq6vc9g.apps.googleusercontent.com"
-const CLIENT_SECRET = "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"
 const REDIRECT_URI = "http://localhost:3000/googleCalendar/auth";
 
 @Injectable()
@@ -31,7 +29,7 @@ export class GoogleCalendarService {
 	constructor(private userService: UsersService, private authService: AuthService, 
 		@InjectModel('Google') private googleModel: Model<IOauthToken>) {
 		this.oAuth2Client = new google.auth.OAuth2(
-			CLIENT_ID, CLIENT_SECRET, REDIRECT_URI
+			process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, REDIRECT_URI
 		)
   	}
 	

@@ -8,7 +8,9 @@ export class CreateEvent extends ATask {
 
 	constructor(name: string, data: properties) {
 		super(name, data);
-		this.oAuth2Client = new google.auth.OAuth2();
+		this.oAuth2Client = new google.auth.OAuth2(
+			process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET
+		);
 	}
 
 	async run(user: any): Promise<any> {
