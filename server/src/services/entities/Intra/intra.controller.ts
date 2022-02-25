@@ -25,17 +25,18 @@ export class IntraController {
         }
     }})
     async intraPostToken(@Query() query, @Req() req, @Body() linkDTO: LinkDTO) {
-        let info = {autologin: "", gpa:0};
+        let info = {email: '', autologin: "", gpa:0};
         let data = await this.intraService.getUserProfile(linkDTO.link)
         if (!data) {
             return new HttpException('Invalid autologin', HttpStatus.BAD_REQUEST);
         }
+        info.email = data.login;
         info.autologin = linkDTO.link;
         info.gpa = data.gpa[0].gpa;
         if (query.state) {
             let res = this.authService.verify(query.state);
             this.intraService.setIntraLink(res.email, info);
-            return {intra:info.autologin};
+            return {email: res.email, intra:info.autologin};
         } else
             return await this.intraService.LoginWithIntra(data.login, info);
 
