@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Redirect, Req, UseGuards } from "@nestjs/common";
+import { Controller, Get, Query, Redirect, Req, UseGuards, Request } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { query } from "express";
@@ -34,7 +34,6 @@ export class GoogleCalendarController {
 	}
 
 	@Get('/createEvent')
-	@ApiOperation({summary: "Get all the events from user calendars"})
 	async createGoogleEvent() {
 		const props: Map<string, any> = new Map<string, any>([
 			["calendar_id", "primary"],
@@ -51,5 +50,12 @@ export class GoogleCalendarController {
 		}).catch(err => {
 			console.log(err);
 		})
+	}
+
+	@Get('/listCalendars')
+	@ApiOperation({summary: "Get all calendars from user"})
+	@UseGuards(AuthGuard('jwt'))
+	async listCalendars(@Request() req) {
+		return this.googleService.listCalendars(req.user.email);
 	}
 }
