@@ -4,10 +4,6 @@ import { client, readyBot } from "../discord.service";
 
 export class SendMessage extends ATask {
 	
-	// constructor(name: string, data: properties) {
-	// 	super(name, data);
-	// }
-	
 	async run(user: any): Promise<any> {
 		let envToken = process.env.DISCORD_BOT_TOKEN;
 		client.login(envToken);
