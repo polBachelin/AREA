@@ -24,7 +24,7 @@
           <v-card-text style="font-size: 40px; font-weight: bold"> {{app.name}} </v-card-text>
         </v-col>
         <v-col cols="3" class="justify-center align-center">
-          <v-col cols="12" class="mt-2">
+          <v-col cols="12" class="mt-2 mb-2">
             <v-card v-if="app.isConnected" style="background-color: darkorange">
               <v-row class="align-center justify-center">
                 <v-col cols="6">
@@ -65,7 +65,7 @@
                   <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.reactions.length}} réactions </v-card-text>
                 </v-card>
               </template>
-              <span v-for="reaction in app.reactions" v-bind:key="reaction.id"> - {{ reaction.id }}</span>
+              <span v-for="reaction in app.reactions" v-bind:key="reaction.id"> - {{ reaction }}</span>
             </v-tooltip>
           </v-col>
         </v-row>
@@ -73,6 +73,8 @@
       </v-col>
 
       <v-col cols="1"></v-col>
+    </v-row>
+    <v-row class="mb-10">
     </v-row>
 
   </v-container>
