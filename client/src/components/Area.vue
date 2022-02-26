@@ -167,10 +167,12 @@
                 </v-col>
                 <v-col cols="4" class="text-right">
                   <v-btn v-if="currentDestination.label === 'services pour actions'"
+                         :disabled="checkIfServiceConnected(item.name)"
                          @click="selectActionService(index)" :style= "isButtonIndex(selectedActionService, index) ? 'background-color: lime' : ''">
                     SELECT
                   </v-btn>
                   <v-btn v-if="currentDestination.label === 'services pour reactions'"
+                         :disabled="checkIfServiceConnected(item.name)"
                          @click="selectReactionService(index)" :style= "isButtonIndex(selectedReactionService, index) ? 'background-color: lime' : ''">
                     SELECT
                   </v-btn>
@@ -589,6 +591,13 @@ export default {
     filterChannels() {
       this.channels = this.channels.filter(channel => channel.type === 'text')
     },
+
+    checkIfServiceConnected(name) {
+     if (this.connectedServices.toString().toUpperCase().indexOf(name.toUpperCase()) > -1)
+        return false
+      else
+        return true
+    }
   }
 }
 </script>
