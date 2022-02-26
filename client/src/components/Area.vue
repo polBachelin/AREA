@@ -157,10 +157,10 @@
           >
             <v-col cols="1"></v-col>
             <v-col cols="10">
-            <v-card class="mt-1" width="800">
+            <v-card class="mt-1" width="800" elevation="7">
               <v-row v-if="currentDestination.label === 'services pour actions' || currentDestination.label === 'services pour reactions'">
                 <v-col cols="4">
-                  <v-card-text class="text-center" style="font-size: 30px"> {{ item.name }} </v-card-text>
+                  <v-card-text class="text-center" style="font-size: 30px; font-weight: bold"> {{ item.name }} </v-card-text>
                 </v-col>
                 <v-col cols="2">
                   <v-img :src="item.icon" max-height="50" max-width="50"/>
@@ -180,7 +180,7 @@
               </v-row>
               <v-row v-if="currentDestination.label === 'actions' || currentDestination.label === 'reactions'">
                 <v-col cols="5">
-                  <v-card-text class="text-center" style="font-size: 30px"> {{ item }} </v-card-text>
+                  <v-card-text class="text-center" style="font-size: 30px; font-weight: bold"> {{ item }} </v-card-text>
                 </v-col>
                 <v-col cols="2">
                   <v-img :src="item.icon" max-height="50" max-width="50"/>
@@ -300,6 +300,214 @@
                     </v-row>
                   </v-row>
                 </v-row>
+
+                <v-row v-if="selectedReaction === 'Create an event'" class="ml-3">
+                  <v-col cols="12" class="mt-3 mb-3 text-center justify-center">
+                    <v-menu
+                        rounded
+                        offset-y
+                    >
+                      <template v-slot:activator="{ attrs, on }">
+                        <v-btn
+                            v-bind="attrs"
+                            v-on="on"
+                            color="orange"
+                        >
+                          Choose Calendar
+                        </v-btn>
+                      </template>
+
+                      <v-list>
+                        <v-list-item
+                            v-for="item in calendars"
+                            :key="item.id"
+                            @click="selectCalendar(item.id, item.summary)"
+                            link
+                        >
+                          <v-list-item-title v-text="item.summary"></v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                    <v-row>
+                      <v-col cols="5">
+                        <v-card-text class="text-right" style="font-size: 20px">
+                          Selected calendar:
+                        </v-card-text>
+                      </v-col>
+                      <v-col cols="5" class="text-left">
+                        <v-card-text class="text-left" style="color: darkorange; font-size: 25px">
+                          {{calendarName}}
+                        </v-card-text>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+<!--                  START DATES-->
+                  <v-col cols="6" class="">
+                    <v-dialog
+                        ref="dialog"
+                        v-model="startDateModal"
+                        persistent
+                        width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            style="font-size: 20px"
+                            v-model="startEventDate"
+                            label="Start Date"
+                            prepend-icon="mdi-calendar"
+                            v-bind="attrs"
+                            v-on="on"
+                            color="orange"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                          v-model="startEventDate"
+                          scrollable
+                          color="orange"
+                      >
+                        <v-btn
+                            text
+                            color="orange"
+                            @click="startDateModal = false"
+                        >
+                          Cancel
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            text
+                            color="orange"
+                            @click="startDateModal = false"
+                        >
+                          OK
+                        </v-btn>
+                      </v-date-picker>
+                    </v-dialog>
+                  </v-col>
+                  <v-col cols="5">
+                    <v-dialog
+                        ref="dialog"
+                        v-model="startTimeModal"
+                        width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            style="font-size: 20px"
+                            v-model="startEventTime"
+                            label="Start time"
+                            prepend-icon="mdi-clock-time-four-outline"
+                            color="orange"
+                            v-bind="attrs"
+                            v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-time-picker
+                          v-if="startTimeModal"
+                          v-model="startEventTime"
+                          format="24hr"
+                          color="orange"
+                      >
+                        <v-btn
+                            text
+                            color="orange"
+                            @click="startTimeModal = false"
+                        >
+                          Cancel
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            text
+                            color="orange"
+                            @click="startTimeModal = false; checkIfEventOk"
+                        >
+                          OK
+                        </v-btn>
+                      </v-time-picker>
+                    </v-dialog>
+                  </v-col>
+<!--                  END DATES-->
+                  <v-col cols="6" class="">
+                    <v-dialog
+                        ref="dialog"
+                        v-model="endDateModal"
+                        persistent
+                        width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            style="font-size: 20px"
+                            v-model="endEventDate"
+                            label="End Date"
+                            prepend-icon="mdi-calendar"
+                            v-bind="attrs"
+                            v-on="on"
+                            color="orange"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                          v-model="endEventDate"
+                          scrollable
+                          color="orange"
+                      >
+                        <v-btn
+                            text
+                            color="orange"
+                            @click="endDateModal = false"
+                        >
+                          Cancel
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            text
+                            color="orange"
+                            @click="endDateModal = false; checkIfEventOk"
+                        >
+                          OK
+                        </v-btn>
+                      </v-date-picker>
+                    </v-dialog>
+                  </v-col>
+                  <v-col cols="5">
+                    <v-dialog
+                        ref="dialog"
+                        v-model="endTimeModal"
+                        width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            style="font-size: 20px"
+                            v-model="endEventTime"
+                            label="End time"
+                            prepend-icon="mdi-clock-time-four-outline"
+                            color="orange"
+                            v-bind="attrs"
+                            v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-time-picker
+                          v-if="endTimeModal"
+                          v-model="endEventTime"
+                          format="24hr"
+                          color="orange"
+                      >
+                        <v-btn
+                            text
+                            color="orange"
+                            @click="endTimeModal = false"
+                        >
+                          Cancel
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            text
+                            color="orange"
+                            @click="endTimeModal = false; checkIfEventOk"
+                        >
+                          OK
+                        </v-btn>
+                      </v-time-picker>
+                    </v-dialog>
+                  </v-col>
+                </v-row>
               </v-row>
 
             </v-card>
@@ -390,7 +598,18 @@ export default {
         actionData: {},
         reactionName: '',
         reactionData: {}
-      }
+      },
+      startEventDate: null,
+      startEventTime: null,
+      startDateModal: false,
+      startTimeModal: false,
+      endEventDate: null,
+      endEventTime: null,
+      endDateModal: false,
+      endTimeModal: false,
+      calendars: [],
+      calendarName: '',
+      selectedCalendar: '',
     }
   },
 
@@ -402,7 +621,6 @@ export default {
     axios.get('http://localhost:3000/services', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
         .then((response) => {
           this.services = response.data
-          console.log(this.services)
         })
         .catch( () => {
           console.log("services fetch error")
@@ -410,7 +628,6 @@ export default {
 
     axios.get('http://localhost:3000/services/logged', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
         .then((response) => {
-          console.log(response.data)
           this.connectedServices = response.data
         })
         .catch( () => {
@@ -434,6 +651,14 @@ export default {
           console.log("channels fetch error")
         })
 
+    axios.get('http://localhost:3000/googleCalendar/listCalendars', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+        .then((response) => {
+          this.calendars = response.data
+          this.filterChannels()
+        })
+        .catch( () => {
+          console.log("channels fetch error")
+        })
 
   },
 
@@ -491,7 +716,7 @@ export default {
     selectAction(id) {
       this.selectedAction = this.selectedActionService.actions[id]
       this.currentDestination.isClicked = true
-      if (this.selectedAction === 'ReceiveMessage') {
+      if (this.selectedAction === 'Receive a message') {
         this.currentDestination.isConfirmed = true
       }
     },
@@ -525,6 +750,7 @@ export default {
         this.areaBody.reactionData = {message_content: this.discordMessage, guild_id: this.selectedGuild}
         this.sendAreaToBack(this.areaBody)
       }
+
       this.rightCardError = ''
       this.goodMessage = "Area created!"
     },
@@ -589,6 +815,12 @@ export default {
       this.currentDestination.isConfirmed = true
     },
 
+    selectCalendar(id, name) {
+      this.calendarName = name
+      this.selectedCalendar = id
+      this.checkIfEventOk()
+    },
+
     filterChannels() {
       this.channels = this.channels.filter(channel => channel.type === 'text')
     },
@@ -598,6 +830,12 @@ export default {
         return false
       else
         return true
+    },
+
+    checkIfEventOk() {
+      if (this.selectedCalendar && this.startEventTime && this.startEventDate && this.endEventTime && this.endEventDate) {
+        this.currentDestination.isConfirmed = true
+      }
     }
   }
 }

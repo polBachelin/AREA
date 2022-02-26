@@ -28,6 +28,7 @@
               </v-col>
               <v-col cols="2" class="align-end mr-2">
                 <v-switch
+                    color="orange"
                     v-model="enabled"
                     :append-icon="enabled ? 'mdi-checkbox-marked-circle' : 'mdi-cancel'"
                     @change="changeArea(area.name)"
