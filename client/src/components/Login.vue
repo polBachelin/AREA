@@ -162,6 +162,7 @@ export default {
 
     authorizeGoogle() {
       this.connectOauth(googleCalendarUrl);
+      localStorage.setItem('isLogged', 'true')
     }
   },
 }
