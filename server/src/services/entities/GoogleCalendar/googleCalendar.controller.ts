@@ -14,7 +14,7 @@ export class GoogleCalendarController {
 	
 	@Get('/auth')
 	@ApiOperation({summary: "Get the access token from google"})
-	//@Redirect('http://localhost:8080')
+	@Redirect('http://localhost:8080')
 	async googleCalendarCallback(@Query() query, @Req() req) {
 		let email: string = null;
 		let token = null;
