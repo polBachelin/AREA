@@ -402,6 +402,7 @@ export default {
     axios.get('http://localhost:3000/services', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
         .then((response) => {
           this.services = response.data
+          console.log(this.services)
         })
         .catch( () => {
           console.log("services fetch error")

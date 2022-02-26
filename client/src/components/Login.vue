@@ -58,8 +58,10 @@
           <v-col cols="5" class="ml-5 mt-2">
             <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeEpitech"> Connect to Intra </v-btn>
           </v-col>
-          <v-col cols="5" class="ml-5">
-              <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeGoogle"> Connect to Google </v-btn>
+        </v-row>
+        <v-row>
+          <v-col cols="5" class="ml-5 mb-3">
+            <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeGoogle"> Connect to Google </v-btn>
           </v-col>
         </v-row>
       </v-card>
