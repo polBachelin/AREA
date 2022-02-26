@@ -4,7 +4,7 @@ import { UsersService } from '../users/users.service';
 import { allServices } from './allServices';
 
 const serviceName = [
-  "notion", "discord", "intra", "google", "github"
+  "Notion", "Discord", "Intra", "Google Calendar", "Github"
 ]
 
 @Injectable()
