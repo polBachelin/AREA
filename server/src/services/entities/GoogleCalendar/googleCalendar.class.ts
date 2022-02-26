@@ -9,7 +9,7 @@ export class GoogleCalendar implements IService {
 
 	constructor() {
 		this.id = undefined;
-		this.name = "Google Calendar";
+		this.name = "Google";
 		this.icon = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Calendar_icon_%282020%29.svg/2048px-Google_Calendar_icon_%282020%29.svg.png";
 		this.actions = [];
 		this.reactions = [
