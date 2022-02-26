@@ -21,19 +21,12 @@
               elevation="10"
           >
             <v-row class="align-center align-content-center ml-3">
-              <v-col cols="4">
-                 <v-img 
-                  :src="area.icon"
-                  max-height="50"
-                  max-width="50"
-                />
-              </v-col>
-              <v-col cols="4">
+              <v-col cols="9">
                 <v-card-text class="text-center mt-1 mb-1" style="color: black; font-size: 35px">
                   {{area.name}}
                 </v-card-text>
               </v-col>
-              <v-col cols="2">
+              <v-col cols="2" class="align-end mr-2">
                 <v-switch
                     v-model="enabled"
                     :append-icon="enabled ? 'mdi-checkbox-marked-circle' : 'mdi-cancel'"
