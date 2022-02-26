@@ -21,19 +21,17 @@
               elevation="10"
           >
             <v-row class="align-center align-content-center ml-3">
-              <v-col cols="4">
-                 <v-img 
-                  :src="area.icon"
-                  max-height="50"
-                  max-width="50"
-                />
-              </v-col>
-              <v-col cols="4">
+              <v-col cols="9">
                 <v-card-text class="text-center mt-1 mb-1" style="color: black; font-size: 35px">
                   {{area.name}}
                 </v-card-text>
               </v-col>
-              <v-col cols="4">
+              <v-col cols="2" class="align-end mr-2">
+                <v-switch
+                    v-model="enabled"
+                    :append-icon="enabled ? 'mdi-checkbox-marked-circle' : 'mdi-cancel'"
+                    @change="changeArea(area.name)"
+                ></v-switch>
               </v-col>
             </v-row>
           </v-card>
@@ -84,10 +82,31 @@ export default {
 
   data() {
     return {
-      areas: []
+      areas: [{name: 'test'}],
+      enabled: false,
+      switchText: 'disabled'
     }
   },
   methods: {
+    changeArea(name) {
+      if (this.enabled === true) {
+        axios.get(`http://localhost:3000/area/${name}/enable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+            .then((response) => {
+              console.log(response.data)
+            })
+            .catch(() => {
+              console.log("Enable area error")
+            })
+      } else {
+        axios.get(`http://localhost:3000/area/${name}/disable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+            .then((response) => {
+              console.log(response.data)
+            })
+            .catch(() => {
+              console.log("Disable area error")
+            })
+      }
+    }
   },
   
     mounted() {
