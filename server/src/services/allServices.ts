@@ -6,6 +6,7 @@ import { AddToDB } from './entities/Notion/actions/AddToDB';
 import { SendMessage } from './entities/Discord/reactions/SendMessage';
 import { ReceiveMessage } from './entities/Discord/actions/ReceiveMessage';
 import { googleCalendar } from './entities/GoogleCalendar/googleCalendar.class';
+import { CreateEvent } from './entities/GoogleCalendar/reactions/CreateEvent';
 
 export let allServices: IService[] = [];
 allServices.push(notion);
@@ -23,6 +24,8 @@ const actionsMap = {
 const reactionsMap = {
 	//DISCORD
 	"Send a message": SendMessage,
+
+	"Create an event": CreateEvent
 }
 
 /*
