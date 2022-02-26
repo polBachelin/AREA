@@ -12,7 +12,8 @@ export let allServices: IService[] = [];
 allServices.push(notion);
 allServices.push(discord);
 allServices.push(intra);
-allServices.push(googleCalendar)
+allServices.push(googleCalendar);
+
 const actionsMap = {
 	//NOTION
 	"Add to database": AddToDB,
@@ -24,8 +25,8 @@ const actionsMap = {
 const reactionsMap = {
 	//DISCORD
 	"Send a message": SendMessage,
+	"Create an event": CreateEvent,
 
-	"Create an event": CreateEvent
 }
 
 /*

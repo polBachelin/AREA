@@ -4,13 +4,13 @@ import { client, readyBot } from "../discord.service";
 
 export class SendMessage extends ATask {
 	
-	constructor(name: string, data: properties) {
-		super(name, data);
-		let envToken = process.env.DISCORD_BOT_TOKEN;
-	}
+	// constructor(name: string, data: properties) {
+	// 	super(name, data);
+	// }
 	
 	async run(user: any): Promise<any> {
-		client.login(user.discord.access_token);
+		let envToken = process.env.DISCORD_BOT_TOKEN;
+		client.login(envToken);
 		const id = this.data.get('guild_id');
 		const content = this.data.get('message_content');
 
