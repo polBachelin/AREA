@@ -1,5 +1,5 @@
 import { ATask } from "src/interfaces/task.interface";
-import { ATrigger, REFRESH_RATE } from "src/interfaces/trigger.interface";
+import { ATrigger, REFRESH_RATE } from "../../../../interfaces/trigger.interface";
 import { IUser } from "src/models/User";
 import { notionClient } from "../notion.service";
 
@@ -25,4 +25,4 @@ export class AddToDB extends ATrigger {
 			}
 		}, REFRESH_RATE)
 	}
-}
+} export type properties = Map<string, any>

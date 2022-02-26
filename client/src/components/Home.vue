@@ -3,9 +3,9 @@
 
     <v-row justify="center">
 
-      <v-card width="800" style=" background-color: white; margin:0px;  border-radius: 0px 0px 10px 10px; margin-bottom:-110px">
+      <v-card width="800" style=" background-color: white; border-radius: 0px 0px 10px 10px; margin: 0px 0px -110px;">
         <v-row class="mt-1 mb-1"></v-row>
-        <v-row v-if="areas.length == 0">
+        <v-row v-if="areas.length === 0">
             <v-card-text class="text-center mt-10 mb-10" style=" color: grey; font-size: 40px; border-radius: 0px">Aucune Aréa</v-card-text>
         </v-row>
         <v-row v-else
@@ -13,14 +13,12 @@
             :key="area.id"
             class="text-center justify-center align-center"
         >
-          
           <v-card 
               style="background-color: white; border: 1px solid darkorange"
               class="mt-2 mb-2"
               width="600px"
               height="60px"
               elevation="10"
-
           >
             <v-row class="align-center align-content-center ml-3">
               <v-col cols="4">
@@ -86,27 +84,21 @@ export default {
 
   data() {
     return {
-      areas: [
-      ]
+      areas: []
     }
   },
   methods: {
-    goToArea() {
-      
-      localStorage.setItem('isLogged', 'false')
-      this.$router.push('/login')
-    }
   },
   
     mounted() {
-    axios.get('http://localhost:3000/area', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} ) 
+        axios.get('http://localhost:3000/area', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
     
         .then((response) => {
           this.areas = response.data
           console.log(response.data)
         })
         
-        .catch( () => {
+        .catch(() => {
           console.log("services fetch error")
         })
   },
@@ -115,11 +107,5 @@ export default {
 </script>
 
 <style scoped>
-
-.my-areas-title-text {
-  background-color: black;
-  font-weight: bold;
-  font-size: 50px
-}
 
 </style>

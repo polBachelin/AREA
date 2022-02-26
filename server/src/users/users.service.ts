@@ -43,6 +43,7 @@ export class UsersService {
   }
 
   async removeArea(email: string, areaName: string) {
+    //TODO
   }
 
   async findByLogin(UserDTO: LoginDTO) {

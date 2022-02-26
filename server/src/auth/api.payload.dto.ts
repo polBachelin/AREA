@@ -13,3 +13,11 @@ export class LoginApiDTO {
     })
     password!: string;
 }
+
+export class IntraTokenDTO {
+    @ApiProperty({
+        type: String,
+        description: "Autologin link"
+    })
+    link!: string
+}

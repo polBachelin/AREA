@@ -9,6 +9,10 @@ export const notionSchema = new mongoose.Schema({
     owner: {type: Object}
 });
 
+export interface notion {
+    access_token: string;
+};
+
 export interface INotion extends Document {
     access_token: {type: String},
     workspace_id: {type: String},

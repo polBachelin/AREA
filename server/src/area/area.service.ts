@@ -103,8 +103,22 @@ export class AreaService {
 		if (await this.areaExists(userEmail, areaName)) {
 			let userAreas: Area[] = this.areas.get(userEmail);
 			userAreas.forEach(async (j) => {
-				if (j.name == areaName)
+				if (j.name == areaName) {
 					j.enable(await this.userService.findOne(userEmail));
+					return;
+				}
+			})
+		}
+	}
+
+	public async disableArea(userEmail: string, areaName: string) {
+		if (await this.areaExists(userEmail, areaName)) {
+			let userAreas: Area[] = this.areas.get(userEmail);
+			userAreas.forEach(async (j) => {
+				if (j.name == areaName) {
+					j.disable();
+					return;
+				}
 			})
 		}
 	}
