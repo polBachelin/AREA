@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Header } from '@nestjs/common';
+import { Controller, Get, Param, Header, UseGuards, Query, Request } from '@nestjs/common';
 import {ServicesService} from './services.service';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiResponseProperty, ApiTags} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('services')
 @Controller('/services')
@@ -23,5 +24,12 @@ export class ServicesController {
 	@ApiOperation( {summary: 'Get certain service reactions'})
 	getReactions(@Param('id') id: string): JSON {
 		return this.servicesService.getServiceReactions(id);
+	}
+
+	@Get('/logged')
+	@ApiOperation({summary: 'Get all logged in services'})
+	@UseGuards(AuthGuard('jwt'))
+	getLoggedServices(@Request() req) {
+		return this.servicesService.getLoggedInServices(req.user.email);	
 	}
 }

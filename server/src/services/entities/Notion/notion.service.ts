@@ -4,11 +4,11 @@ import axios, { AxiosPromise } from "axios";
 import type { GetUserResponse } from "@notionhq/client/build/src/api-endpoints"
 import { INotion } from "src/models/Notion";
 import { Model } from 'mongoose';
-import { UsersService } from "src/users/users.service";
+import { UsersService } from "../../../users/users.service";
 import { InjectModel } from '@nestjs/mongoose';
 import { Client } from "@notionhq/client";
-import { AuthService } from "src/auth/auth.service";
-import { RegisterDTO } from "src/users/register.dto";
+import { AuthService } from "../../../auth/auth.service";
+import { RegisterDTO } from "../../../users/register.dto";
 
 
 type NotionPersonUser = Extract<GetUserResponse, { type: "person" }>

@@ -3,10 +3,10 @@ import { AxiosRequestConfig } from "@nestjs/common/node_modules/axios";
 import { InjectModel } from "@nestjs/mongoose";
 import axios, {AxiosPromise} from 'axios';
 import { Model } from "mongoose";
-import { User, UsersService } from "src/users/users.service";
-import { AuthService } from "src/auth/auth.service";
-import { RegisterDTO } from "src/users/register.dto";
-import { IOauthToken } from "src/models/OauthToken";
+import { User, UsersService } from "../../../users/users.service";
+import { AuthService } from "../../../auth/auth.service";
+import { RegisterDTO } from "../../../users/register.dto";
+import { OauthTokenDoc } from "src/models/OauthToken";
 import { Client, GuildChannel, TextChannel } from 'discord.js'
 
 const DiscordOauth2 = require("discord-oauth2");
@@ -43,7 +43,7 @@ export async function readyBot() {
 export class DiscordService {
 
 	constructor(
-		@InjectModel('Discord') private discordModel: Model<IOauthToken>,
+		@InjectModel('Discord') private discordModel: Model<OauthTokenDoc>,
 		private userService: UsersService,
 		private authService: AuthService
 	) {}

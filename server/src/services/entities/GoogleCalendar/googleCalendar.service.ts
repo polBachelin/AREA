@@ -5,7 +5,7 @@ import { Model } from 'mongoose'
 import { RegisterDTO } from "src/users/register.dto";
 import { AuthService } from "src/auth/auth.service";
 import { InjectModel } from "@nestjs/mongoose";
-import { IOauthToken } from "src/models/OauthToken";
+import { OauthTokenDoc } from "src/models/OauthToken";
 import { OAuth2Client, Credentials} from 'google-auth-library';
 
 
@@ -27,7 +27,7 @@ export class GoogleCalendarService {
 	private oAuth2Client: OAuth2Client;
 
 	constructor(private userService: UsersService, private authService: AuthService, 
-		@InjectModel('Google') private googleModel: Model<IOauthToken>) {
+		@InjectModel('Google') private googleModel: Model<OauthTokenDoc>) {
 		this.oAuth2Client = new google.auth.OAuth2(
 			process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, REDIRECT_URI
 		)
@@ -50,12 +50,14 @@ export class GoogleCalendarService {
 			auth: this.oAuth2Client,
 			version: 'v2'
 		});
+		let email = null;
 		await profile.userinfo.get().then(res => {
-			return res.data.email;
+			email = res.data.email;
 		}).catch(err => {
 			console.log(err);
 		});
-		return "";
+		if (email)
+			return email;
 	}
 
 	public async loginByGoogleCalendar(email: string, token: string) {
@@ -66,6 +68,7 @@ export class GoogleCalendarService {
 				registerDTO = {email: email, password: ''};
 				user = await this.userService.createUser(registerDTO);
 			}
+			console.log(token);
 			this.setToken(email, token);
 			const t = await this.authService.signUser(user);
 			console.log(t);
@@ -79,6 +82,15 @@ export class GoogleCalendarService {
 			res.save();
 			return this.userService.sanitizeUser(res);
 		})
+	}
+
+	public async listCalendars(email: string) {
+		const token = await this.userService.getSpecificService('google', email);
+		this.oAuth2Client.setCredentials(token)
+		const calendar = google.calendar({version: 'v3', auth: this.oAuth2Client});
+		
+		const list = await calendar.calendarList.list();
+		return list.data.items;
 	}
 
 	public listEvents(auth) {

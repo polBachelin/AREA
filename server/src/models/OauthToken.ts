@@ -8,7 +8,15 @@ export const oauthToken = new mongoose.Schema({
     scope: {type: String}
 });
 
-export interface IOauthToken extends Document {
+export interface OauthToken {
+    access_token: string,
+    token_type: string,
+    expires_in: number,
+    refresh_token: string,
+    scope: string
+};
+
+export interface OauthTokenDoc extends Document {
   access_token: {type: String},
     token_type: {type: String},
     expires_in: {type: Number},

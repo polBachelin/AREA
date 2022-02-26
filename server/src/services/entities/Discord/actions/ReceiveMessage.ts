@@ -1,4 +1,4 @@
-import { ATrigger } from "src/interfaces/trigger.interface";
+import { ATrigger } from "../../../../interfaces/trigger.interface";
 import { ATask, properties } from "src/interfaces/task.interface";
 import { Client } from 'discord.js'
 import {client } from '../discord.service'
