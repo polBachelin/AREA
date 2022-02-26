@@ -33,7 +33,12 @@
                   {{area.name}}
                 </v-card-text>
               </v-col>
-              <v-col cols="4">
+              <v-col cols="2">
+                <v-switch
+                    v-model="enabled"
+                    :append-icon="enabled ? 'mdi-checkbox-marked-circle' : 'mdi-cancel'"
+                    @change="changeArea(area.name)"
+                ></v-switch>
               </v-col>
             </v-row>
           </v-card>
@@ -84,10 +89,31 @@ export default {
 
   data() {
     return {
-      areas: []
+      areas: [{name: 'test'}],
+      enabled: false,
+      switchText: 'disabled'
     }
   },
   methods: {
+    changeArea(name) {
+      if (this.enabled === true) {
+        axios.get(`http://localhost:3000/area/${name}/enable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+            .then((response) => {
+              console.log(response.data)
+            })
+            .catch(() => {
+              console.log("Enable area error")
+            })
+      } else {
+        axios.get(`http://localhost:3000/area/${name}/disable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+            .then((response) => {
+              console.log(response.data)
+            })
+            .catch(() => {
+              console.log("Disable area error")
+            })
+      }
+    }
   },
   
     mounted() {
