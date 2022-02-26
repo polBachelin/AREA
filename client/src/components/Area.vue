@@ -230,8 +230,14 @@
                         {{databaseName}}
                       </v-card-text>
                   </v-row>
+                  </v-row>
+
+<!--                DISCORD-->
+                <v-row v-if="selectedActionService.name === 'Discord'" >
+                  <v-row v-if="selectedAction === 'ReceiveMessage'" class="text-center justify-center mb-2">
 
                   </v-row>
+                </v-row>
 
                 </v-row>
 
@@ -363,6 +369,7 @@ export default {
       selectedReaction: '',
       isSelected: false,
       services: [],
+      connectedServices: [],
       errorMsg: '',
       rightCardError: '',
       goodMessage: '',
@@ -389,12 +396,22 @@ export default {
     this.currentDestination = {label: 'none'}
     this.resetArea()
     this.accessToken = localStorage.getItem('accessToken')
+
     axios.get('http://localhost:3000/services', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
         .then((response) => {
           this.services = response.data
         })
         .catch( () => {
           console.log("services fetch error")
+        })
+
+    axios.get('http://localhost:3000/services/logged', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
+        .then((response) => {
+          console.log(response.data)
+          this.connectedServices = response.data
+        })
+        .catch( () => {
+          console.log("logged services fetch error")
         })
 
     axios.get('http://localhost:3000/notion/databases', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
@@ -411,7 +428,7 @@ export default {
           this.filterChannels()
         })
         .catch( () => {
-          console.log("databases fetch error")
+          console.log("channels fetch error")
         })
 
 
@@ -471,6 +488,9 @@ export default {
     selectAction(id) {
       this.selectedAction = this.selectedActionService.actions[id]
       this.currentDestination.isClicked = true
+      if (this.selectedAction === 'ReceiveMessage') {
+        this.currentDestination.isConfirmed = true
+      }
     },
 
     selectReactionService(id) {
