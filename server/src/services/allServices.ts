@@ -5,12 +5,13 @@ import { intra } from './entities/Intra/Intra.class';
 import { AddToDB } from './entities/Notion/actions/AddToDB';
 import { SendMessage } from './entities/Discord/reactions/SendMessage';
 import { ReceiveMessage } from './entities/Discord/actions/ReceiveMessage';
+import { googleCalendar } from './entities/GoogleCalendar/googleCalendar.class';
 
 export let allServices: IService[] = [];
 allServices.push(notion);
 allServices.push(discord);
 allServices.push(intra);
-
+allServices.push(googleCalendar)
 const actionsMap = {
 	//NOTION
 	"Add to database": AddToDB,
