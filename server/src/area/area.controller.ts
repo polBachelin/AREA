@@ -29,6 +29,14 @@ export class AreaController {
 		return this.areaService.enableAnArea(req.user.email, name);
 	}
 
+	@Get(':name/disable')
+	@ApiOperation({summary: 'Disable an area with name for logged in user'})
+	@UseGuards(AuthGuard('jwt'))
+	disableArea(@Request() req, @Param('name') name: string) {
+		return this.areaService.disableArea(req.user.email, name);
+	}
+
+
 	@Get()
 	@ApiOperation({summary: 'Get logged in user areas'})
 	@UseGuards(AuthGuard('jwt'))
