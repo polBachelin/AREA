@@ -99,7 +99,7 @@ export default {
   },
   
     mounted() {
-    axios.get('http://localhost:3000/area', { 'headers': { 'Authorization': 'Bearer' + localStorage.getItem('accessToken') }} ) 
+    axios.get('http://localhost:3000/area', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} ) 
     
         .then((response) => {
           this.areas = response.data
