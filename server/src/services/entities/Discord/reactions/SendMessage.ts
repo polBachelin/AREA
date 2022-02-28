@@ -1,6 +1,7 @@
 import { ATask, properties } from "../../../../interfaces/task.interface";
 import { Client, GuildChannel, TextChannel } from 'discord.js'
 import { client, readyBot } from "../discord.service";
+import { Logger } from "@nestjs/common";
 
 export class SendMessage extends ATask {
 	
@@ -13,6 +14,7 @@ export class SendMessage extends ATask {
 		if (!id || !content) throw 'Invalid Data'
 		let channel = undefined;		
 
+		Logger.log("CALLBACK DISCORD REACT");
 		readyBot();
 		
 		try {
@@ -24,6 +26,7 @@ export class SendMessage extends ATask {
 			const tc = channel as TextChannel
 			await tc.send(content)
 		} catch(err) {
+			Logger.log(err);
 			throw err
 		}
 

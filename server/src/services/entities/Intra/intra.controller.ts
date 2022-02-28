@@ -1,4 +1,5 @@
-import { Controller, Post, Req, Query, Body, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import { Controller, Post, Req, Query, Body, HttpException, HttpStatus, Logger, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags, ApiBody } from '@nestjs/swagger';
 import { IntraTokenDTO } from 'src/auth/api.payload.dto';
 import { AuthService } from 'src/auth/auth.service';
@@ -40,5 +41,16 @@ export class IntraController {
         } else
             return await this.intraService.LoginWithIntra(data.login, info);
 
+    }
+
+    @Post('change_gpa')
+    async changeGPA(@Req() req, @Query() query) {
+        if (!query.email)
+            return;
+        const user = await this.userService.findOne(query.email);
+        if (query.gpa) {
+            user.intra.gpa = query.gpa;
+            user.save();
+        }
     }
 }
