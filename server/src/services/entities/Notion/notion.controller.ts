@@ -54,5 +54,22 @@ export class NotionController {
 		return this.notionService.getAllDatabaseTitles(req.user.email)
 	}
 
-	//TODO add db id getter from db title
+	@Get('/auth_mobile')
+	@ApiOperation({ summary: "Get the access token from the authorization code"})
+    async notionMobileCallback(@Req() req, @Query() query, @Response() res) {
+		let email: string = null;
+		let notionToken = null;
+		await this.notionService.authorize(query.code).then((res) => {
+			email = res.data.owner.user.person.email;
+			notionToken = res.data;
+		}).catch((err) => {
+			console.log(err);
+		})
+		if (query.state) {
+			let result = this.authService.verify(query.state);
+			this.notionService.setNotionToken(result.email, notionToken)
+			return {notion: notionToken};
+		} else
+			return await this.notionService.loginByNotion(email, notionToken);
+	}
 }

@@ -12,15 +12,17 @@ export class GPAChanges extends ATrigger {
         this.intervalObj = setInterval(async () => {            
             const link = user.intra.autologin;
             const gpa = user.intra.gpa;
-            let res = await axios.get(link+'/user/?format=json')
-            if (!res) {
-                return new HttpException('Invalid autologin', HttpStatus.BAD_REQUEST);
-            }
-            const new_gpa = res.data.gpa[0].gpa;
-            if (!this.isRunning() && (new_gpa && gpa && (new_gpa != gpa))) {
-                callback()
-                this.setRunning();
-                this.lastExec = new Date();
+            if (link) {
+                let res = await axios.get(link+'/user/?format=json')
+                if (!res) {
+                    return new HttpException('Invalid autologin', HttpStatus.BAD_REQUEST);
+                }
+                const new_gpa = res.data.gpa[0].gpa;
+                if (!this.isRunning() && (new_gpa && gpa && (new_gpa != gpa))) {
+                    callback()
+                    this.setRunning();
+                    this.lastExec = new Date();
+                }
             }
         }, INTRA_REFRESH_RATE)
         

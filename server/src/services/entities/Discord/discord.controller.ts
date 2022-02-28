@@ -62,4 +62,25 @@ export class DiscordController {
 			console.log(err);
 		});
 	}
+
+	@Get('/auth_mobile')
+	@ApiOperation({summary: "Get the access from the authorization"})
+	async discordMobileCallback(@Query() query, @Req() req) {
+		let email: string = null;
+		let discordToken = null;
+
+		await this.discordService.authorize(query.code).then((res) => {
+			discordToken = res;
+			console.log(discordToken)
+		})
+		if (discordToken) {
+			email = await this.discordService.getUserEmail(discordToken.access_token)
+		}
+		if (query.state) {
+			let res = this.authService.verify(query.state);
+			this.discordService.setDiscordToken(res.email, discordToken)
+			return {discord: discordToken};
+		} else
+			return await this.discordService.LoginByDiscord(email, discordToken);
+	}
 }
