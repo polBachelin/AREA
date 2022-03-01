@@ -14,5 +14,5 @@ export const areaSchema = new mongoose.Schema({
 	actionName: {type: String},
 	reactionName: {type: String},
 	actionData: Map,
-	reactoinData: Map,
+	reactionData: Map,
 });
