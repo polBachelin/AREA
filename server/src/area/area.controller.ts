@@ -41,7 +41,7 @@ export class AreaController {
 	@ApiOperation({summary: 'Get logged in user areas'})
 	@UseGuards(AuthGuard('jwt'))
 	getAllAreas(@Request() req) {
-		return this.areaService.getUserAreas(req.user.email);
+		return this.areaService.getUserAreas(req.user.email)
 	}
 
 	@Get(':name')

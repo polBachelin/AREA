@@ -69,7 +69,7 @@ export class AreaService {
 			return {error: "This area name already exists"};
 		}
 		let area = await this.newArea(areaName, actionName, reactionName, actionData, reactionData);
-		let userAreas: Area[] = this.areas[userEmail];
+		let userAreas: Area[] = this.areas.get(userEmail);
 		if (userAreas == undefined) {
 			this.areas.set(userEmail, [area])
 		} else {
