@@ -25,7 +25,7 @@
         </v-col>
         <v-col cols="3" class="justify-center align-center">
           <v-col cols="12" class="mt-2 mb-2">
-            <v-card v-if="app.isConnected" style="background-color: darkorange">
+            <v-card v-if="areas.discord" style="background-color: darkorange">
               <v-row class="align-center justify-center">
                 <v-col cols="6">
                   <v-card-text style="color: white; font-size: 30px"> connecté </v-card-text>
@@ -120,7 +120,7 @@ export default {
           console.log("services fetch error")
         })
     
-    axios.get('http://localhost:3000/auth/profile', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} ) 
+    axios.get('http://localhost:3000/auth/profile', { 'headers': { 'Authorization': 'Bearer' + localStorage.getItem('accessToken') }} ) 
         .then((response) => {
           this.areas = response.data
           console.log(response.data)
