@@ -57,4 +57,11 @@ export class AreaController {
 	deleteArea(@Request() req, @Param('name') name: string) {
 		return this.areaService.deleteAnArea(req.user.email, name);
 	}
+
+	@Get('/:name/isEnabled')
+	@ApiOperation({summary: "Checks if area is enabled"})
+	@UseGuards(AuthGuard('jwt'))
+	isEnabled(@Request() req, @Param('name') name: string) {
+		return this.areaService.isEnabled(req.user.email, name);
+	}
 }

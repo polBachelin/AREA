@@ -9,6 +9,7 @@ import { Model } from 'mongoose';
 import { AreaDTO } from "./area.dto";
 import { UsersService } from "src/users/users.service";
 import { IUser } from "src/models/User";
+import { AreaState } from "src/area/area.class";
 
 @Injectable()
 export class AreaService {
@@ -80,7 +81,7 @@ export class AreaService {
 			actionName: actionName,
 			reactionName: reactionName,
 			actionData: actionData,
-			reactionData: reactionData
+			reactionData: reactionData,
 		});
 		user.areas.push(newArea);
 		user.save();
@@ -132,5 +133,12 @@ export class AreaService {
 			if (j.name === areaName)
 				return j;
 		});
+	}
+
+	public async isEnabled(email: string, areaName: string): Promise<boolean> {
+		let ar = await this.getArea(email, areaName);
+		if (ar.status == AreaState.DISABLED)
+			return false;
+		return true;
 	}
 }
