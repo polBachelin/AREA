@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:area/pages/login_screen.dart';
+import 'package:area/services/discord_api.dart';
 import 'package:area/theme.dart' as theme;
 
 import '../components/delayed_animation.dart';
@@ -90,7 +90,7 @@ class AuthScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/discord_oauth');
+                        doDiscordOAuth(context);
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
@@ -152,7 +152,11 @@ class AuthScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const FaIcon(FontAwesomeIcons.instagram),
+                          const ImageIcon(
+                              AssetImage("images/Epitech.png"),
+                              color: Colors.white,
+                              size: 24,
+                          ),
                           const SizedBox(width: 10),
                           Text(
                             'Intra Epitech',
@@ -166,6 +170,41 @@ class AuthScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
+                    Text(
+                      "or Register",
+                      style: GoogleFonts.poppins(
+                        color: theme.primaryColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/register_email");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: const StadiumBorder(),
+                        primary: theme.primaryColor,
+                        padding: const EdgeInsets.all(13),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.app_registration),
+                          const SizedBox(width: 10),
+                          Text(
+                            'with Email',
+                            style: GoogleFonts.poppins(
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),

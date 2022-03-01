@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,13 +10,15 @@ class RFLargeButton extends StatefulWidget {
   final String buttonText;
   final IconData buttonIcon;
   final Function passedFunction;
+  final BuildContext parentContext;
 
   const RFLargeButton(
       {Key? key,
       required this.backgroundColor,
       required this.passedFunction,
       required this.buttonText,
-      required this.buttonIcon})
+      required this.buttonIcon,
+      required this.parentContext})
       : super(key: key);
 
   @override
@@ -28,7 +32,7 @@ class RFLargeButtonState extends State<RFLargeButton> {
   Widget build(BuildContext context) {
     return (ButtonTheme(
       child: ElevatedButton(
-        onPressed: () => widget.passedFunction(context),
+        onPressed: () => widget.passedFunction(widget.parentContext),
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
           primary: widget.backgroundColor,

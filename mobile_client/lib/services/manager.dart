@@ -4,9 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Server {
   Server({required this.url});
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   String url;
   Map<String, String> headers = {"Content-Type": "application/json"};
@@ -19,8 +21,7 @@ class Server {
     if (kDebugMode) {
       print("GET - $route");
     }
-    final response =
-        await http.get(Uri.parse(url + route), headers: headers);
+    final response = await http.get(Uri.parse(url + route), headers: headers);
     if (kDebugMode) {
       print("Response payload : ${response.body}");
     }
@@ -77,6 +78,24 @@ class Server {
 
   Future<bool> register(dynamic data) async {
     final response = await postRequest('/auth/register', data);
+    if (response.statusCode >= 300) {
+      print(response.body.toString());
+      final error = json.decode(response.body.toString())['message'];
+      return false;
+    }
+    _prefs.then((SharedPreferences prefs) {
+      prefs.setString(
+          "username", json.decode(response.body.toString())['user']['email']);
+      prefs.setString("token_session",
+          json.decode(response.body.toString())['token']['access_token']);
+      //print("JSON = " + json.decode(response.body.toString()));
+      print(prefs.getString("username"));
+    });
+    return true;
+  }
+
+  Future<bool> oauthPOSTCode(dynamic data, String serviceName) async {
+    final response = await postRequest('/' + serviceName + '/auth', data);
     if (response.statusCode >= 300) {
       print(response.body.toString());
       final error = json.decode(response.body.toString())['error'];

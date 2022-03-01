@@ -1,10 +1,11 @@
 import 'package:area/components/roundedFlatButtonLarge.dart';
 import 'package:area/components/toast.dart';
-import 'package:area/service/api.dart';
+import 'package:area/services/manager.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../components/delayed_animation.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -32,6 +33,7 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   void register(BuildContext context) {
+    print("Try Register IP : " + Manager.of(context).api.url);
     Manager.of(context).api.register({
       "email": _email,
       "password": _password,
@@ -102,6 +104,7 @@ class _RegisterFormState extends State<RegisterForm> {
               buttonIcon: Icons.login,
               passedFunction: register,
               buttonText: 'Register',
+              parentContext: context,
               ),
           ),
         ],

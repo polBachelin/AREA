@@ -15,6 +15,8 @@ class RegisterEmailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        centerTitle: true,
+        title: Image.asset("./images/AREA.png"),
         backgroundColor: theme.background,
         leading: IconButton(
           icon: const Icon(
@@ -41,7 +43,7 @@ class RegisterEmailScreen extends StatelessWidget {
                   DelayedAnimation(
                     delay: 500,
                     child: Text(
-                      "Connect with email address",
+                      "Register you with email address",
                       style: GoogleFonts.poppins(
                         color: d_red,
                         fontSize: 25,

@@ -1,8 +1,6 @@
 import 'package:area/pages/register_email_screen.dart';
 import 'package:area/pages/select_server.dart';
-import 'package:area/service/api.dart';
-import 'package:area/service/discord_api%20copy.dart';
-import 'package:area/service/discord_api.dart';
+import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'pages/home_screen.dart';
@@ -24,7 +22,7 @@ class MyApp extends StatelessWidget {
             title: 'AREA',
             // Start the app with the "/" named route. In this case, the app starts
             // on the RegisterScreen widget.
-            initialRoute: '/',
+            initialRoute: '/home',
             debugShowCheckedModeBanner: false,
             routes: {
           // When navigating to the "/" route, build the RegisterScreen widget.
@@ -32,7 +30,6 @@ class MyApp extends StatelessWidget {
           // When navigating to the "/second" route, build the HomeScreen widget.
           // '/welcome': (context) => const WelcomeScreen(),
           '/register': (context) => const AuthScreen(),
-          '/discord_oauth': (context) => RootPage(),
           '/register_email': (context) => const RegisterEmailScreen(),
           '/home': (context) => const HomeScreen(),
           '/login': (context) => const LoginScreen(),

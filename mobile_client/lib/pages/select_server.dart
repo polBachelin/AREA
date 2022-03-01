@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:area/components/roundedFlatButton.dart';
 import 'package:area/components/inputText.dart';
 import 'package:area/theme.dart' as theme;
-import 'package:area/service/api.dart';
+import 'package:area/services/manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ServerPage extends StatefulWidget {
   const ServerPage({Key? key}) : super(key: key);
@@ -12,17 +13,35 @@ class ServerPage extends StatefulWidget {
 }
 
 class ServerPageState extends State<ServerPage> {
-  String _newServer = '';
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   void _getNewServer(String server) {
     setState(() {
-      _newServer = server;
+      _prefs.then((SharedPreferences prefs) {
+        print("Base IP : " + prefs.getString('server_ip')!);
+        prefs.setString('server_ip', server);
+        Manager.of(context).api.changeUrl("http://" + prefs.getString('server_ip')! + ":3000");
+        print("Update IP : " + Manager.of(context).api.url);
+      });
     });
   }
 
-  void _connectServer(BuildContext context) {
-    Manager.of(context).api.changeUrl("http://" + _newServer + ":3000");
+  @override
+  void initState() {
+    super.initState();
+    _prefs.then((SharedPreferences prefs) {
+      return prefs.getString('server_ip') ??
+          prefs.setString('server_ip', '192.168.43.15');
+    });
+  }
+
+  void _connectServer(BuildContext context) async {
+    final SharedPreferences prefs = await _prefs;
+    final String server = prefs.getString('server_ip') ?? "";
+    Manager.of(context).api.changeUrl("http://" + server + ":3000");
+    print("Connect to server IP : " + Manager.of(context).api.url);
     Navigator.pushNamed(context, '/register');
+
   }
 
   @override
