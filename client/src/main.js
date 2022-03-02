@@ -8,6 +8,8 @@ import Register from "@/components/Register";
 import Profile from "@/components/Profile"
 import vuetify from './plugins/vuetify'
 import MyApps from "@/components/MyApps";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 Vue.use(VueRouter)
 

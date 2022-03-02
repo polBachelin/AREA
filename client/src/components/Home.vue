@@ -9,7 +9,7 @@
             <v-card-text class="text-center mt-10 mb-10" style=" color: grey; font-size: 40px; border-radius: 0px">Aucune Aréa</v-card-text>
         </v-row>
         <v-row v-else
-            v-for="area in areas"
+            v-for="(area, index) in getComputedAreas"
             :key="area.id"
             class="text-center justify-center align-center"
         >
@@ -23,22 +23,25 @@
             <v-row class="align-center align-content-center ml-3">
               <v-col cols="9">
                 <v-card-text class="text-center mt-1 mb-1" style="color: black; font-size: 35px">
-                  {{area.name}}
+                  {{ area.isenabled }}
                 </v-card-text>
               </v-col>
               <v-col cols="2" class="align-end mr-2">
                 <v-switch
                     color="orange"
-                    :v-model="checkAreaStatus(area.name)"
-                    :append-icon="checkAreaStatus(area.name) ? 'mdi-checkbox-marked-circle' : 'mdi-cancel'"
-                    @change="changeArea(area.name)"
-                ></v-switch>
+                    :input-value="area.isenabled"
+                    :append-icon="area.isenabled ? 'mdi-checkbox-marked-circle' : 'mdi-cancel'"
+                    @change="changeArea(index, area)"
+                >
+                </v-switch>
               </v-col>
             </v-row>
+
           </v-card>
         </v-row>
         <v-card-text class="text-center mt-13 mb-13"> </v-card-text>
       </v-card>
+
     </v-row>
   
     <v-row >
@@ -81,24 +84,33 @@ export default {
   data() {
     return {
       areas: [],
-      enabled: false,
-      switchText: 'disabled'
+      isEnabled: false,
+      switchText: 'disabled',
     }
   },
+
+  computed: {
+    getComputedAreas: function () {
+      return this.areas
+    }
+  },
+
   methods: {
-    changeArea(name) {
-      if (this.checkAreaStatus(name) === false) {
-        axios.get(`http://localhost:3000/area/${name}/enable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+    async changeArea(index, area) {
+      if (!area.isenabled) {
+        await axios.get(`http://localhost:3000/area/${area.name}/enable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
             .then((response) => {
-              console.log(response.data)
+              console.log(response.data, "area enabled")
+              this.areas[index].isenabled = true
             })
             .catch(() => {
               console.log("Enable area error")
             })
       } else {
-        axios.get(`http://localhost:3000/area/${name}/disable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+        await axios.get(`http://localhost:3000/area/${area.name}/disable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
             .then((response) => {
-              console.log(response.data)
+              console.log(response.data, "area disabled")
+              this.areas[index].isenabled = false
             })
             .catch(() => {
               console.log("Disable area error")
@@ -106,32 +118,34 @@ export default {
       }
     },
 
-    checkAreaStatus(name) {
-      let isEnabled = false
 
-      axios.get(`http://localhost:3000/area/${name}/isEnabled`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+    async checkAreaStatus(name) {
+      try {
+          let response = await axios.get(`http://localhost:3000/area/${name}/isEnabled`, {'headers': {'Authorization': 'Bearer ' + localStorage.getItem('accessToken')}})
+          console.log(name, ' is enabled ? ',response.data)
+          return response.data
+      } catch (error)  {
+       console.log(error, "Enable area error")
+      }
+    },
+
+    async getAreas() {
+      await axios.get('http://localhost:3000/area', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
           .then((response) => {
-            isEnabled = response.data
+            this.areas = response.data
+            console.log("areas received: ", this.areas)
+            this.areas.forEach(e => e.isenabled = this.checkAreaStatus(e.name)) //IT fukinnn RETURN A PROMISE OBJECT
           })
-          .catch(() => {
-            console.log("Enable area error")
+          .catch((error) => {
+            console.log(error, "area get error")
           })
+    },
 
-      return isEnabled
-    }
+
   },
   
     mounted() {
-        axios.get('http://localhost:3000/area', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
-    
-        .then((response) => {
-          this.areas = response.data
-          console.log(response.data)
-        })
-        
-        .catch(() => {
-          console.log("area get error")
-        })
+       this.getAreas()
   },
 }
 
