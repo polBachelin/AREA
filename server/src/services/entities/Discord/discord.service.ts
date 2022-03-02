@@ -120,7 +120,9 @@ export class DiscordService {
 	}
 
 	public setDiscordToken(email: string, discordToken: Object) {
+		Logger.log("email " + email); 
 		this.userService.findOne(email).then(res => {
+			Logger.log(res);
 			const userDiscord = new this.discordModel(discordToken);
 			res.discord = userDiscord;
 			res.save();

@@ -24,13 +24,14 @@ export class DiscordController {
 
 		await this.discordService.authorize(query.code).then((res) => {
 			discordToken = res;
-			console.log(discordToken)
 		})
 		if (discordToken) {
 			email = await this.discordService.getUserEmail(discordToken.access_token)
 		}
 		if (query.state) {
+			Logger.log(query.state);
 			let res = this.authService.verify(query.state);
+			Logger.log("Res", res.email);
 			this.discordService.setDiscordToken(res.email, discordToken)
 			return {discord: discordToken};
 		} else

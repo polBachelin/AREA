@@ -93,6 +93,7 @@ export default {
   methods: {
     connectToService(name) {
      if (name === "Discord") {
+       console.log(discordUrlState) 
        window.location.replace(discordUrlState);
      }
      if (name === "Notion") {
