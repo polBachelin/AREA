@@ -29,8 +29,8 @@
               <v-col cols="2" class="align-end mr-2">
                 <v-switch
                     color="orange"
-                    v-model="enabled"
-                    :append-icon="enabled ? 'mdi-checkbox-marked-circle' : 'mdi-cancel'"
+                    :v-model="checkAreaStatus(area.name)"
+                    :append-icon="checkAreaStatus(area.name) ? 'mdi-checkbox-marked-circle' : 'mdi-cancel'"
                     @change="changeArea(area.name)"
                 ></v-switch>
               </v-col>
@@ -78,19 +78,16 @@ import axios from "axios";
 export default {
   name: "Home.vue",
 
-  created() {
-    },
-
   data() {
     return {
-      areas: [{name: 'test'}],
+      areas: [],
       enabled: false,
       switchText: 'disabled'
     }
   },
   methods: {
     changeArea(name) {
-      if (this.enabled === true) {
+      if (this.checkAreaStatus(name) === false) {
         axios.get(`http://localhost:3000/area/${name}/enable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
             .then((response) => {
               console.log(response.data)
@@ -107,6 +104,20 @@ export default {
               console.log("Disable area error")
             })
       }
+    },
+
+    checkAreaStatus(name) {
+      let isEnabled = false
+
+      axios.get(`http://localhost:3000/area/${name}/isEnabled`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+          .then((response) => {
+            isEnabled = response.data
+          })
+          .catch(() => {
+            console.log("Enable area error")
+          })
+
+      return isEnabled
     }
   },
   
@@ -119,7 +130,7 @@ export default {
         })
         
         .catch(() => {
-          console.log("services fetch error")
+          console.log("area get error")
         })
   },
 }

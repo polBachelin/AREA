@@ -637,6 +637,7 @@ export default {
     axios.get('http://localhost:3000/notion/databases', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.databases = response.data.results
+          console.log(this.databases)
         })
         .catch( () => {
           console.log("databases fetch error")
@@ -645,7 +646,6 @@ export default {
     axios.get('http://localhost:3000/discord/getChannels', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.channels = response.data
-          this.filterChannels()
         })
         .catch( () => {
           console.log("channels fetch error")
@@ -654,7 +654,6 @@ export default {
     axios.get('http://localhost:3000/googleCalendar/listCalendars', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.calendars = response.data
-          this.filterChannels()
         })
         .catch( () => {
           console.log("channels fetch error")
@@ -746,6 +745,7 @@ export default {
           this.rightCardError = 'Please fill a message'
           return
         }
+        console.log(this.selectedDatabase)
         this.areaBody.actionData = {database_id: this.selectedDatabase}
         this.areaBody.reactionData = {message_content: this.discordMessage, guild_id: this.selectedGuild}
         this.sendAreaToBack(this.areaBody)
@@ -819,10 +819,6 @@ export default {
       this.calendarName = name
       this.selectedCalendar = id
       this.checkIfEventOk()
-    },
-
-    filterChannels() {
-      this.channels = this.channels.filter(channel => channel.type === 'text')
     },
 
     checkIfServiceConnected(name) {
