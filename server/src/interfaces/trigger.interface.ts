@@ -2,7 +2,7 @@ import { IUser } from "src/models/User";
 import { ATask, properties } from "./task.interface";
 
 export const REFRESH_RATE = 10000
-enum TriggerState {
+export enum TriggerState {
 	CHECKING,
 	RUNNING,
 	STOPPED

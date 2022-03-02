@@ -10,6 +10,22 @@ import { AreaDTO } from "./area.dto";
 import { UsersService } from "src/users/users.service";
 import { IUser } from "src/models/User";
 import { AreaState } from "src/area/area.class";
+import { threadId } from "worker_threads";
+import {TriggerState} from 'src/interfaces/trigger.interface'
+
+interface AreaJSON {
+	name: string,
+	action: {
+		name: string
+		data: properties,
+		state: TriggerState
+	}
+	reaction: {
+		name: string
+		data: properties
+	}
+	status: AreaState
+}
 
 @Injectable()
 export class AreaService {
@@ -106,8 +122,6 @@ export class AreaService {
 			userAreas.forEach(async (j) => {
 				if (j.name == areaName) {
 					j.enable(await this.userService.findOne(userEmail));
-					console.log(this.areas.get(userEmail));
-					console.log(userEmail);
 					return;
 				}
 			})
@@ -126,14 +140,46 @@ export class AreaService {
 		}
 	}
 
-	public async getUserAreas(email: string): Promise<Area[]> {
-		return this.areas.get(email)
+	public async getUserAreas(email: string): Promise<any[]> {
+		let res = [];
+		
+		for await (const value of this.areas.get(email)) {
+			let obj: AreaJSON = {
+				name: value.name,
+				action: {
+					name: value.action.name,
+					data: value.action.data,
+					state: value.action.state
+				},
+				reaction: {
+					name: value.reaction.name,
+					data: value.reaction.data
+				},
+				status: value.status
+			}
+			res.push(obj)
+		}
+		return res
 	}
 
 	public async getArea(email: string, areaName: string): Promise<Area> {
 		return this.areas.get(email).find((j) => {
-			if (j.name === areaName)
-				return j;
+			if (j.name === areaName) {
+				let obj: AreaJSON = {
+					name: j.name,
+					action: {
+						name: j.action.name,
+						data: j.action.data,
+						state: j.action.state
+					},
+					reaction: {
+						name: j.reaction.name,
+						data: j.reaction.data
+					},
+					status: j.status
+				}
+				return obj;
+			}
 		});
 	}
 
