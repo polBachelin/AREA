@@ -11,6 +11,8 @@ import { GPAChanges } from './entities/Intra/actions/GPAChanges';
 import { NewNotification } from './entities/Intra/actions/NewNotification';
 import { StartTimer } from './entities/Timer/actions/StartTimer';
 import { timer } from './entities/Timer/timer.class';
+import { weather } from './entities/Weather/weather.class';
+import { WeatherChange } from './entities/Weather/actions/GetCityWeather';
 
 export let allServices: IService[] = [];
 allServices.push(notion);
@@ -18,6 +20,7 @@ allServices.push(discord);
 allServices.push(intra);
 allServices.push(googleCalendar);
 allServices.push(timer);
+allServices.push(weather);
 
 const actionsMap = {
 	//NOTION
@@ -31,7 +34,10 @@ const actionsMap = {
 	"New notification": NewNotification,
 
 	//TIMER
-	"Start timer": StartTimer
+	"Start timer": StartTimer,
+
+	//WEATHER
+	"City\'s weather change":WeatherChange
 }
 
 const reactionsMap = {

@@ -4,7 +4,7 @@ import { UsersService } from '../users/users.service';
 import { allServices } from './allServices';
 
 const serviceName = [
-  "notion", "discord", "intra", "google", "github", "timer"
+  "notion", "discord", "intra", "google", "github", "timer", "weather"
 ]
 
 @Injectable()
@@ -29,6 +29,7 @@ export class ServicesService {
     let connected: Array<string> = [];
 
     connected.push('timer');
+    connected.push('weather');
     if (!user) return undefined;
     for (let name in serviceName) {
       if (await this.userService.getSpecificService(serviceName[name], email)) {
