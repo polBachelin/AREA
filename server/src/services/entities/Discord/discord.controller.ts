@@ -41,7 +41,14 @@ export class DiscordController {
 	@ApiOperation({summary: "Get the channels of the bot"})
 	@UseGuards(AuthGuard('jwt'))
 	async getChannels(@Request() req) {
-		return this.discordService.getChannels(req.user.email);
+		let res = await this.discordService.getChannels(req.user.email);
+		const mapToObj = m => {
+			return Array.from(m).reduce((obj, [key, value]) => {
+			  obj[key] = value;
+			  return obj;
+			}, {});
+		  };  
+		return JSON.stringify(mapToObj(res))
 	}
 
 	@Get('/run')

@@ -19,9 +19,6 @@ export class SendMessage extends ATask {
 		
 		try {
 			channel = client.channels.cache.get(id);
-			console.log(client.guilds.cache)
-			console.log(client.channels.cache)
-			console.log(client.readyAt);
 			if (!channel) throw 'Invalid Channel'
 			const tc = channel as TextChannel
 			await tc.send(content)

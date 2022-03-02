@@ -15,6 +15,7 @@ const oauth = new DiscordOauth2();
 const CLIENT_ID = '286959581488480267'
 const REDIRECT_URI = "http://localhost:3000/discord/auth"
 const CLIENT_SECRET = 'EmhaycziVCFdud6Awg91r-B1Dy7M8gbY'
+const BOT_SECRET = "Mjg2OTU5NTgxNDg4NDgwMjY3.WLiB7w.XApM2voxDIVQ_nHBdhBwRBdEyuc"
 
 export interface DiscordOauthToken {
 	access_token: string,
@@ -28,6 +29,7 @@ let client = new Client();
 export {client};
 
 export async function readyBot() {
+	client.login(BOT_SECRET);
 	if (!client.readyAt) {
 		let wait = true
 		client.on('ready', async () => {
@@ -98,10 +100,16 @@ export class DiscordService {
 	}
 
 	public async getChannels(email: string): Promise<any> {
-		client.login("Mjg2OTU5NTgxNDg4NDgwMjY3.WLiB7w.XApM2voxDIVQ_nHBdhBwRBdEyuc");
-
 		await readyBot();
-		return client.channels.cache	;
+		let res: Map<string, string[]> = new Map;
+		for await (const value of client.guilds.cache) {
+			res.set(value[1].name, []);
+			for await (const v of value[1].channels.cache) {
+				if (v[1].type == "text")
+					res.get(value[1].name).push(v[1].name);
+			}
+		}
+		return res;
 	}
 
 	public refreshToken(token: string): AxiosPromise<any> {
