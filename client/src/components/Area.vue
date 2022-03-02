@@ -198,7 +198,7 @@
               </v-row>
 
 <!--              ACTIONS ADDITIONAL OPTIONS-->
-              <v-row v-if="currentDestination.label === 'actions' && currentDestination.isClicked">
+              <v-row v-if="currentDestination.label === 'actions' && currentDestination.isClicked && (selectedAction === selectedActionService.reactions[index])">
 
                 <!--              NOTION -->
                 <v-row v-if="selectedActionService.name === 'Notion'" >
@@ -270,7 +270,7 @@
 
 
 <!--              REACTIONS-->
-              <v-row v-if="currentDestination.label === 'reactions' && currentDestination.isClicked">
+              <v-row v-if="currentDestination.label === 'reactions' && currentDestination.isClicked && (selectedReaction === selectedReactionService.reactions[index])">
 
                 <!--              DISCORD -->
                 <v-row v-if="selectedReactionService.name === 'Discord'" class="text-center justify-center mb-5">
@@ -317,13 +317,148 @@
                         Selected channel:
                       </v-card-text>
                       </v-col>
-                      <v-col cols="3" class="text-left">
+                      <v-col cols="5" class="text-left">
                         <v-card-text class="text-left" style="color: darkorange; font-size: 25px">
                           {{guildName}}
                         </v-card-text>
                       </v-col>
                     </v-row>
                   </v-row>
+
+                  <v-row v-if="selectedReaction === 'Rename channel'">
+                    <v-col cols="5" class="text-center justify-center mt-3">
+                      <v-menu
+                          rounded
+                          offset-y
+                      >
+                        <template v-slot:activator="{ attrs, on }">
+                          <v-btn
+                              v-bind="attrs"
+                              v-on="on"
+                              color="orange"
+                          >
+                            Choose Guild
+                          </v-btn>
+                        </template>
+
+                        <v-list>
+                          <v-list-item
+                              v-for="item in channels"
+                              :key="item.channel_id"
+                              @click="selectGuild2(item.channel_id, item.name)"
+                              link
+                          >
+                            <v-list-item-title v-text="item.name"></v-list-item-title>
+                          </v-list-item>
+                        </v-list>
+                      </v-menu>
+                    </v-col>
+                    <v-col cols="6">
+                      <v-text-field
+                          label="New channel name"
+                          v-model="newChannelName"
+                          prepend-icon="mdi-pen"
+                          clearable
+                      />
+                    </v-col>
+                    <v-row>
+                      <v-col cols="5">
+                        <v-card-text class="text-right" style="font-size: 20px">
+                          Selected channel:
+                        </v-card-text>
+                      </v-col>
+                      <v-col cols="5" class="text-left">
+                        <v-card-text class="text-left" style="color: darkorange; font-size: 25px">
+                          {{guildName}}
+                        </v-card-text>
+                      </v-col>
+                    </v-row>
+                  </v-row>
+
+                  <v-row v-if="selectedReaction === 'Add role'">
+                    <v-col cols="12">
+                      <v-row>
+                        <v-col cols="4" class="text-right mt-3">
+                          <v-menu
+                              rounded
+                              offset-y
+                          >
+                            <template v-slot:activator="{ attrs, on }">
+                              <v-btn
+                                  v-bind="attrs"
+                                  v-on="on"
+                                  color="orange"
+                              >
+                                Choose Guild
+                              </v-btn>
+                            </template>
+
+                            <v-list>
+                              <v-list-item
+                                  v-for="item in channels"
+                                  :key="item.channel_id"
+                                  @click="selectGuild3(item.channel_id, item.name)"
+                                  link
+                              >
+                                <v-list-item-title v-text="item.name"></v-list-item-title>
+                              </v-list-item>
+                            </v-list>
+                          </v-menu>
+                        </v-col>
+                        <v-col cols="3">
+                          <v-card-text class="text-center" style="font-size: 20px">
+                            Selected channel:
+                          </v-card-text>
+                        </v-col>
+                        <v-col cols="5" class="text-left">
+                          <v-card-text style="color: darkorange; font-size: 25px">
+                            {{guildName}}
+                          </v-card-text>
+                        </v-col>
+                      </v-row>
+
+                      <v-row>
+                        <v-col cols="4" class="text-right mt-3">
+                          <v-menu
+                              rounded
+                              offset-y
+                          >
+                            <template v-slot:activator="{ attrs, on }">
+                              <v-btn
+                                  v-bind="attrs"
+                                  v-on="on"
+                                  color="orange"
+                              >
+                                Choose Role
+                              </v-btn>
+                            </template>
+
+                            <v-list>
+                              <v-list-item
+                                  v-for="item in roles"
+                                  :key="item.role_id"
+                                  @click="selectRole(item.role_id, item.name)"
+                                  link
+                              >
+                                <v-list-item-title v-text="item.name"></v-list-item-title>
+                              </v-list-item>
+                            </v-list>
+                          </v-menu>
+                        </v-col>
+                        <v-col cols="3">
+                          <v-card-text class="text-center" style="font-size: 20px">
+                            Selected role:
+                          </v-card-text>
+                        </v-col>
+                        <v-col cols="5" class="text-left">
+                          <v-card-text style="color: darkorange; font-size: 25px">
+                            {{roleName}}
+                          </v-card-text>
+                        </v-col>
+                      </v-row>
+                    </v-col>
+                  </v-row>
+
                 </v-row>
 
                 <v-row v-if="selectedReaction === 'Create an event'" class="ml-3">
@@ -625,6 +760,9 @@ export default {
       channels: [],
       selectedGuild: '',
       guildName: '',
+      roles: [],
+      selectedRole: '',
+      roleName: '',
       discordMessage: '',
       areaBody: {
         name: '',
@@ -647,6 +785,7 @@ export default {
       eventName: '',
       timerValue: 0,
       cityName: 'Paris',
+      newChannelName: '',
     }
   },
 
@@ -682,6 +821,14 @@ export default {
     axios.get('http://localhost:3000/discord/getChannels', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.channels = response.data
+        })
+        .catch( () => {
+          console.log("channels fetch error")
+        })
+
+    axios.get('http://localhost:3000/discord/getRoles', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+        .then((response) => {
+          this.roles = response.data
         })
         .catch( () => {
           console.log("channels fetch error")
@@ -801,6 +948,20 @@ export default {
         this.areaBody.reactionData = {message_content: this.discordMessage, guild_id: this.selectedGuild}
       }
 
+      if (this.selectedReaction === 'Rename channel') {
+        if (!this.newChannelName) {
+          return
+        }
+        this.areaBody.reactionData = {channel_name: this.newChannelName, guild_id: this.selectedGuild}
+      }
+
+      if (this.selectedReaction === 'Add role') {
+        if (!this.roleName) {
+          return
+        }
+        this.areaBody.reactionData = {role_id: this.selectedRole, guild_id: this.selectedGuild}
+      }
+
       if (this.selectedReaction === 'Create an event') {
         if (!this.eventName) {
           this.rightCardError = 'Please give a name to the event'
@@ -888,7 +1049,41 @@ export default {
     selectGuild(id, name) {
       this.guildName = name
       this.selectedGuild = id
-      this.currentDestination.isConfirmed = true
+      if (this.discordMessage) {
+        this.currentDestination.isConfirmed = true
+      } else {
+        this.currentDestination.isConfirmed = false
+      }
+    },
+
+    selectGuild2(id, name) {
+      this.guildName = name
+      this.selectedGuild = id
+      if (this.newChannelName) {
+        this.currentDestination.isConfirmed = true
+      } else {
+        this.currentDestination.isConfirmed = false
+      }
+    },
+
+    selectGuild3(id, name) {
+      this.guildName = name
+      this.selectedGuild = id
+      if (this.roleName) {
+        this.currentDestination.isConfirmed = true
+      } else {
+        this.currentDestination.isConfirmed = false
+      }
+    },
+
+    selectRole(id, name) {
+      this.roleName = name
+      this.selectedRole = id
+      if (this.guildName) {
+        this.currentDestination.isConfirmed = true
+      } else {
+        this.currentDestination.isConfirmed = false
+      }
     },
 
     selectCalendar(id, name) {
