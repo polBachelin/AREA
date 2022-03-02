@@ -107,12 +107,14 @@ export class AreaService {
 		let area = await this.getArea(userEmail, areaName);
 		
 		if (!area) return "No area with this name"
+		this.areas.delete(area.name);
 		let user = await this.userService.findOne(userEmail);
 		user.areas.forEach(el => {
 			if (el.name == areaName) {
 				user.areas.splice(user.areas.indexOf(el), 1);
 			}
 		})
+
 		user.save();
 	}
 
