@@ -86,6 +86,8 @@ export class GoogleCalendarService {
 
 	public async listCalendars(email: string) {
 		const token = await this.userService.getSpecificService('google', email);
+		if (token == undefined)
+			return 404
 		this.oAuth2Client.setCredentials(token)
 		const calendar = google.calendar({version: 'v3', auth: this.oAuth2Client});
 		
