@@ -22,7 +22,6 @@ export class DiscordController {
 
 		await this.discordService.authorize(query.code).then((res) => {
 			discordToken = res;
-			console.log(discordToken)
 		})
 		if (discordToken) {
 			email = await this.discordService.getUserEmail(discordToken.access_token)
