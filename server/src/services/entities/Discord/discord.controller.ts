@@ -1,9 +1,7 @@
 import { Controller, Get, Redirect, Query, Logger, Req, UseGuards, Request } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AuthService } from "src/auth/auth.service";
-import { RegisterDTO } from "src/users/register.dto";
 import { UsersService } from "src/users/users.service";
 import { DiscordService, DiscordOauthToken } from "./discord.service";
 import { SendMessage } from "./reactions/SendMessage";
@@ -42,13 +40,7 @@ export class DiscordController {
 	@UseGuards(AuthGuard('jwt'))
 	async getChannels(@Request() req) {
 		let res = await this.discordService.getChannels(req.user.email);
-		const mapToObj = m => {
-			return Array.from(m).reduce((obj, [key, value]) => {
-			  obj[key] = value;
-			  return obj;
-			}, {});
-		  };  
-		return JSON.stringify(mapToObj(res))
+		return res
 	}
 
 	@Get('/run')
