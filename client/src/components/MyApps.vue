@@ -79,8 +79,8 @@
 
 <script>
 import axios from "axios";
-import {notionUrl} from '@/oauth/Notion';
-import {discordUrl} from '@/oauth/Discord';
+import {notionUrlState} from '@/oauth/Notion';
+import {discordUrlState} from '@/oauth/Discord';
 
 export default {
   name: "MyApps",
@@ -93,10 +93,10 @@ export default {
   methods: {
     connectToService(name) {
      if (name === "Discord") {
-       window.location.replace(discordUrl + localStorage.getItem("accessToken"));
+       window.location.replace(discordUrlState + localStorage.getItem("accessToken"));
      }
      if (name === "Notion") {
-       window.location.replace(notionUrl + localStorage.getItem("accessToken"));
+       window.location.replace(notionUrlState + localStorage.getItem("accessToken"));
      }
     },
 
