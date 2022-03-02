@@ -340,8 +340,17 @@
                         </v-card-text>
                       </v-col>
                     </v-row>
+                    <v-col cols="6" class="text-center">
+                      <v-text-field
+                          label="Event name"
+                          v-model="eventName"
+                          prepend-icon="mdi-pen"
+                          clearable
+                      />
+                    </v-col>
                   </v-col>
 <!--                  START DATES-->
+
                   <v-col cols="6" class="">
                     <v-dialog
                         ref="dialog"
@@ -417,7 +426,7 @@
                         <v-btn
                             text
                             color="orange"
-                            @click="startTimeModal = false; checkIfEventOk"
+                            @click="startTimeModal = false; checkIfEventOk()"
                         >
                           OK
                         </v-btn>
@@ -459,7 +468,7 @@
                         <v-btn
                             text
                             color="orange"
-                            @click="endDateModal = false; checkIfEventOk"
+                            @click="endDateModal = false; checkIfEventOk()"
                         >
                           OK
                         </v-btn>
@@ -500,7 +509,7 @@
                         <v-btn
                             text
                             color="orange"
-                            @click="endTimeModal = false; checkIfEventOk"
+                            @click="endTimeModal = false; checkIfEventOk()"
                         >
                           OK
                         </v-btn>
@@ -610,6 +619,7 @@ export default {
       calendars: [],
       calendarName: '',
       selectedCalendar: '',
+      eventName: '',
     }
   },
 
@@ -740,20 +750,50 @@ export default {
       this.areaBody.actionName = this.selectedAction
       this.areaBody.reactionName = this.selectedReaction
 
+      //ACTIONS ---------------------------------------
+      if (this.selectedAction === 'Add to database') {
+        if (this.selectedDatabase)
+          this.areaBody.actionData = {database_id: this.selectedDatabase}
+      }
+
+      //REACTIONS -------------------------------------
       if (this.selectedReaction === 'Send a message') {
         if (!this.discordMessage) {
           this.rightCardError = 'Please fill a message'
           return
         }
-        console.log(this.selectedDatabase)
-        console.log(this.selectedGuild)
-        this.areaBody.actionData = {database_id: this.selectedDatabase}
         this.areaBody.reactionData = {message_content: this.discordMessage, guild_id: this.selectedGuild}
-        this.sendAreaToBack(this.areaBody)
       }
 
-      this.rightCardError = ''
-      this.goodMessage = "Area created!"
+      if (this.selectedReaction === 'Create an event') {
+        if (!this.eventName) {
+          this.rightCardError = 'Please give a name to the event'
+          return
+        }
+        this.areaBody.reactionData = {
+          calendar_id: this.selectedCalendar,
+          event: {
+            summary: this.eventName,
+            start: {
+              dateTime: new Date(this.startEventDate + 'T' + this.startEventTime + ':00Z'),
+              timeZone: "Europe/Paris"
+            },
+            end: {
+              dateTime: new Date(this.endEventDate + 'T' + this.endEventTime + ':00Z'),
+              timeZone: "Europe/Paris"
+            }
+          }
+        }
+      }
+      // console.log(this.areaBody)
+
+      if (this.areaBody.reactionData.name && this.areaBody.actionData.name) {
+        this.sendAreaToBack(this.areaBody)
+        this.rightCardError = ''
+        this.goodMessage = "Area created!"
+      } else {
+        this.rightCardError = 'Please select an action AND a reaction'
+      }
     },
 
     sendAreaToBack() {
