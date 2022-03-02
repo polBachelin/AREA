@@ -1,9 +1,7 @@
 import { Controller, Get, Redirect, Query, Logger, Req, UseGuards, Request } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AuthService } from "src/auth/auth.service";
-import { RegisterDTO } from "src/users/register.dto";
 import { UsersService } from "src/users/users.service";
 import { DiscordService, DiscordOauthToken } from "./discord.service";
 import { SendMessage } from "./reactions/SendMessage";
@@ -24,7 +22,6 @@ export class DiscordController {
 
 		await this.discordService.authorize(query.code).then((res) => {
 			discordToken = res;
-			console.log(discordToken)
 		})
 		if (discordToken) {
 			email = await this.discordService.getUserEmail(discordToken.access_token)
@@ -41,7 +38,8 @@ export class DiscordController {
 	@ApiOperation({summary: "Get the channels of the bot"})
 	@UseGuards(AuthGuard('jwt'))
 	async getChannels(@Request() req) {
-		return this.discordService.getChannels(req.user.email);
+		let res = await this.discordService.getChannels(req.user.email);
+		return res
 	}
 
 	@Get('/run')
@@ -61,5 +59,26 @@ export class DiscordController {
 		}).catch(err => {
 			console.log(err);
 		});
+	}
+
+	@Get('/auth_mobile')
+	@ApiOperation({summary: "Get the access from the authorization"})
+	async discordMobileCallback(@Query() query, @Req() req) {
+		let email: string = null;
+		let discordToken = null;
+
+		await this.discordService.authorize(query.code).then((res) => {
+			discordToken = res;
+			console.log(discordToken)
+		})
+		if (discordToken) {
+			email = await this.discordService.getUserEmail(discordToken.access_token)
+		}
+		if (query.state) {
+			let res = this.authService.verify(query.state);
+			this.discordService.setDiscordToken(res.email, discordToken)
+			return {discord: discordToken};
+		} else
+			return await this.discordService.LoginByDiscord(email, discordToken);
 	}
 }

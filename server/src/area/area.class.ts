@@ -1,12 +1,13 @@
+import { Logger } from "@nestjs/common";
 import { ATask } from "src/interfaces/task.interface";
 import { ATrigger } from "src/interfaces/trigger.interface";
 import { IUser } from "src/models/User";
 
-enum AreaState {
+export enum AreaState {
+	DISABLED = 0,
+	ENABLED = 1,
 	STOPPED,
 	CRASHED,
-	DISABLED,
-	ENABLED
 };
 
 export class Area {

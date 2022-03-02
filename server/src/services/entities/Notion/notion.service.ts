@@ -10,7 +10,6 @@ import { Client } from "@notionhq/client";
 import { AuthService } from "../../../auth/auth.service";
 import { RegisterDTO } from "../../../users/register.dto";
 
-
 type NotionPersonUser = Extract<GetUserResponse, { type: "person" }>
 
 interface NotionOAuthToken {

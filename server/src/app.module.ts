@@ -14,8 +14,9 @@ import { NotionModule } from 'src/services/entities/Notion/notion.module';
 import { DiscordModule } from 'src/services/entities/Discord/discord.module';
 import { IntraModule } from 'src/services/entities/Intra/intra.module';
 import { GoogleCalendarModule } from 'src/services/entities/GoogleCalendar/googleCalendar.module';
+import * as dotenv from "dotenv";
 
-
+dotenv.config({path: `../.env`});
 @Module({
   imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MongooseModule.forRoot(process.env.DB_URL), ServicesModule, AreaModule,
     NotionModule, DiscordModule, IntraModule, GoogleCalendarModule],

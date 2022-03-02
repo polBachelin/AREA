@@ -7,6 +7,8 @@ import { SendMessage } from './entities/Discord/reactions/SendMessage';
 import { ReceiveMessage } from './entities/Discord/actions/ReceiveMessage';
 import { googleCalendar } from './entities/GoogleCalendar/googleCalendar.class';
 import { CreateEvent } from './entities/GoogleCalendar/reactions/CreateEvent';
+import { GPAChanges } from './entities/Intra/actions/GPAChanges';
+import { NewNotification } from './entities/Intra/actions/NewNotification';
 
 export let allServices: IService[] = [];
 allServices.push(notion);
@@ -20,6 +22,10 @@ const actionsMap = {
 
 	//DISCORD
 	"Receive a message": ReceiveMessage,
+
+	//INTRA
+	"GPA changes": GPAChanges,
+	"New notification": NewNotification
 }
 
 const reactionsMap = {

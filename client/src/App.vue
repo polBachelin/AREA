@@ -186,6 +186,8 @@ export default {
     },
     logOut() {
       localStorage.setItem('isLogged', 'false')
+      localStorage.setItem('accessToken', '')
+      localStorage.setItem('username', '')
       this.$router.push('/login')
     }
   },

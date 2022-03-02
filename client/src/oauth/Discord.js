@@ -2,7 +2,6 @@ export const discordUrl = "https://discord.com/api/oauth2/authorize?"
 			+ "response_type=code"
 			+ "&client_id=286959581488480267"
 			+ "&scope=identify%20email"
-			+ "&state="
 			+ "&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fdiscord%2Fauth"
 			+ "&prompt=consent"
 
@@ -12,4 +11,4 @@ export const discordUrlState = "https://discord.com/api/oauth2/authorize?"
 			+ "&scope=identify%20email"
 			+ "&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fdiscord%2Fauth"
 			+ "&prompt=consent"
-			+ "&state="+localStorage.getItem('accessToken')
+			+ "&state="

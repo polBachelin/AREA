@@ -97,10 +97,10 @@ export default {
   methods: {
     connectToService(name) {
      if (name === "Discord") {
-       window.location.replace(discordUrlState);
+       window.location.replace(discordUrlState + localStorage.getItem("accessToken"));
      }
      if (name === "Notion") {
-       window.location.replace(notionUrlState);
+       window.location.replace(notionUrlState + localStorage.getItem("accessToken"));
      }
     },
 
