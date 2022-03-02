@@ -3,14 +3,14 @@ import { IUser } from "src/models/User";
 import axios, {AxiosRequestConfig} from 'axios';
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 
-const INTRA_REFRESH_RATE = 1000
+const INTRA_REFRESH_RATE = 10000
 
 export class NewNotification extends ATrigger {
 
     public setup(callback: () => Promise<void>, user: any): void {
         this.setChecking();
         this.intervalObj = setInterval(async () => {
-            Logger.log("checking");
+            Logger.log("NEW NOTIF IS CHECKING")
             const link = user.intra.autologin;
             const user_notif: Date = user.intra.last_notif;
             if (link) {

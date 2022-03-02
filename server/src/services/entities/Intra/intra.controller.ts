@@ -29,7 +29,7 @@ export class IntraController {
         }
     }})
     async intraPostToken(@Query() query, @Req() req, @Body() linkDTO: LinkDTO) {
-        let info = {email: '', autologin: "", gpa:0, last_notif:Date};
+        let info = {email: '', autologin: "", gpa:0, last_notif:0};
         let data = await this.intraService.getUserProfile(linkDTO.link)
         if (!data) {
             return new HttpException('Invalid autologin', HttpStatus.BAD_REQUEST);
@@ -37,9 +37,10 @@ export class IntraController {
         info.email = data.login;
         info.autologin = linkDTO.link;
         info.gpa = data.gpa[0].gpa;
-        let notif = await axios.get(link+'/user/notification/message?format=json')
+        let notif = await axios.get(linkDTO.link+'/user/notification/message?format=json')
         const last_notif = notif.data[0].date;
-        info.last_notif.parse(last_notif);
+        const tmp = new Date(last_notif)
+        info.last_notif = tmp.getTime();
         if (query.state) {
             let res = this.authService.verify(query.state);
             this.intraService.setIntraLink(res.email, info);
