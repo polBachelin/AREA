@@ -234,10 +234,35 @@
                   </v-row>
                   </v-row>
 
-<!--                DISCORD-->
-                <v-row v-if="selectedActionService.name === 'Discord'" >
-                  <v-row v-if="selectedAction === 'ReceiveMessage'" class="text-center justify-center mb-2">
+<!--            TIMER-->
+                <v-row v-if="selectedActionService.name === 'Timer'" >
+                  <v-row v-if="selectedAction === 'Start timer'" class="text-center justify-center mb-2">
+                    <v-col cols="8">
+                      <v-text-field
+                        style="font-size: 20px"
+                        v-model="timerValue"
+                        label="Timer Duration in Seconds"
+                        append-icon="mdi-clock"
+                        type="number"
+                        color="orange"
+                        @input="checkTimer"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-row>
 
+                <v-row v-if="selectedActionService.name === 'Weather'" >
+                  <v-row v-if="selectedAction === 'City\'s weather change'" class="text-center justify-center mb-2">
+                    <v-col cols="6">
+                      <v-text-field
+                          style="font-size: 30px"
+                          v-model="cityName"
+                          label="City name"
+                          append-icon="mdi-domain"
+                          color="orange"
+                          @input="checkCity"
+                      />
+                    </v-col>
                   </v-row>
                 </v-row>
 
@@ -620,6 +645,8 @@ export default {
       calendarName: '',
       selectedCalendar: '',
       eventName: '',
+      timerValue: 0,
+      cityName: 'Paris',
     }
   },
 
@@ -647,7 +674,6 @@ export default {
     axios.get('http://localhost:3000/notion/databases', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.databases = response.data.results
-          console.log(this.databases)
         })
         .catch( () => {
           console.log("databases fetch error")
@@ -756,6 +782,16 @@ export default {
           this.areaBody.actionData = {database_id: this.selectedDatabase}
       }
 
+      if (this.selectedAction === 'City\'s weather change') {
+        if (this.cityName.length > 0)
+          this.areaBody.actionData = {city: this.cityName}
+      }
+
+      if (this.selectedAction === 'Start timer') {
+        if (this.timerValue > 0)
+          this.areaBody.actionData = {time_s: this.timerValue}
+      }
+
       //REACTIONS -------------------------------------
       if (this.selectedReaction === 'Send a message') {
         if (!this.discordMessage) {
@@ -785,9 +821,8 @@ export default {
           }
         }
       }
-      // console.log(this.areaBody)
 
-      if (this.areaBody.reactionData.name && this.areaBody.actionData.name) {
+      if (this.areaBody.actionName && this.areaBody.reactionName) {
         this.sendAreaToBack(this.areaBody)
         this.rightCardError = ''
         this.goodMessage = "Area created!"
@@ -873,7 +908,23 @@ export default {
       if (this.selectedCalendar && this.startEventTime && this.startEventDate && this.endEventTime && this.endEventDate) {
         this.currentDestination.isConfirmed = true
       }
-    }
+    },
+
+    checkTimer() {
+      if (this.timerValue > 0) {
+        this.currentDestination.isConfirmed = true
+      } else {
+        this.currentDestination.isConfirmed = false
+      }
+    },
+
+    checkCity() {
+      if (this.cityName.length > 0) {
+        this.currentDestination.isConfirmed = true
+      } else {
+        this.currentDestination.isConfirmed = false
+      }
+    },
   }
 }
 </script>
