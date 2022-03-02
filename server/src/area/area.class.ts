@@ -21,6 +21,7 @@ export class Area {
 	}
 
 	public enable(user: any) {
+		if (this.status == AreaState.ENABLED) return;
 		this.status = AreaState.ENABLED;
 		this.launch(user);
 	}
@@ -36,8 +37,9 @@ export class Area {
 				try {
 					await this.reaction.run(user);
 					this.action.setChecking();
-				} catch (errror) {
+				} catch (error) {
 					this.status = AreaState.CRASHED;
+					Logger.error(error);
 					this.disable();
 				}
 			}, user)

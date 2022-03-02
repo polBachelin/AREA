@@ -106,6 +106,8 @@ export class AreaService {
 			userAreas.forEach(async (j) => {
 				if (j.name == areaName) {
 					j.enable(await this.userService.findOne(userEmail));
+					console.log(this.areas.get(userEmail));
+					console.log(userEmail);
 					return;
 				}
 			})
