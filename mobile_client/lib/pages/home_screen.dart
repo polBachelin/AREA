@@ -1,3 +1,4 @@
+import 'package:area/pages/Services.dart';
 import 'package:area/pages/dashboard.dart';
 import 'package:area/pages/settings.dart';
 import 'package:flutter/material.dart';
@@ -14,17 +15,14 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: theme.white);
   static const List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
     Text(
       'Areas',
       style: optionStyle,
     ),
-    Text(
-      'Services',
-      style: optionStyle,
-    ),
+    ServicesPage(),
     SettingsScreen(),
   ];
 
@@ -39,12 +37,14 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('AREA'),
+        backgroundColor: theme.primaryColor,
         leading: IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
               Navigator.pop(context);
             }),
       ),
+      backgroundColor: theme.background,
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -53,26 +53,26 @@ class HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Dashboard',
-            backgroundColor: Colors.red,
+            backgroundColor: theme.primaryColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
             label: 'Areas',
-            backgroundColor: Colors.green,
+            backgroundColor: theme.primaryLightColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Services',
-            backgroundColor: Colors.purple,
+            backgroundColor: theme.primaryColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',
-            backgroundColor: Colors.pink,
+            backgroundColor: theme.primaryLightColor,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: theme.primaryColor,
+        selectedItemColor: theme.githubBlack,
         onTap: _onItemTapped,
       ),
     );

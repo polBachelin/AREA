@@ -6,26 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 Future<bool> interceptToken(
     BuildContext context, String oauthName, String code) async {
-  var postRequest =
-      await Manager.of(context).api.oauthPOSTCode(code, "discord");
-  var server = await HttpServer.bind("localhost", 8080);
-  print("Interceptor launch on " +
-      server.address.toString() +
-      server.port.toString());
-  await server.forEach((HttpRequest request) {
-    print("Interceptor URI :" + request.uri.path);
-    if (request.uri.queryParametersAll.containsKey("token")) {
-      request.response.statusCode = HttpStatus.notFound;
-      request.response.close();
-      return;
-    }
-
-    print(request.uri);
-    final token = request.uri.queryParameters["token"];
-    if (token == null) {
-      throw "Missing Token";
-    }
-  });
+  var postRequest = await Manager.of(context).api.oauthGetToken(code, "discord");
   return true;
 }
 
@@ -58,15 +39,12 @@ void doDiscordOAuth(BuildContext context) async {
     }
     print(code);
     request.response.close();
-    print("Let's GO");
     server.close();
-    interceptToken(context, "discord", code).then((value)
-    {
+    interceptToken(context, "discord", code).then((value) {
       closeWebView();
       if (value == true) {
         Navigator.pushNamed(context, '/home');
-      }
-      else {
+      } else {
         Navigator.pushNamed(context, '/login');
       }
     });

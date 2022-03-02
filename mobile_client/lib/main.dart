@@ -9,6 +9,7 @@ import 'pages/login_screen.dart';
 
 Future main() async {
   await dotenv.load(fileName: "credentials.env");
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
             title: 'AREA',
             // Start the app with the "/" named route. In this case, the app starts
             // on the RegisterScreen widget.
-            initialRoute: '/home',
+            initialRoute: '/register',
             debugShowCheckedModeBanner: false,
             routes: {
           // When navigating to the "/" route, build the RegisterScreen widget.

@@ -2,7 +2,7 @@ library color_theme;
 import 'package:flutter/material.dart';
 
 const Color primaryColor = Color.fromARGB(255, 211, 109, 42);
-const Color primaryLightColor = Color(0xff9be181);
+const Color primaryLightColor = Color.fromARGB(255, 214, 86, 0);
 const Color labelColor = Color(0xffc5c5c5);
 
 const Color white = Color(0xffffffff);

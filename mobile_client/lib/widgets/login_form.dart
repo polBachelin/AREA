@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:area/components/delayed_animation.dart';
-import 'package:area/models/user.dart';
+import 'package:area/models/services.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -11,7 +11,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  Future<User>? fetchLogin;
   var _obscureText = true;
 
   @override
