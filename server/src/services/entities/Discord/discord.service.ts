@@ -101,12 +101,12 @@ export class DiscordService {
 
 	public async getChannels(email: string): Promise<any> {
 		await readyBot();
-		let res: Map<string, string[]> = new Map;
+		let res: string[] = [];
 		for await (const value of client.guilds.cache) {
-			res.set(value[1].name, []);
 			for await (const v of value[1].channels.cache) {
-				if (v[1].type == "text")
-					res.get(value[1].name).push(v[1].name);
+				if (v[1].type == "text") {
+					res.push(value[1].name + '/' + v[1].name);
+				}
 			}
 		}
 		return res;
