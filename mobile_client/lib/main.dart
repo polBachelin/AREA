@@ -1,3 +1,4 @@
+import 'package:area/pages/IntraFormLogin.dart';
 import 'package:area/pages/register_email_screen.dart';
 import 'package:area/pages/select_server.dart';
 import 'package:area/services/manager.dart';
@@ -29,11 +30,11 @@ class MyApp extends StatelessWidget {
           // When navigating to the "/" route, build the RegisterScreen widget.
           '/': (context) => const ServerPage(),
           // When navigating to the "/second" route, build the HomeScreen widget.
-          // '/welcome': (context) => const WelcomeScreen(),
           '/register': (context) => const AuthScreen(),
           '/register_email': (context) => const RegisterEmailScreen(),
           '/home': (context) => const HomeScreen(),
           '/login': (context) => const LoginScreen(),
+          '/register_epitech' : (context) => const IntraFormLogin()
         }));
   }
 }

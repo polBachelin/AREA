@@ -1,9 +1,9 @@
 import 'package:area/models/services.dart';
-import 'package:area/services/discord_api.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tuple/tuple.dart';
 
 class Server {
   Server({required this.url});
@@ -99,15 +99,41 @@ class Server {
     return true;
   }
 
-  Future<bool> oauthGetToken(dynamic code, String serviceName) async {
-    final response = await getRequest('/' + serviceName + '/auth_mobile?code=$code');
+  Future<bool> postIntraRequest(dynamic data) async {
+    final response = await postRequest('/intra/token', {"link": data});
+    if (response.statusCode >= 300) {
+      final error = json.decode(response.body.toString())['message'];
+      return false;
+    }
+    print(response.body.toString());
+    _prefs.then((SharedPreferences prefs) {
+      prefs.setString(
+          "username", json.decode(response.body.toString())['email']);
+      prefs.setString("token_session",
+          json.decode(response.body.toString())['token']['access_token']);
+    });
+    return true;
+  }
+
+  Future<Tuple3<String, String, bool>> oauthGetToken(
+      dynamic code, String serviceName) async {
+    final response =
+        await getRequest('/' + serviceName + '/auth_mobile?code=$code');
+    var ret = const Tuple3<String, String, bool>("", "", false);
 
     if (response.statusCode >= 300) {
       print(response.body.toString());
       final error = json.decode(response.body.toString())['error'];
-      return false;
+      return ret;
     }
-    return true;
+    if (response.statusCode == 200) {
+      final uri = Uri.parse(json.decode(response.body.toString())['url']);
+      ret = ret.withItem1(uri.queryParameters["email"]!);
+      ret = ret.withItem2(uri.queryParameters["token"]!);
+      ret = ret.withItem3(true);
+    }
+    print("TUPLE returned ==> " + ret.toString());
+    return ret;
   }
 
   Future<List<Service>> getServices() async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:area/services/discord_api.dart';
+import 'package:area/services/api_register.dart';
 import 'package:area/theme.dart' as theme;
 
 import '../components/delayed_animation.dart';
@@ -90,7 +90,7 @@ class AuthScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        doDiscordOAuth(context);
+                        registerOauth(context, "discord");
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
@@ -116,7 +116,7 @@ class AuthScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, "/register_email");
+                        registerOauth(context, "notion");
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
@@ -126,10 +126,10 @@ class AuthScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const FaIcon(FontAwesomeIcons.github),
+                          Image.asset("./images/notion.png", height: 24),
                           const SizedBox(width: 10),
                           Text(
-                            'Github',
+                            'Notion',
                             style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 16,
@@ -142,7 +142,34 @@ class AuthScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, "/login");
+                        registerOauth(context, "googleCalendar");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: const StadiumBorder(),
+                        primary: Color.fromARGB(255, 235, 125, 121),
+                        padding: const EdgeInsets.all(13),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const FaIcon(FontAwesomeIcons.google),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Google',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/register_epitech");
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
@@ -153,9 +180,9 @@ class AuthScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const ImageIcon(
-                              AssetImage("images/Epitech.png"),
-                              color: Colors.white,
-                              size: 24,
+                            AssetImage("images/Epitech.png"),
+                            color: Colors.white,
+                            size: 24,
                           ),
                           const SizedBox(width: 10),
                           Text(
