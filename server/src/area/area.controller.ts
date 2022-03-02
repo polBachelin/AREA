@@ -41,7 +41,7 @@ export class AreaController {
 	@ApiOperation({summary: 'Get logged in user areas'})
 	@UseGuards(AuthGuard('jwt'))
 	getAllAreas(@Request() req) {
-		return this.areaService.getUserAreas(req.user.email);
+		return this.areaService.getUserAreas(req.user.email)
 	}
 
 	@Get(':name')
@@ -56,5 +56,12 @@ export class AreaController {
 	@UseGuards(AuthGuard('jwt'))
 	deleteArea(@Request() req, @Param('name') name: string) {
 		return this.areaService.deleteAnArea(req.user.email, name);
+	}
+
+	@Get('/:name/isEnabled')
+	@ApiOperation({summary: "Checks if area is enabled"})
+	@UseGuards(AuthGuard('jwt'))
+	isEnabled(@Request() req, @Param('name') name: string) {
+		return this.areaService.isEnabled(req.user.email, name);
 	}
 }

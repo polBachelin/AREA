@@ -41,7 +41,14 @@ export class DiscordController {
 	@ApiOperation({summary: "Get the channels of the bot"})
 	@UseGuards(AuthGuard('jwt'))
 	async getChannels(@Request() req) {
-		return this.discordService.getChannels(req.user.email);
+		let res = await this.discordService.getChannels(req.user.email);
+		const mapToObj = m => {
+			return Array.from(m).reduce((obj, [key, value]) => {
+			  obj[key] = value;
+			  return obj;
+			}, {});
+		  };  
+		return JSON.stringify(mapToObj(res))
 	}
 
 	@Get('/run')
@@ -61,5 +68,26 @@ export class DiscordController {
 		}).catch(err => {
 			console.log(err);
 		});
+	}
+
+	@Get('/auth_mobile')
+	@ApiOperation({summary: "Get the access from the authorization"})
+	async discordMobileCallback(@Query() query, @Req() req) {
+		let email: string = null;
+		let discordToken = null;
+
+		await this.discordService.authorize(query.code).then((res) => {
+			discordToken = res;
+			console.log(discordToken)
+		})
+		if (discordToken) {
+			email = await this.discordService.getUserEmail(discordToken.access_token)
+		}
+		if (query.state) {
+			let res = this.authService.verify(query.state);
+			this.discordService.setDiscordToken(res.email, discordToken)
+			return {discord: discordToken};
+		} else
+			return await this.discordService.LoginByDiscord(email, discordToken);
 	}
 }
