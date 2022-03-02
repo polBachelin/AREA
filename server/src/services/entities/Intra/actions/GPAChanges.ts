@@ -3,7 +3,7 @@ import { IUser } from "src/models/User";
 import axios, {AxiosRequestConfig} from 'axios';
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 
-const INTRA_REFRESH_RATE = 1000
+const INTRA_REFRESH_RATE = 10000
 
 export class GPAChanges extends ATrigger {
     
