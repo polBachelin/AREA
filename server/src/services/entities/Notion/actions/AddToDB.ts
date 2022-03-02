@@ -9,9 +9,7 @@ export class AddToDB extends ATrigger {
 
 	setup(callback: () => Promise<void>, user: any): void {
 		this.setChecking();
-		console.log("setpu of addtoDB");
 		this.intervalObj = setInterval(async () => {
-			console.log("callback of addtoDB")
 			this.lastUpdateCheck = new Date()
 			const db_id = this.data.get('database_id');
 			const access_token = user.notion.access_token;

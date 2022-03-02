@@ -142,7 +142,10 @@ export class AreaService {
 
 	public async getUserAreas(email: string): Promise<any[]> {
 		let res = [];
-		
+		let areas = this.areas.get(email);
+		if (areas == undefined) {
+			return undefined
+		}
 		for await (const value of this.areas.get(email)) {
 			let obj: AreaJSON = {
 				name: value.name,
