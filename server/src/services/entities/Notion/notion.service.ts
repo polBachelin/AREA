@@ -99,6 +99,8 @@ export class NotionService {
 
 	public async getDatabases(email: string) {
 		let token = await this.getNotionToken(email)
+		if (!token)
+			return undefined
 		return notionClient.search({auth: token.access_token, filter: {
 			property: "object",
 			value: "database"
