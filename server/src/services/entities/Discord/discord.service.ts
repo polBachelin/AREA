@@ -12,10 +12,7 @@ import { Client, GuildChannel, TextChannel } from 'discord.js'
 const DiscordOauth2 = require("discord-oauth2");
 const oauth = new DiscordOauth2();
 
-const CLIENT_ID = '286959581488480267'
 const REDIRECT_URI = "http://localhost:3000/discord/auth"
-const CLIENT_SECRET = 'EmhaycziVCFdud6Awg91r-B1Dy7M8gbY'
-const BOT_SECRET = "Mjg2OTU5NTgxNDg4NDgwMjY3.WLiB7w.XApM2voxDIVQ_nHBdhBwRBdEyuc"
 
 export interface DiscordOauthToken {
 	access_token: string,
@@ -29,7 +26,7 @@ let client = new Client();
 export {client};
 
 export async function readyBot() {
-	client.login(BOT_SECRET);
+	client.login(process.env.DISCORD_BOT_TOKEN);
 	if (!client.readyAt) {
 		let wait = true
 		client.on('ready', async () => {
@@ -55,8 +52,7 @@ export class DiscordService {
 
 		try {
 			let res = await oauth.tokenRequest({
-				clientId: CLIENT_ID,
-				clientSecret: CLIENT_SECRET,
+				clientId: process.env.DISCORD_CLIENT_ID,
 				code: code,
 				scope: ["identify", "email"],
 				grantType: "authorization_code",
@@ -99,7 +95,7 @@ export class DiscordService {
 		return user.discord;
 	}
 
-	public async getChannels(email: string): Promise<any> {
+	public async getChannels(): Promise<any> {
 		await readyBot();
 		let res = [];
 		for await (const value of client.guilds.cache) {
@@ -115,10 +111,24 @@ export class DiscordService {
 		return res;
 	}
 
+	public async getRoles(): Promise<any> {
+		await readyBot();
+		let res = []
+		for await (const value of client.guilds.cache) {
+			for await (const v of value[1].roles.cache) {
+				let name = value[1].name + '/' + v[1].name
+				let role_id = v[1].id
+				let obj = {role_id, name}
+				res.push(obj);
+			}
+		}
+		return res;
+	}
+
 	public refreshToken(token: string): AxiosPromise<any> {
 		const param = new URLSearchParams();
-		param.append('client_id', CLIENT_ID);
-		param.append('client_secret', CLIENT_SECRET);
+		param.append('client_id', process.env.DISCORD_CLIENT_ID);
+		param.append('client_secret', process.env.DISCORD_CLIENT_SECRET);
 		param.append('grant_type', 'refresh_token');
 		param.append('refresh_token', token);
 		const options: AxiosRequestConfig = {
@@ -127,7 +137,6 @@ export class DiscordService {
 			}
 		};
 		return axios.post("https://discord.com/api/oauth2/token", param, options);
-
 	}
 
 	public setDiscordToken(email: string, discordToken: Object) {

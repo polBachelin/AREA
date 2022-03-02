@@ -4,6 +4,7 @@ import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AuthService } from "src/auth/auth.service";
 import { UsersService } from "src/users/users.service";
 import { DiscordService, DiscordOauthToken } from "./discord.service";
+import { AddRoleToChannel } from "./reactions/AddRoleToChannel";
 import { SendMessage } from "./reactions/SendMessage";
 
 @ApiTags('discord')
@@ -38,7 +39,7 @@ export class DiscordController {
 	@ApiOperation({summary: "Get the channels of the bot"})
 	@UseGuards(AuthGuard('jwt'))
 	async getChannels(@Request() req) {
-		let res = await this.discordService.getChannels(req.user.email);
+		let res = await this.discordService.getChannels();
 		return res
 	}
 
@@ -46,9 +47,9 @@ export class DiscordController {
 	async runBotMessage() {
 		const props: Map<string, any> = new Map<string, any>([
 			["guild_id", "286961972589625344"],
-			["message_content", "Hello sent from AREA"]
+			["role_id", "948618505400492162"]
 		]);
-		const instance = new SendMessage("test", props);
+		const instance = new AddRoleToChannel("test", props);
 		const user = {
 			"discord": {
 				"access_token": "Mjg2OTU5NTgxNDg4NDgwMjY3.WLiB7w.XApM2voxDIVQ_nHBdhBwRBdEyuc"
@@ -59,6 +60,14 @@ export class DiscordController {
 		}).catch(err => {
 			console.log(err);
 		});
+	}
+
+	@Get('/getRoles')
+	@ApiOperation({summary: "Get the roles of servers"})
+	@UseGuards(AuthGuard('jwt'))
+	async getRoles(@Request() req) {
+		let res = await this.discordService.getRoles();
+		return res;
 	}
 
 	@Get('/auth_mobile')

@@ -9,6 +9,8 @@ import { googleCalendar } from './entities/GoogleCalendar/googleCalendar.class';
 import { CreateEvent } from './entities/GoogleCalendar/reactions/CreateEvent';
 import { GPAChanges } from './entities/Intra/actions/GPAChanges';
 import { NewNotification } from './entities/Intra/actions/NewNotification';
+import { RenameChannel } from './entities/Discord/reactions/RenameChannel';
+import { AddRoleToChannel } from './entities/Discord/reactions/AddRoleToChannel';
 import { StartTimer } from './entities/Timer/actions/StartTimer';
 import { timer } from './entities/Timer/timer.class';
 import { weather } from './entities/Weather/weather.class';
@@ -43,8 +45,11 @@ const actionsMap = {
 const reactionsMap = {
 	//DISCORD
 	"Send a message": SendMessage,
-	"Create an event": CreateEvent,
+	"Rename channel": RenameChannel,
+	"Add role to channel": AddRoleToChannel,
 
+	//Google
+	"Create an event": CreateEvent,
 }
 
 /*

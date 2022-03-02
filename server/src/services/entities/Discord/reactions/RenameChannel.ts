@@ -3,14 +3,13 @@ import { Client, GuildChannel, TextChannel } from 'discord.js'
 import { client, readyBot } from "../discord.service";
 import { Logger } from "@nestjs/common";
 
-export class SendMessage extends ATask {
+export class RenameChannel extends ATask {
 	
 	async run(user: any): Promise<any> {		
 		const id = this.data.get('guild_id') || undefined;
-		const content = this.data.get('message_content') || undefined;
+		const name = this.data.get('channel_name') || undefined;
 		
-		Logger.log("CALLBACK DISCORD REACT");
-		if (!id || !content) throw 'Invalid Data'
+		if (!id || !name) throw 'Invalid Data'
 		let channel = undefined;		
 
 		await readyBot();
@@ -19,12 +18,11 @@ export class SendMessage extends ATask {
 			channel = client.channels.cache.get(id);
 			if (!channel) throw 'Invalid Channel'
 			const tc = channel as TextChannel
-			await tc.send(content)
+			await tc.setName(name);
 		} catch(err) {
 			Logger.log(err);
 			throw err
 		}
-
 		return undefined;
 	}
 }
