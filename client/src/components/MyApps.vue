@@ -20,12 +20,12 @@
         <v-col cols="1">
           <v-img :src="app.icon"/>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="2">
           <v-card-text style="font-size: 40px; font-weight: bold"> {{app.name}} </v-card-text>
         </v-col>
-        <v-col cols="3" class="justify-center align-center">
+        <v-col cols="4" class="justify-center align-center">
           <v-col cols="12" class="mt-2 mb-2">
-            <v-card v-if="areas.discord" style="background-color: darkorange">
+            <v-card v-if="checkIfServiceConnected(app.name)" style="background-color: darkorange">
               <v-row class="align-center justify-center">
                 <v-col cols="6">
                   <v-card-text style="color: white; font-size: 30px"> connecté </v-card-text>
@@ -50,19 +50,18 @@
           <v-col cols="2">
             <v-tooltip bottom color="orange">
               <template v-slot:activator="{ on, attrs }">
-                <v-card v-bind="attrs" v-on="on" :style="app.isConnected ? 'background-color: darkorange' : 'background-color: black'">
-                  <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.actions.length}} actions </v-card-text>
+                <v-card v-bind="attrs" v-on="on" :style="checkIfServiceConnected(app.name) ? 'background-color: darkorange' : 'background-color: black'">
+                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.actions.length}} actions </v-card-text>
                 </v-card>
               </template>
               <span v-for="action in app.actions" v-bind:key="action.id"> - {{ action }}</span>
-              <span v-for="user in areas" v-bind:key="user.id"> - {{ user.discord }}</span>
             </v-tooltip>
           </v-col>
           <v-col cols="2">
             <v-tooltip bottom color="orange">
               <template v-slot:activator="{ on, attrs }">
-                <v-card v-bind="attrs" v-on="on" :style="app.isConnected ? 'background-color: darkorange' : 'background-color: black'">
-                  <v-card-text :style="app.isConnected ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.reactions.length}} réactions </v-card-text>
+                <v-card v-bind="attrs" v-on="on" :style="checkIfServiceConnected(app.name) ? 'background-color: darkorange' : 'background-color: black'">
+                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.reactions.length}} réactions </v-card-text>
                 </v-card>
               </template>
               <span v-for="reaction in app.reactions" v-bind:key="reaction.id"> - {{ reaction }}</span>
@@ -91,6 +90,7 @@ export default {
     return {
       services: [],
       areas: [],
+      connectedServices: []
     }
   },
 
@@ -107,7 +107,14 @@ export default {
     getNumber(arr) {
       console.log(arr)
       return arr.length
-    }
+    },
+
+    checkIfServiceConnected(name) {
+      if (this.connectedServices.toString().toUpperCase().indexOf(name.toUpperCase()) > -1)
+        return true
+      else
+        return false
+    },
   },
 
   mounted() {
@@ -120,12 +127,10 @@ export default {
           console.log("services fetch error")
         })
     
-    axios.get('http://localhost:3000/auth/profile', { 'headers': { 'Authorization': 'Bearer' + localStorage.getItem('accessToken') }} ) 
+    axios.get('http://localhost:3000/services/logged', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
         .then((response) => {
-          this.areas = response.data
-          console.log(response.data)
+          this.connectedServices = response.data
         })
-        
         .catch( () => {
           console.log("services fetch error")
         })
