@@ -9,12 +9,15 @@ import { googleCalendar } from './entities/GoogleCalendar/googleCalendar.class';
 import { CreateEvent } from './entities/GoogleCalendar/reactions/CreateEvent';
 import { GPAChanges } from './entities/Intra/actions/GPAChanges';
 import { NewNotification } from './entities/Intra/actions/NewNotification';
+import { StartTimer } from './entities/Timer/actions/StartTimer';
+import { timer } from './entities/Timer/timer.class';
 
 export let allServices: IService[] = [];
 allServices.push(notion);
 allServices.push(discord);
 allServices.push(intra);
 allServices.push(googleCalendar);
+allServices.push(timer);
 
 const actionsMap = {
 	//NOTION
@@ -25,7 +28,10 @@ const actionsMap = {
 
 	//INTRA
 	"GPA changes": GPAChanges,
-	"New notification": NewNotification
+	"New notification": NewNotification,
+
+	//TIMER
+	"Start timer": StartTimer
 }
 
 const reactionsMap = {
