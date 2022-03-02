@@ -70,6 +70,6 @@ export class NotionController {
 			this.notionService.setNotionToken(result.email, notionToken)
 			return {notion: notionToken};
 		} else
-			return await this.notionService.loginByNotion(email, notionToken);
+			return res.send(await this.notionService.loginByNotion(email, notionToken));
 	}
 }

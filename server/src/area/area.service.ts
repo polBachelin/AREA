@@ -1,4 +1,4 @@
-import { ConsoleLogger, HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { ConsoleLogger, HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
 import { ActionsFactory, actionKeys, ReactionsFactory, reactionKeys } from "src/services/allServices";
 import { Area } from "src/area/area.class"
 import { ATrigger } from "src/interfaces/trigger.interface";
@@ -104,9 +104,11 @@ export class AreaService {
 	}
 
 	public async deleteAnArea(userEmail: string, areaName: string) {
+		let areas = this.areas.get(userEmail);
 		let area = await this.getArea(userEmail, areaName);
-		
+
 		if (!area) return "No area with this name"
+		areas.splice(areas.indexOf(area), 1);
 		let user = await this.userService.findOne(userEmail);
 		user.areas.forEach(el => {
 			if (el.name == areaName) {

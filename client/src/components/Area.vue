@@ -269,8 +269,8 @@
                         <v-list>
                           <v-list-item
                               v-for="item in channels"
-                              :key="item.id"
-                              @click="selectGuild(item.id, item.name)"
+                              :key="item.channel_id"
+                              @click="selectGuild(item.channel_id, item.name)"
                               link
                           >
                             <v-list-item-title v-text="item.name"></v-list-item-title>
@@ -746,6 +746,7 @@ export default {
           return
         }
         console.log(this.selectedDatabase)
+        console.log(this.selectedGuild)
         this.areaBody.actionData = {database_id: this.selectedDatabase}
         this.areaBody.reactionData = {message_content: this.discordMessage, guild_id: this.selectedGuild}
         this.sendAreaToBack(this.areaBody)
