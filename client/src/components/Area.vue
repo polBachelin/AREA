@@ -198,7 +198,7 @@
               </v-row>
 
 <!--              ACTIONS ADDITIONAL OPTIONS-->
-              <v-row v-if="currentDestination.label === 'actions' && currentDestination.isClicked && (selectedAction === selectedActionService.reactions[index])">
+              <v-row v-if="currentDestination.label === 'actions' && currentDestination.isClicked && (selectedAction === selectedActionService.actions[index])">
 
                 <!--              NOTION -->
                 <v-row v-if="selectedActionService.name === 'Notion'" >
@@ -893,6 +893,7 @@ export default {
     selectActionService(id) {
       this.selectedActionService = this.services[id]
       this.currentDestination.isConfirmed = true
+      console.log(this.selectedActionService)
     },
 
     selectAction(id) {
@@ -907,6 +908,7 @@ export default {
       if (this.selectedAction === 'New notification') {
         this.currentDestination.isConfirmed = true
       }
+      console.log(this.selectedAction)
     },
 
     selectReactionService(id) {
