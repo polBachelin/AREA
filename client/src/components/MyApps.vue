@@ -36,16 +36,17 @@
               </v-row>
             </v-card>
             <v-card v-else style="background-color: black" hover="hover" @click="connectToService(app.name)">
-              <v-row v-if="app.name === 'Intra'" class="align-center justify-center">
+              <v-row v-if="app.name === 'Intra'" class="align-center justify-center" style="background-color: #015a9f">
                 <v-col cols="6">
                   <v-text-field
-                      color="orange"
+                      color="white"
+                      style="font-size: 20px; color: antiquewhite"
                       label="Autologin link"
                       v-model="autologin"
                   />
                 </v-col>
                 <v-col cols="4">
-                  <v-btn color="orange" @click="connectToIntra"> Connect </v-btn>
+                  <v-btn style="color: antiquewhite; background-color: black" @click="connectToIntra"> Connect </v-btn>
                 </v-col>
               </v-row>
               <v-row v-else class="align-center justify-center">
@@ -134,6 +135,7 @@ export default {
       axios.post('http://localhost:3000/intra/token', {link: this.autologin},)
           .then((response) => {
             setUser(response.data.email, response.data.token.access_token);
+            this.$router.push({name: '/myapps'})
           })
           .catch( (error) => {
             console.log(error)
