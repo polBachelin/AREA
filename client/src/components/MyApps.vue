@@ -74,7 +74,7 @@
             <v-tooltip bottom color="orange">
               <template v-slot:activator="{ on, attrs }">
                 <v-card v-bind="attrs" v-on="on" :style="checkIfServiceConnected(app.name) ? 'background-color: darkorange' : 'background-color: black'">
-                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.reactions.length}} réactions </v-card-text>
+                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{ (app.reactions.length === 1 && app.reactions[0] === '') ? 0 : app.reactions.length}} réactions </v-card-text>
                 </v-card>
               </template>
               <span v-for="reaction in app.reactions" v-bind:key="reaction.id"> - {{ reaction }}</span>
@@ -149,7 +149,6 @@ export default {
     axios.get('http://localhost:3000/services')
         .then((response) => {
           this.services = response.data
-          console.log(this.services)
         })
         .catch( () => {
           console.log("services fetch error")
