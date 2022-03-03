@@ -36,6 +36,17 @@
               </v-row>
             </v-card>
             <v-card v-else style="background-color: black" hover="hover" @click="connectToService(app.name)">
+              <v-row v-if="app.name === 'Intra'" class="align-center justify-center">
+                <v-col cols="6">
+                  <v-text-field
+                    label="Autologin link"
+                    v-model="autologin"
+                  />
+                </v-col>
+                <v-col cols="4">
+                  <v-btn style="color: darkorange" @click="connectToIntra"> Connect </v-btn>
+                </v-col>
+              </v-row>
               <v-row class="align-center justify-center">
                 <v-col cols="6">
                   <v-card-text style="color: darkorange; font-size: 30px"> hors-ligne </v-card-text>
@@ -83,6 +94,7 @@
 import axios from "axios";
 import {notionUrlState} from '@/oauth/Notion';
 import {discordUrlState} from '@/oauth/Discord';
+import {setUser} from "@/auth";
 
 export default {
   name: "MyApps",
@@ -90,7 +102,8 @@ export default {
     return {
       services: [],
       areas: [],
-      connectedServices: []
+      connectedServices: [],
+      autologin: '',
     }
   },
 
@@ -115,6 +128,18 @@ export default {
       else
         return false
     },
+
+    connectToIntra() {
+      axios.post('http://localhost:3000/intra/token', {link: this.autologin},)
+          .then((response) => {
+            setUser(response.data.email, response.data.token.access_token);
+          })
+          .catch( (error) => {
+            console.log(error)
+            this.isError = "Intra connection failed"
+          })
+    }
+
   },
 
   mounted() {
