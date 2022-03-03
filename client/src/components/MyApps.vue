@@ -135,6 +135,7 @@ export default {
       axios.post('http://localhost:3000/intra/token', {link: this.autologin},)
           .then((response) => {
             setUser(response.data.email, response.data.token.access_token);
+            this.$router.push({name: 'home'})
             this.$router.push({name: 'myapps'})
           })
           .catch( (error) => {
