@@ -39,15 +39,16 @@
               <v-row v-if="app.name === 'Intra'" class="align-center justify-center">
                 <v-col cols="6">
                   <v-text-field
-                    label="Autologin link"
-                    v-model="autologin"
+                      color="orange"
+                      label="Autologin link"
+                      v-model="autologin"
                   />
                 </v-col>
                 <v-col cols="4">
-                  <v-btn style="color: darkorange" @click="connectToIntra"> Connect </v-btn>
+                  <v-btn color="orange" @click="connectToIntra"> Connect </v-btn>
                 </v-col>
               </v-row>
-              <v-row class="align-center justify-center">
+              <v-row v-else class="align-center justify-center">
                 <v-col cols="6">
                   <v-card-text style="color: darkorange; font-size: 30px"> hors-ligne </v-card-text>
                 </v-col>
