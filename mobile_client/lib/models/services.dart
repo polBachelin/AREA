@@ -3,12 +3,14 @@ class Service {
   final String icon;
   final List<dynamic> actions;
   final List<dynamic> reactions;
+  bool connected;
 
-  const Service({
+  Service({
     required this.name,
     required this.icon,
     required this.actions,
     required this.reactions,
+    required this.connected,
   });
 
   factory Service.fromJson(Map<String, dynamic> json) => Service(
@@ -16,6 +18,7 @@ class Service {
         icon: json['icon'],
         actions: json['actions'],
         reactions: json['reactions'],
+        connected: false
       );
 
   Map<String, dynamic> toJson() => {

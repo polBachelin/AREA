@@ -198,6 +198,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  hexcolor:
+    dependency: transitive
+    description:
+      name: hexcolor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.6"
   http:
     dependency: "direct main"
     description:
@@ -546,13 +553,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
-  webview_flutter:
+  visa:
     dependency: "direct main"
+    description:
+      name: visa
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
+  webview_flutter:
+    dependency: transitive
     description:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "2.8.0"
   webview_flutter_android:
     dependency: transitive
     description:

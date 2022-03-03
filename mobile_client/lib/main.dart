@@ -1,6 +1,7 @@
 import 'package:area/pages/IntraFormLogin.dart';
 import 'package:area/pages/register_email_screen.dart';
 import 'package:area/pages/select_server.dart';
+import 'package:area/services/google_oauth.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
           '/register_email': (context) => const RegisterEmailScreen(),
           '/home': (context) => const HomeScreen(),
           '/login': (context) => const LoginScreen(),
-          '/register_epitech' : (context) => const IntraFormLogin()
+          '/register_epitech' : (context) => const IntraFormLogin(),
+          '/google_oauth' : (context) => const GoogleAuthPage()
         }));
   }
 }

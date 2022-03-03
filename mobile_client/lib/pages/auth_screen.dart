@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:area/services/api_register.dart';
@@ -142,7 +143,8 @@ class AuthScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        registerOauth(context, "googleCalendar");
+                        //registerOauth(context, "googleCalendar");
+                        Navigator.pushNamed(context, "/google_oauth");
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
@@ -165,7 +167,6 @@ class AuthScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {

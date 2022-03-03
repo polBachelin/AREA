@@ -1,4 +1,4 @@
-import 'package:area/pages/Services.dart';
+import 'package:area/pages/services_screen.dart';
 import 'package:area/pages/dashboard.dart';
 import 'package:area/pages/settings.dart';
 import 'package:flutter/material.dart';

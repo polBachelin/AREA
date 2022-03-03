@@ -31,7 +31,7 @@ Future<Tuple3<String, String, bool>> interceptToken(BuildContext context,
   return response;
 }
 
-void registerOauth(BuildContext context, String serviceName) async {
+void loginOauth(BuildContext context, String serviceName) async {
   final SharedPreferences _prefs = await SharedPreferences.getInstance();
   var server = await HttpServer.bind("localhost", 3000);
 
@@ -39,7 +39,7 @@ void registerOauth(BuildContext context, String serviceName) async {
       server.address.toString() +
       server.port.toString());
 
-  if (!await launch(urls[serviceName]!,
+  if (!await launch(urls[serviceName]! + "&state=" + _prefs.getString("sessionToken")!,
       enableJavaScript: true,
       forceWebView: true,
       enableDomStorage: true,

@@ -46,7 +46,7 @@ dependencies:
   url_launcher: ^6.0.20
   shared_preferences: ^2.0.13
   tuple: ^2.0.0
-  webview_flutter: ^3.0.1
+  visa: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -67,7 +67,4 @@ flutter:
 flutter_icons:
   android: true # can specify file name here e.g. "ic_launcher"
   ios: true
-  image_path_ios: "images/yoga_3.png"
-  image_path_android: "images/yoga_3.png"
-  image_path: "images/yoga_3.png"
 

@@ -16,8 +16,8 @@ class Server {
   };
 
   void updateToken() {
-    _prefs.then((SharedPreferences prefs) =>
-        headers["Authorization"] = prefs.getString("session_token")!);
+    _prefs.then((SharedPreferences prefs) => headers["Authorization"] =
+        "Bearer " + prefs.getString("token_session")!);
   }
 
   void changeUrl(newUrl) {
@@ -127,6 +127,7 @@ class Server {
       return ret;
     }
     if (response.statusCode == 200) {
+      print(response.body.toString());
       final uri = Uri.parse(json.decode(response.body.toString())['url']);
       ret = ret.withItem1(uri.queryParameters["email"]!);
       ret = ret.withItem2(uri.queryParameters["token"]!);
@@ -138,13 +139,20 @@ class Server {
 
   Future<List<Service>> getServices() async {
     final response = await getRequest('/services');
+    updateToken();
+    print(headers);
+    final loggedServices = await getRequest("/services/logged");
+    var joe = List<String>.from(json.decode(loggedServices.body));
+    print("Logged Services ==> " + joe.toString());
 
     if (response.statusCode == 200) {
       final List services = json.decode(response.body);
 
       return services.map((json) => Service.fromJson(json)).where((service) {
         final nameService = service.name.toLowerCase();
-        final icon = service.icon.toLowerCase();
+        if (joe.contains(nameService)) {
+          service.connected = true;
+        }
 
         return true;
       }).toList();

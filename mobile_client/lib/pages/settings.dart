@@ -36,9 +36,9 @@ class SettingsScreenState extends State<SettingsScreen> {
       prefs.remove('server_ip');
     }
     if (prefs.get('server_ip') != null) {
-      prefs.remove('session_token');
+      prefs.remove('token_session');
     }
-    prefs.remove('session_token');
+    prefs.remove('token_session');
     prefs.setBool('isLogged', false);
   }
 

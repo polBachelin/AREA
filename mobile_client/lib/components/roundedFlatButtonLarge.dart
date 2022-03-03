@@ -46,7 +46,7 @@ class RFLargeButtonState extends State<RFLargeButton> {
             Text(
               widget.buttonText,
               style: GoogleFonts.poppins(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
