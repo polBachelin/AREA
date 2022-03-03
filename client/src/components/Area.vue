@@ -901,6 +901,12 @@ export default {
       if (this.selectedAction === 'Receive a message') {
         this.currentDestination.isConfirmed = true
       }
+      if (this.selectedAction === 'GPA changes') {
+        this.currentDestination.isConfirmed = true
+      }
+      if (this.selectedAction === 'New notification') {
+        this.currentDestination.isConfirmed = true
+      }
     },
 
     selectReactionService(id) {
