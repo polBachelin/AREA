@@ -56,12 +56,11 @@ void registerOauth(BuildContext context, String serviceName) async {
       return;
     }
 
-    print(request.uri);
+    print("URI ==>" + request.uri.toString());
     final code = request.uri.queryParameters["code"];
     if (code == null) {
       throw "Missing code";
     }
-    print(code);
     request.response.close();
     server.close();
     interceptToken(context, serviceName, code, _prefs).then((value) {

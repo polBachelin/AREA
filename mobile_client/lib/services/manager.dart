@@ -1,9 +1,7 @@
 // ignore_for_file: avoid_print
 
-
 import 'package:area/services/api.dart';
 import 'package:flutter/material.dart';
-
 
 class _Manager extends InheritedWidget {
   const _Manager({
@@ -35,6 +33,16 @@ class Manager extends StatefulWidget {
 
 class ManagerState extends State<Manager> {
   final api = Server(url: 'http://192.168.43.15:3000');
+  var creator = {
+    "action_defined": false,
+    "reaction_defined": false,
+    "actions": {
+      "Add to Database" : {
+        "database_id": null
+      }
+
+    }
+  };
 
   @override
   void initState() {

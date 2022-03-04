@@ -1,5 +1,10 @@
+import 'package:area/components/dropdown_menu_actions.dart';
+import 'package:area/components/dropdown_menu_reactions.dart';
+import 'package:area/services/AREA_creator.dart';
+import 'package:area/services/manager.dart';
 import 'package:area/widgets/create_area_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:area/theme.dart' as theme;
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -10,58 +15,48 @@ class Dashboard extends StatefulWidget {
 
 class DashboardState extends State<Dashboard> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  Widget showValueValidator(BuildContext context) {
+    if (Manager.of(context).creator["action_defined"] == true &&
+        Manager.of(context).creator["reaction_defined"] == true) {
+      return ElevatedButton(
+        child: Text("Create"),
+        onPressed:
+            createAREA(Manager.of(context).creator, Manager.of(context).api),
+      );
+    }
+    return Text("Not Ready");
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(children: [
       const Text('Create an AREA',
           textDirection: TextDirection.ltr,
           style: TextStyle(
             fontSize: 32,
-            color: Colors.black87,
+            color: theme.white,
           )),
       const Text('When',
           textDirection: TextDirection.ltr,
           style: TextStyle(
             fontSize: 15,
-            color: Colors.black87,
+            color: theme.white,
           )),
-      buildFloatingSearchBar(),
+      const DropDownMenuActions(),
       //CreateAREAWidget(hint: "Search for actions..."),
       const Text('do',
           textDirection: TextDirection.ltr,
           style: TextStyle(
-            fontSize: 15,
-            color: Colors.black87,
+            fontSize: 30,
+            color: Colors.white,
           )),
-      buildFloatingSearchBar(),
+      const DropDownMenuReactions(),
+      showValueValidator(context)
       // CreateAREAWidget(hint: "Search for reactions..."),
     ]);
   }
-}
-
-Widget buildFloatingSearchBar() {
-  return SizedBox(
-    height: 70.0,
-    child: Card(
-      margin: const EdgeInsets.all(8.0),
-      child: Row(
-        children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: const Icon(Icons.search),
-          ),
-          const Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                  hintText: 'Search for actions', border: InputBorder.none),
-            ),
-            flex: 1,
-          ),
-          IconButton(
-            icon: const Icon(Icons.cancel),
-            onPressed: () {},
-          )
-        ],
-      ),
-    ),
-  );
 }
