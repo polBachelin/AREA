@@ -3,7 +3,7 @@
     <v-img src="../assets/background.gif" max-height="800">
       <v-row class="justify-center">
         <v-card-text class="text-center title_text mt-10">
-          Bienvenue sur l'area
+          Welcome to the Area
         </v-card-text>
       </v-row>
       <v-row class="justify-center">
@@ -13,7 +13,7 @@
                 height="500"
                 :style="isError !== 'none' ? 'border: 10px solid red;' : 'border: 5px solid black;'"
         >
-          <v-card-title class="font-weight-bold">Création de compte :</v-card-title>
+          <v-card-title class="font-weight-bold">Account creation :</v-card-title>
           <v-card-text class="mt-3">
             <v-text-field
                 v-model="username"
@@ -23,13 +23,13 @@
             />
             <v-text-field
                 v-model="password"
-                label="Mot de passe"
+                label="Password"
                 prepend-icon="mdi-lock"
                 type="password"
             />
             <v-text-field
                 v-model="confirmPass"
-                label="Mot de passe"
+                label="Confirm Password"
                 prepend-icon="mdi-lock"
                 type="password"
             />
@@ -41,7 +41,7 @@
 
           <v-row class="mt-14">
             <v-col cols="12" class="mt-10 text-center">
-              <v-btn color="black" style="color: darkorange" @click="confirmUserCreation"> Valider </v-btn>
+              <v-btn color="black" style="color: darkorange" @click="confirmUserCreation"> Confirm </v-btn>
             </v-col>
           </v-row>
         </v-card>
@@ -82,14 +82,14 @@ export default {
                 this.$router.push({name: 'home'})
               })
               .catch( () => {
-                this.isError = "Utilisateur " + this.username + " existe déjà !"
+                this.isError = "User " + this.username + " already exists !"
               })
 
         } else {
-          this.isError = "Les mots de passes sont différents !"
+          this.isError = "Passwords does not match !"
         }
       } else {
-        this.isError = 'Nom ou mot de passe non valide !'
+        this.isError = 'Name or Password not valid !'
       }
     },
 

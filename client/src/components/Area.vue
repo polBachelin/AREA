@@ -9,7 +9,7 @@
         >
           <v-card style="background-color: darkorange">
             <v-card-text  class="card-title text-center" style="color: black">
-              CREATION D'AREA
+              AREA CREATION
             </v-card-text>
           </v-card>
 
@@ -17,7 +17,7 @@
             <v-spacer></v-spacer>
               <v-text-field
                   style="font-size: 25px"
-                  label="Donnez un nom à votre Area"
+                  label="Give a name to your Area"
                   v-model="areaName"
               />
             <v-spacer></v-spacer>
@@ -113,12 +113,12 @@
             <v-spacer></v-spacer>
             <v-col>
               <v-btn @click="resetArea" style="background-color: darkorange; color: black; font-size: 20px; width: 150px">
-                REINITIALISER
+                RESET
               </v-btn>
             </v-col>
             <v-col>
               <v-btn @click="confirmArea" style="background-color: darkorange; color: black; font-size: 20px; width: 150px">
-                CONFIRMER
+                CONFIRM
               </v-btn>
             </v-col>
             <v-spacer></v-spacer>
@@ -148,7 +148,7 @@
               class="card-title text-center"
               style="color: darkorange"
           >
-            Choisissez des {{currentDestination.label}}
+            Choose {{currentDestination.label}}
             <v-row class="mt-16"></v-row>
           </v-card-text>
           <v-row
@@ -158,7 +158,7 @@
             <v-col cols="1"></v-col>
             <v-col cols="10">
             <v-card class="mt-1" width="800" elevation="7">
-              <v-row v-if="currentDestination.label === 'services pour actions' || currentDestination.label === 'services pour reactions'">
+              <v-row v-if="currentDestination.label === 'services for actions' || currentDestination.label === 'services for reactions'">
                 <v-col cols="4">
                   <v-card-text class="text-center" style="font-size: 30px; font-weight: bold"> {{ item.name }} </v-card-text>
                 </v-col>
@@ -166,12 +166,12 @@
                   <v-img :src="item.icon" max-height="50" max-width="50"/>
                 </v-col>
                 <v-col cols="4" class="text-right">
-                  <v-btn v-if="currentDestination.label === 'services pour actions'"
+                  <v-btn v-if="currentDestination.label === 'services for actions'"
                          :disabled="checkIfServiceConnected(item.name)"
                          @click="selectActionService(index)" :style= "isButtonIndex(selectedActionService, index) ? 'background-color: lime' : ''">
                     SELECT
                   </v-btn>
-                  <v-btn v-if="currentDestination.label === 'services pour reactions'"
+                  <v-btn v-if="currentDestination.label === 'services for reactions'"
                          :disabled="checkIfServiceConnected(item.name)"
                          @click="selectReactionService(index)" :style= "isButtonIndex(selectedReactionService, index) ? 'background-color: lime' : ''">
                     SELECT
@@ -691,7 +691,7 @@
                 style="background-color: darkorange; color: black; font-size: 20px"
                 class="mb-3"
             >
-              SAUVEGARDER
+              SAVE
             </v-btn>
             <v-btn
                 v-else
@@ -700,7 +700,7 @@
                 style="background-color: darkorange; color: black; font-size: 20px"
                 class="mb-3"
             >
-              SUIVANT
+              NEXT
             </v-btn>
             <v-spacer></v-spacer>
           </v-row>
@@ -715,7 +715,7 @@
         <v-card v-else style="background-color: black; height: 800px" >
           <v-row style="margin-top: 400px">
           <v-card-text   style="color: darkorange; font-size: 40px; font-style: italic" class="text-center">
-            En attente de création ...
+            Awaiting creation ...
             <v-row class="mt-16"></v-row>
           </v-card-text>
           </v-row>
@@ -736,9 +736,9 @@ export default {
     return {
       destinations: [
         {label: 'none'},
-        {label: 'services pour actions', isConfirmed: false, isClicked: false, service: ''},
+        {label: 'services for actions', isConfirmed: false, isClicked: false, service: ''},
         {label: 'actions', isConfirmed: false, isClicked: false, service: ''},
-        {label: 'services pour reactions', isConfirmed: false, isClicked: false, service: ''},
+        {label: 'services for reactions', isConfirmed: false, isClicked: false, service: ''},
         {label: 'reactions', isConfirmed: false, isClicked: false, service: ''},
       ],
       currentDestination: {label: 'none'},
@@ -858,7 +858,7 @@ export default {
       this.currentDestination = this.destinations[4]
     },
     goToNextDestination() {
-      if (this.currentDestination.label === 'services pour actions') {
+      if (this.currentDestination.label === 'services for actions') {
         this.destinations[1].isConfirmed = true
         this.currentDestination = this.destinations[2]
         return
@@ -868,7 +868,7 @@ export default {
         this.currentDestination = this.destinations[3]
         return
       }
-      if (this.currentDestination.label === 'services pour reactions') {
+      if (this.currentDestination.label === 'services for reactions') {
         this.destinations[3].isConfirmed = true
         this.currentDestination = this.destinations[4]
         return
@@ -878,7 +878,7 @@ export default {
     selectInfo() {
       let info = []
 
-      if (this.currentDestination.label === 'services pour actions' || this.currentDestination.label === 'services pour reactions') {
+      if (this.currentDestination.label === 'services for actions' || this.currentDestination.label === 'services for reactions') {
         info = this.services
       }
       if (this.currentDestination.label === 'actions') {
@@ -924,7 +924,7 @@ export default {
     saveArea() {
 
       if (!this.areaName) {
-        this.rightCardError = 'Veuillez entrer un nom pour votre aréa !'
+        this.rightCardError = 'Please give a name to your Area !'
         return
       }
       this.areaBody.name = this.areaName
@@ -1020,7 +1020,7 @@ export default {
     },
     confirmArea() {
       if (this.destinations[1].isConfirmed === false || this.destinations[2].isConfirmed === false || !this.areaName) {
-        this.errorMsg = 'Veuillez remplir toutes les conditions !'
+        this.errorMsg = 'Please fulfill all conditions !'
       }
     },
 

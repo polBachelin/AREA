@@ -26,7 +26,15 @@
         <v-col cols="4" class="justify-center align-center">
           <v-col cols="12" class="mt-2 mb-2">
             <v-card v-if="checkIfServiceConnected(app.name)" style="background-color: darkorange">
-              <v-row class="align-center justify-center">
+              <v-row v-if="app.name === 'Discord'" class="align-center justify-center">
+                <v-col cols="6">
+                  <v-card-text style="color: white; font-size: 30px"> connecté </v-card-text>
+                </v-col>
+                <v-btn cols="4" color="orange" href="https://discord.com/oauth2/authorize?client_id=286959581488480267&scope=bot&permissions=17448642624" target="_blank">
+                  connect bot
+                </v-btn>
+              </v-row>
+              <v-row v-else class="align-center justify-center">
                 <v-col cols="6">
                   <v-card-text style="color: white; font-size: 30px"> connecté </v-card-text>
                 </v-col>
@@ -111,10 +119,10 @@ export default {
   methods: {
     connectToService(name) {
      if (name === "Discord") {
-       window.location.replace(discordUrlState + localStorage.getItem("accessToken"));
+       window.location.replace(discordUrlState + localStorage.getItem("accessToken"))
      }
      if (name === "Notion") {
-       window.location.replace(notionUrlState + localStorage.getItem("accessToken"));
+       window.location.replace(notionUrlState + localStorage.getItem("accessToken"))
      }
     },
 
