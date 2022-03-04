@@ -5,8 +5,8 @@ import { notionClient } from "../notion.service";
 export class CreatePage extends ATask {
 	
 	async run(user: any): Promise<any> {
-		const database_id = this.data.get('database_id') || undefined;
-		const title = this.data.get('title') || undefined;
+		const database_id = this.data['database_id'] || undefined;
+		const title = this.data['title'] || undefined;
 
 		if (!database_id || !title) throw 'Invalid Data'
 		try {

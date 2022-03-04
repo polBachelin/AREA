@@ -6,8 +6,8 @@ import { Logger } from "@nestjs/common";
 export class SendMessage extends ATask {
 	
 	async run(user: any): Promise<any> {		
-		const id = this.data.get('guild_id') || undefined;
-		const content = this.data.get('message_content') || undefined;
+		const id = this.data['guild_id'] || undefined;
+		const content = this.data['message_content'] || undefined;
 		
 		Logger.log("CALLBACK DISCORD REACT");
 		if (!id || !content) throw 'Invalid Data'

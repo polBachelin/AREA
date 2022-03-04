@@ -6,8 +6,8 @@ import { Logger } from "@nestjs/common";
 export class RemoveRoleFromChannel extends ATask {
 	
 	async run(user: any): Promise<any> {		
-		const id = this.data.get('guild_id') || undefined;
-		const role = this.data.get('role_id') || undefined;
+		const id = this.data['guild_id'] || undefined;
+		const role = this.data['role_id'] || undefined;
 
 		if (!id || !role) throw 'Invalid Data'
 		let channel: Channel = undefined;

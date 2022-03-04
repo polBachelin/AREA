@@ -21,7 +21,7 @@ export class WeatherChange extends ATrigger {
     }
 
     public setup(callback: () => Promise<void>, user: IUser): void {
-        const city_name = this.data.get('city');
+        const city_name = this.data['city'];
         const api_url = WEATHER_URL + city_name + API_KEY;
         let old_weather = this.getWeather(city_name);
         console.log("Weater : "+old_weather);

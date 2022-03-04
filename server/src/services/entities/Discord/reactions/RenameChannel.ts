@@ -6,8 +6,8 @@ import { Logger } from "@nestjs/common";
 export class RenameChannel extends ATask {
 	
 	async run(user: any): Promise<any> {		
-		const id = this.data.get('guild_id') || undefined;
-		const name = this.data.get('channel_name') || undefined;
+		const id = this.data['guild_id'] || undefined;
+		const name = this.data['channel_name'] || undefined;
 		
 		if (!id || !name) throw 'Invalid Data'
 		let channel = undefined;		
