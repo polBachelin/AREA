@@ -3,7 +3,7 @@
 
     <v-row class="mt-10 text-center justify-center">
       <h1 class="mt-10" style="color: white; font-size: 80px">
-        Mes Services
+        {{ $t('message.myAppsTitle') }}
       </h1>
     </v-row>
 
@@ -28,15 +28,15 @@
             <v-card v-if="checkIfServiceConnected(app.name)" style="background-color: darkorange">
               <v-row v-if="app.name === 'Discord'" class="align-center justify-center">
                 <v-col cols="6">
-                  <v-card-text style="color: white; font-size: 30px"> connecté </v-card-text>
+                  <v-card-text style="color: white; font-size: 30px"> {{ $t('message.serviceOnline') }} </v-card-text>
                 </v-col>
                 <v-btn cols="4" color="orange" href="https://discord.com/oauth2/authorize?client_id=286959581488480267&scope=bot&permissions=17448642624" target="_blank">
-                  connect bot
+                  {{ $t('message.connectBot') }}
                 </v-btn>
               </v-row>
               <v-row v-else class="align-center justify-center">
                 <v-col cols="6">
-                  <v-card-text style="color: white; font-size: 30px"> connecté </v-card-text>
+                  <v-card-text style="color: white; font-size: 30px"> {{ $t('message.serviceOnline') }} </v-card-text>
                 </v-col>
                 <v-col cols="4">
                   <v-icon style="color: white"> mdi-checkbox-marked-circle </v-icon>
@@ -59,7 +59,7 @@
               </v-row>
               <v-row v-else class="align-center justify-center">
                 <v-col cols="6">
-                  <v-card-text style="color: darkorange; font-size: 30px"> hors-ligne </v-card-text>
+                  <v-card-text style="color: darkorange; font-size: 30px"> {{ $t('message.serviceOffline') }} </v-card-text>
                 </v-col>
                 <v-col cols="4">
                   <v-icon style="color: darkorange"> mdi-cancel </v-icon>
@@ -72,7 +72,7 @@
             <v-tooltip bottom color="orange">
               <template v-slot:activator="{ on, attrs }">
                 <v-card v-bind="attrs" v-on="on" :style="checkIfServiceConnected(app.name) ? 'background-color: darkorange' : 'background-color: black'">
-                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.actions.length}} actions </v-card-text>
+                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.actions.length}} {{ $t('message.actions') }} </v-card-text>
                 </v-card>
               </template>
               <span v-for="action in app.actions" v-bind:key="action.id"> - {{ action }}</span>
@@ -82,7 +82,7 @@
             <v-tooltip bottom color="orange">
               <template v-slot:activator="{ on, attrs }">
                 <v-card v-bind="attrs" v-on="on" :style="checkIfServiceConnected(app.name) ? 'background-color: darkorange' : 'background-color: black'">
-                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{ (app.reactions.length === 1 && app.reactions[0] === '') ? 0 : app.reactions.length}} réactions </v-card-text>
+                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{ (app.reactions.length === 1 && app.reactions[0] === '') ? 0 : app.reactions.length}} {{ $t('message.reactions') }} </v-card-text>
                 </v-card>
               </template>
               <span v-for="reaction in app.reactions" v-bind:key="reaction.id"> - {{ reaction }}</span>
