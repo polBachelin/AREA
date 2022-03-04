@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:area/models/discord.dart';
 import 'package:area/utils/server_requests.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,19 +17,12 @@ class DiscordAPI {
     prefs.then((p) => url = "http://" + p.getString('server_ip')! + ":3000");
   }
 
-  Future<List> getChannels() async {
+  Future<List<DiscordChannel>> getChannels() async {
     updateUrl();
     final response =
         await ServerRequest.getRequest(url, '/discord/getChannels', headers);
 
-    final List dbs = json.decode(response.body);
-    print(dbs);
-
-    return dbs;
-    //   print(item);
-    //   ret[item["title"]["text"]["content"].toString()] = item["id"].toString();
-    //   print("RET" + ret.toString());
-    // }
-    //return ret;
+    final List channels = json.decode(response.body);
+    return channels.map((json) => DiscordChannel.fromJson(json)).toList();
   }
 }

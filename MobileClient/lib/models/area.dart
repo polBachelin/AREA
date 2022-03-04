@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Area{
   final String name;
 

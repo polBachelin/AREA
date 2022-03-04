@@ -1,4 +1,5 @@
 import 'package:area/components/validators_actions/notion_add_database.dart';
+import 'package:area/models/discord.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
@@ -24,16 +25,10 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
   List<DropdownMenuItem<String>>? getChannelsList(
       AsyncSnapshot<List> snapshot) {
     if (snapshot.hasData) {
-      return snapshot.data?.where((element) => element.connected == true).map((item) {
+      return snapshot.data?.map((item) {
         return DropdownMenuItem<String>(
-          child: Row(
-            children: [
-              Image.network(item, height: 24),
-              const SizedBox(width: 30),
-              Text(item),
-            ],
-          ),
-          value: item,
+          child: Text(item.name),
+          value: item.name,
         );
       }).toList();
     }
@@ -46,7 +41,7 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
   Widget build(BuildContext context) {
     return Form(
         key: _dropdownFormKey,
-        child: FutureBuilder<List>(
+        child: FutureBuilder<List<DiscordChannel>>(
             future: Manager.of(context).api.discord.getChannels(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
