@@ -32,7 +32,27 @@ export class GoogleCalendarController {
 		}
 		return await this.googleService.loginByGoogleCalendar(email, token);
 	}
+	
+	@Get('/auth_mobile')
+	@ApiOperation({summary: "Get the access token from google"})
+	async googleCalendarCallbackMobile(@Query() query, @Req() req) {
+		let email: string = null;
+		let token = null;
 
+		await this.googleService.authorize(query.code).then(res  => {
+			token = res;
+		});
+		if (token) {
+			email = await this.googleService.getUserEmail(token);
+		}
+		if (query.state) {
+			let res = this.authService.verify(query.state);
+			this.googleService.setToken(res.email, token);
+			return {google: token};
+		}
+		return await this.googleService.loginByGoogleCalendar(email, token);
+	}
+	
 	@Get('/createEvent')
 	async createGoogleEvent() {
 		const props: Map<string, any> = new Map<string, any>([
