@@ -52,7 +52,7 @@ export class GoogleCalendarController {
 		}
 		return await this.googleService.loginByGoogleCalendar(email, token);
 	}
-	
+
 	@Get('/createEvent')
 	async createGoogleEvent() {
 		const props: Map<string, any> = new Map<string, any>([
