@@ -1018,7 +1018,7 @@ export default {
 
       if (this.selectedReaction === 'Create page') {
         if (!this.selectedPageName) {
-          this.rightCardError = 'Please name your page'
+          this.rightCardError = 'Please give a name !'
           return
         }
         this.areaBody.reactionData = {title: this.selectedPageName, database_id: this.selectedDatabase}
@@ -1026,7 +1026,7 @@ export default {
 
       if (this.selectedReaction === 'Create an event') {
         if (!this.eventName) {
-          this.rightCardError = 'Please give a name to the event'
+          this.rightCardError = 'Please give a name !'
           return
         }
         this.areaBody.reactionData = {
@@ -1048,9 +1048,9 @@ export default {
       if (this.areaBody.actionName && this.areaBody.reactionName) {
         this.sendAreaToBack(this.areaBody)
         this.rightCardError = ''
-        this.goodMessage = "Area created!"
+        this.goodMessage = "Area created !"
       } else {
-        this.rightCardError = 'Please select an action AND a reaction'
+        this.rightCardError = 'Please select an action AND a reaction !'
       }
     },
 
