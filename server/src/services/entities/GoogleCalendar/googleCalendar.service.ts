@@ -68,10 +68,9 @@ export class GoogleCalendarService {
 				registerDTO = {email: email, password: ''};
 				user = await this.userService.createUser(registerDTO);
 			}
-			console.log(token);
 			this.setToken(email, token);
 			const t = await this.authService.signUser(user);
-			console.log(t);
+			return { url: 'http://localhost:8080/home?email=' + email + '&token=' + t.access_token};
 		}
 	}
 

@@ -15,6 +15,7 @@ import { StartTimer } from './entities/Timer/actions/StartTimer';
 import { timer } from './entities/Timer/timer.class';
 import { weather } from './entities/Weather/weather.class';
 import { WeatherChange } from './entities/Weather/actions/GetCityWeather';
+import { RemoveRoleFromChannel } from './entities/Discord/reactions/RemoveRoleFromChannel';
 
 export let allServices: IService[] = [];
 allServices.push(notion);
@@ -47,6 +48,7 @@ const reactionsMap = {
 	"Send a message": SendMessage,
 	"Rename channel": RenameChannel,
 	"Add role to channel": AddRoleToChannel,
+	"Remove role from channel": RemoveRoleFromChannel,
 
 	//Google
 	"Create an event": CreateEvent,
