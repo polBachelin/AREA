@@ -56,7 +56,7 @@ class NotionAddDatabaseState extends State<NotionAddDatabaseForm> {
                 items: snapshot.data!.map((db) {
                   var name = "Unknown";
                   try {
-                    var name = db["title"][0]["text"]["content"];
+                    name = db["title"][0]["text"]["content"];
                   } on RangeError {
                     name = "Unknown";
                   }
