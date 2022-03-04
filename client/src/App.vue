@@ -38,7 +38,7 @@
                   </v-icon>
                 </v-btn>
               </template>
-              <span>Rechercher</span>
+              <span>Search</span>
             </v-tooltip>
           </v-col>
           <v-col cols="1" class="justify-end">
@@ -57,7 +57,7 @@
 
                 </v-btn>
               </template>
-              <span>Profil</span>
+              <span>Profile</span>
             </v-tooltip>
           </v-col>
           <v-col class="mt-1">
@@ -87,7 +87,7 @@
                   <v-list-item-icon>
                     <v-icon style="color: darkorange">mdi-home</v-icon>
                   </v-list-item-icon>
-                  <v-list-item-title style="color: darkorange">Accueil</v-list-item-title>
+                  <v-list-item-title style="color: darkorange">Home</v-list-item-title>
                 </v-list-item>
               </router-link>
 
@@ -96,7 +96,7 @@
                   <v-list-item-icon>
                     <v-icon style="color: darkorange">mdi-account-multiple</v-icon>
                   </v-list-item-icon>
-                  <v-list-item-title style="color: darkorange">Mes apps</v-list-item-title>
+                  <v-list-item-title style="color: darkorange">My Services</v-list-item-title>
                 </v-list-item>
               </router-link>
 
@@ -104,7 +104,7 @@
                 <v-list-item-icon>
                   <v-icon style="color: darkorange">mdi-star</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title style="color: darkorange">Historique</v-list-item-title>
+                <v-list-item-title style="color: darkorange">History</v-list-item-title>
               </v-list-item>
 
               <v-divider></v-divider>

@@ -6,7 +6,7 @@
       <v-card width="800" style=" background-color: white; border-radius: 0px 0px 10px 10px; margin: 0px 0px -110px;">
         <v-row class="mt-1 mb-1"></v-row>
         <v-row v-if="areas.length === 0">
-            <v-card-text class="text-center mt-10 mb-10" style=" color: grey; font-size: 40px; border-radius: 0px">Aucune Aréa</v-card-text>
+            <v-card-text class="text-center mt-10 mb-10" style=" color: grey; font-size: 40px; border-radius: 0px">No Area ...</v-card-text>
         </v-row>
         <v-row v-else
             v-for="(area, index) in getComputedAreas"
@@ -50,7 +50,7 @@
             <v-col  cols="4">
             </v-col>
             <v-col  cols="4">
-              <v-card-text class="text-center mt-4 mb-4" style="color: white; font-size: 60px; border-radius: 0px"> Mes Aréas</v-card-text>
+              <v-card-text class="text-center mt-4 mb-4" style="color: white; font-size: 60px; border-radius: 0px"> My Areas </v-card-text>
             </v-col>
             <v-col cols="4" class="text-right d-flex justify-center align-center">
               <v-hover v-slot="{ hover }">
