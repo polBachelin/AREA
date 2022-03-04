@@ -10,6 +10,14 @@
       >
         <v-row>
           <v-col cols="3"/>
+          <v-col cols="3" class="mt-2" style="display: flex">
+            <v-btn color="orange" @click="changeLanguage('fr')" style="font-weight: bold">
+              FR
+            </v-btn>
+            <v-btn color="orange" @click="changeLanguage('en')" class="mr-7 ml-3" style="font-weight: bold">
+              EN
+            </v-btn>
+          </v-col>
           <v-col cols="2">
             <router-link :to="'/home'">
               <v-row class="mt-1">
@@ -19,27 +27,8 @@
                 <h1 class="area-title">
                   REA
                 </h1>
-
               </v-row>
-
             </router-link>
-          </v-col>
-          <v-col cols="4"/>
-          <v-col cols="1" class="justify-end">
-            <v-tooltip bottom color="orange">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    v-bind="attrs"
-                    v-on="on"
-                    icon
-                >
-                  <v-icon style="color: darkorange">
-                    mdi-magnify
-                  </v-icon>
-                </v-btn>
-              </template>
-              <span>Search</span>
-            </v-tooltip>
           </v-col>
           <v-col cols="1" class="justify-end">
             <v-tooltip bottom color="orange">
@@ -54,15 +43,30 @@
                       mdi-account
                     </v-icon>
                   </router-link>
-
                 </v-btn>
               </template>
-              <span>Profile</span>
+              <span>{{ $t('message.profileBtn') }}</span>
+            </v-tooltip>
+          </v-col>
+          <v-col cols="1" class="justify-end">
+            <v-tooltip bottom color="orange">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    icon
+                >
+                  <v-icon style="color: darkorange">
+                    mdi-magnify
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>{{ $t('message.searchBtn') }}</span>
             </v-tooltip>
           </v-col>
           <v-col class="mt-1">
             <v-btn v-if="checkIfLogged()" @click="logOut" color="orange">
-              LOGOUT
+              {{ $t('message.logoutBtn') }}
             </v-btn>
           </v-col>
         </v-row>
@@ -87,7 +91,7 @@
                   <v-list-item-icon>
                     <v-icon style="color: darkorange">mdi-home</v-icon>
                   </v-list-item-icon>
-                  <v-list-item-title style="color: darkorange">Home</v-list-item-title>
+                  <v-list-item-title style="color: darkorange">{{ $t('message.homeSideBar') }}</v-list-item-title>
                 </v-list-item>
               </router-link>
 
@@ -96,7 +100,7 @@
                   <v-list-item-icon>
                     <v-icon style="color: darkorange">mdi-account-multiple</v-icon>
                   </v-list-item-icon>
-                  <v-list-item-title style="color: darkorange">My Services</v-list-item-title>
+                  <v-list-item-title style="color: darkorange">{{ $t('message.myAppSideBar') }}</v-list-item-title>
                 </v-list-item>
               </router-link>
 
@@ -104,7 +108,7 @@
                 <v-list-item-icon>
                   <v-icon style="color: darkorange">mdi-star</v-icon>
                 </v-list-item-icon>
-                <v-list-item-title style="color: darkorange">History</v-list-item-title>
+                <v-list-item-title style="color: darkorange">{{ $t('message.historySideBar') }}</v-list-item-title>
               </v-list-item>
 
               <v-divider></v-divider>
@@ -189,8 +193,18 @@ export default {
       localStorage.setItem('accessToken', '')
       localStorage.setItem('username', '')
       this.$router.push('/login')
-    }
+    },
+
+    changeLanguage(lang) {
+      localStorage.setItem('lang', lang)
+      this.$router.go()
+    },
   },
+  created() {
+    if (!localStorage.getItem('lang')) {
+      localStorage.setItem('lang', 'en')
+    }
+  }
 }
 </script>
 
