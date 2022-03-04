@@ -16,6 +16,7 @@ export class StartTimer extends ATrigger {
         const delay = this.data.get('time_s')
         this.setChecking();
         this.intervalObj = setInterval(async () => {
+            Logger.log("IS CHECKING")
         if (!this.lastExec)
             this.save();
         const act = new Date()

@@ -8,25 +8,24 @@ export class CreatePage extends ATask {
 		const database_id = this.data.get('database_id') || undefined;
 		const title = this.data.get('title') || undefined;
 
-		Logger.log("CALLBACK NOTION REACT");
 		if (!database_id || !title) throw 'Invalid Data'
-
 		try {
 			const res = await notionClient.pages.create({
+				auth:user.notion.access_token,
 				parent: {
 					database_id: database_id
 				},
 				properties: {
-					Name: {
-						title: [{
-							text: {
-								content: title
-							}
-						}]
-					}
-				}
+        				title: [
+				        {
+							type: "text",
+	            			text: {
+              					content: title,
+
+            				},
+				        },],
+      				},
 			});
-			Logger.log(res);
 		} catch(err) {
 			Logger.log(err);
 			throw err;
