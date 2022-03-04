@@ -39,7 +39,7 @@ void loginOauth(BuildContext context, String serviceName) async {
       server.address.toString() +
       server.port.toString());
 
-  if (!await launch(urls[serviceName]! + "&state=" + _prefs.getString("sessionToken")!,
+  if (!await launch(urls[serviceName]! + "&state=" + _prefs.getString("token_session")!,
       enableJavaScript: true,
       forceWebView: true,
       enableDomStorage: true,

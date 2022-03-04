@@ -1,4 +1,5 @@
 import 'package:area/models/services.dart';
+import 'package:area/services/discord_api.dart';
 import 'package:area/services/notion_api.dart';
 import 'package:area/utils/server_requests.dart';
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,7 @@ class Server {
   String url;
 
   final notion = NotionAPI(prefs: SharedPreferences.getInstance());
+  final discord = DiscordAPI(prefs: SharedPreferences.getInstance());
 
   Map<String, String> headers = {
     "Content-Type": "application/json",
@@ -20,14 +22,19 @@ class Server {
   };
 
   void updateToken() {
-    prefs.then((SharedPreferences p) =>
-        headers["Authorization"] = "Bearer " + p.getString("token_session")!);
-    notion.headers = headers;
+    prefs.then((SharedPreferences p) {
+      if (p.getString("token_session") != null) {
+        headers["Authorization"] = "Bearer " + p.getString("token_session")!;
+      }
+      notion.headers = headers;
+      discord.headers = headers;
+    });
   }
 
   void changeUrl(newUrl) {
     url = newUrl;
     notion.url = newUrl;
+    discord.url = newUrl;
   }
 
   Future<bool> register(dynamic data) async {
@@ -101,7 +108,6 @@ class Server {
         if (joe.contains(nameService)) {
           service.connected = true;
         }
-
         return true;
       }).toList();
     } else {

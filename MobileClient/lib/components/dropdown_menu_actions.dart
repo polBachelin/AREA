@@ -25,8 +25,7 @@ class DropDownMenuState extends State<DropDownMenuActions> {
   List<DropdownMenuItem<String>>? getActionsList(
       AsyncSnapshot<List<Service>> snapshot) {
     if (selectedService != null) {
-      return snapshot.data
-          ?.firstWhere((element) => element.name == selectedService)
+      return snapshot.data?.firstWhere((element) => element.name == selectedService)
           .actions
           .map((item) {
         return DropdownMenuItem<String>(
@@ -42,7 +41,7 @@ class DropDownMenuState extends State<DropDownMenuActions> {
   List<DropdownMenuItem<String>>? getServicesList(
       AsyncSnapshot<List<Service>> snapshot) {
     if (snapshot.hasData) {
-      return snapshot.data?.map((item) {
+      return snapshot.data?.where((element) => element.connected == true).map((item) {
         return DropdownMenuItem<String>(
           child: Row(
             children: [
@@ -63,9 +62,17 @@ class DropDownMenuState extends State<DropDownMenuActions> {
     switch (selectedAction) {
       case "Add to database":
         return Builder(builder: (context) => NotionAddDatabaseForm());
+      case "Start timer":
+        break;
+      case "City's weather change":
+        break;
+      case "Received a message":
+        break;
       default:
         return const Text("Setup Action");
     }
+    Manager.of(context).creator["Action_name"] = selectedAction!;
+    return const Text("Setup Action");
   }
 
   @override
@@ -104,10 +111,6 @@ class DropDownMenuState extends State<DropDownMenuActions> {
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedService = newValue!;
-                            print("DEBUG ACTIONS " +
-                                selectedService.toString() +
-                                "" +
-                                selectedAction.toString());
                           });
                         },
                         items: getServicesList(snapshot)),

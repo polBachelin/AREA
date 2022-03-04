@@ -31,29 +31,34 @@ Future<Tuple3<String, String, bool>> interceptToken(BuildContext context,
   return response;
 }
 
+//TODO: fix close serveur
+
 void registerOauth(BuildContext context, String serviceName) async {
   final SharedPreferences _prefs = await SharedPreferences.getInstance();
+
   var server = await HttpServer.bind("localhost", 3000);
 
-  print("Serveur launch on " +
-      server.address.toString() +
-      server.port.toString());
+  try {
+    print("Serveur launch on " +
+        server.address.toString() +
+        server.port.toString());
 
-  if (!await launch(urls[serviceName]!,
+    if (!await launch(urls[serviceName]!,
       enableJavaScript: true,
       forceWebView: true,
       enableDomStorage: true,
-      universalLinksOnly: true,
-      )) {
-    throw "Could not start OAuth";
-  }
+    )) {
+      server.close();
+      throw "Could not start OAuth";
+    }
 
-  await server.forEach((HttpRequest request) {
-    print(request.uri.path);
-    if (request.uri.path != "/" + serviceName + "/auth") {
-      request.response.statusCode = HttpStatus.notFound;
-      request.response.close();
-      return;
+    await server.forEach((HttpRequest request) {
+      print(request.uri.path);
+      if (request.uri.path != "/" + serviceName + "/auth") {
+        request.response.statusCode = HttpStatus.notFound;
+        request.response.close();
+        server.close();
+        return;
     }
 
     print("URI ==>" + request.uri.toString());
@@ -66,12 +71,16 @@ void registerOauth(BuildContext context, String serviceName) async {
     interceptToken(context, serviceName, code, _prefs).then((value) {
       closeWebView();
       if (value.item3 == true) {
+        server.close();
         Navigator.pushNamed(context, '/home');
       } else {
+        server.close();
         //TODO: toast System
         Navigator.pushNamed(context, '/login');
       }
     });
-    // else:
-  });
+    });
+  } finally {
+    server.close();
+  }
 }

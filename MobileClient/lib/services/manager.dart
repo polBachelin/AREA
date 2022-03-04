@@ -36,12 +36,11 @@ class ManagerState extends State<Manager> {
   var creator = {
     "action_defined": false,
     "reaction_defined": false,
-    "actions": {
-      "Add to Database" : {
-        "database_id": null
-      }
-
-    }
+    "name" : "",
+    "ActionName" : "",
+    "ActionData" : {},
+    "ReactionName" : "",
+    "ReactionData" : {},
   };
 
   @override

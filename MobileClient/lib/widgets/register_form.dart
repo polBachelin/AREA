@@ -105,6 +105,7 @@ class _RegisterFormState extends State<RegisterForm> {
               passedFunction: register,
               buttonText: 'Register',
               parentContext: context,
+              passedString: "",
               ),
           ),
         ],

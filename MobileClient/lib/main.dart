@@ -1,4 +1,4 @@
-import 'package:area/pages/IntraFormLogin.dart';
+import 'package:area/pages/intra_form_login.dart';
 import 'package:area/pages/register_email_screen.dart';
 import 'package:area/pages/select_server.dart';
 import 'package:area/services/google_oauth.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
             title: 'AREA',
             // Start the app with the "/" named route. In this case, the app starts
             // on the RegisterScreen widget.
-            initialRoute: '/home',
+            initialRoute: '/',
             debugShowCheckedModeBanner: false,
             routes: {
           // When navigating to the "/" route, build the RegisterScreen widget.

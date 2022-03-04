@@ -11,6 +11,7 @@ class RFLargeButton extends StatefulWidget {
   final IconData buttonIcon;
   final Function passedFunction;
   final BuildContext parentContext;
+  final String passedString;
 
   const RFLargeButton(
       {Key? key,
@@ -18,7 +19,8 @@ class RFLargeButton extends StatefulWidget {
       required this.passedFunction,
       required this.buttonText,
       required this.buttonIcon,
-      required this.parentContext})
+      required this.parentContext,
+      required this.passedString})
       : super(key: key);
 
   @override
@@ -32,7 +34,17 @@ class RFLargeButtonState extends State<RFLargeButton> {
   Widget build(BuildContext context) {
     return (ButtonTheme(
       child: ElevatedButton(
-        onPressed: () => widget.passedFunction(widget.parentContext),
+        onPressed: () {
+          if (widget.passedString != "") {
+            print("CALLBACK ==> " +
+                widget.passedFunction.toString() +
+                " --> " +
+                widget.passedString);
+            widget.passedFunction(widget.parentContext, widget.passedString);
+          } else {
+            widget.passedFunction(widget.parentContext);
+          }
+        },
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
           primary: widget.backgroundColor,

@@ -1,4 +1,5 @@
 import 'package:area/components/validators_actions/notion_add_database.dart';
+import 'package:area/components/validators_reactions/discord_send_message.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
   List<DropdownMenuItem<String>>? getServicesList(
       AsyncSnapshot<List<Service>> snapshot) {
     if (snapshot.hasData) {
-      return snapshot.data?.map((item) {
+      return snapshot.data?.where((element) => element.connected == true).map((item) {
         return DropdownMenuItem<String>(
           child: Row(
             children: [
@@ -63,6 +64,8 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
     switch (selectedReaction) {
       case "Update Page":
         return Builder(builder: (context) => NotionAddDatabaseForm());
+      case "Send a message":
+        return Builder(builder: (context) => DiscordSendMessageForm());
       default:
         return const Text("Setup Reaction");
     }

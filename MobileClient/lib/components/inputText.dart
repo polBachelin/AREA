@@ -26,7 +26,7 @@ class Input extends StatefulWidget {
 }
 
 class InputState extends State<Input> {
-  String _input = '192.168.43.15';
+  String _input = "";
 
   @override
   Widget build(BuildContext context) {

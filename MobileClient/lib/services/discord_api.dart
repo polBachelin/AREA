@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:area/models/notion.dart';
 import 'package:area/utils/server_requests.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NotionAPI {
-  NotionAPI({required this.prefs});
+class DiscordAPI {
+  DiscordAPI({required this.prefs});
   Future<SharedPreferences> prefs;
   String url = "";
   Map<String, String> headers = {
@@ -17,12 +16,13 @@ class NotionAPI {
     prefs.then((p) => url = "http://" + p.getString('server_ip')! + ":3000");
   }
 
-  Future<List> getDatabases() async {
+  Future<List> getChannels() async {
     updateUrl();
     final response =
-        await ServerRequest.getRequest(url, '/notion/databases', headers);
+        await ServerRequest.getRequest(url, '/discord/getChannels', headers);
 
-    final List dbs = json.decode(response.body)["results"];
+    final List dbs = json.decode(response.body);
+    print(dbs);
 
     return dbs;
     //   print(item);

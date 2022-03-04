@@ -3,6 +3,7 @@ import 'package:area/components/delayed_animation.dart';
 import 'package:area/components/roundedFlatButtonLarge.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/api_login.dart';
+import 'package:area/services/api_register.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:area/theme.dart' as theme;
@@ -44,8 +45,8 @@ class ServicePageState extends State<ServicesPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Image.network(snapshot.data![index].icon,
                                       height: 24),
@@ -56,37 +57,26 @@ class ServicePageState extends State<ServicesPage> {
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    for (var item
-                                        in snapshot.data![index].actions)
-                                      Text(item)
-                                  ]),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    if (snapshot.data![index].connected == true)
-                                      RFLargeButton(
-                                        backgroundColor: Color.fromARGB(255, 41, 194, 27),
-                                        buttonIcon: Icons.api,
-                                        passedFunction: loginOauth,
-                                        buttonText: 'Connected',
-                                        parentContext: context,
-                                      )
-                                    else
-                                      RFLargeButton(
-                                        backgroundColor: Color.fromARGB(255, 190, 39, 13),
-                                        buttonIcon: Icons.login,
-                                        passedFunction: loginOauth,
-                                        buttonText: 'Disconnected',
-                                        parentContext: context,
-                                      )
+                                  ),
+                                  const SizedBox(width: 10),
+                                  if (snapshot.data![index].connected == true)
+                                    RFLargeButton(
+                                      backgroundColor: Color.fromARGB(255, 41, 194, 27),
+                                      buttonIcon: Icons.api,
+                                      passedFunction: registerOauth,
+                                      buttonText: 'Connected',
+                                      parentContext: context,
+                                      passedString: snapshot.data![index].name
+                                    )
+                                  else
+                                    RFLargeButton(
+                                      backgroundColor: Color.fromARGB(255, 190, 39, 13),
+                                      buttonIcon: Icons.login,
+                                      passedFunction: loginOauth,
+                                      buttonText: 'Disconnected',
+                                      parentContext: context,
+                                      passedString: snapshot.data![index].name
+                                    )
                                   ])
                             ],
                           ),

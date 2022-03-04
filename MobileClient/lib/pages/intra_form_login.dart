@@ -53,7 +53,7 @@ class IntraFormLoginState extends State<IntraFormLogin> {
             Input(
               inputName: 'Autologin Link',
               inputIcon: Icons.link,
-              inputHintText: '0.0.0.0',
+              inputHintText: 'Lien auto login intra',
               inputType: TextInputType.text,
               inputHidden: false,
               getInputValue: _getNewLink,
