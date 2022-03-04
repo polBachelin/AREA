@@ -125,7 +125,7 @@ export default {
 
     requestError() {
       console.log("user doesnt exist");
-      this.isError = 'User ' + this.username + ' does\'nt exist !'
+      this.isError = 'User ' + this.username + ' doesn\'t exist !'
     },
 
     goToRegister() {
