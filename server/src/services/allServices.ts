@@ -16,6 +16,7 @@ import { timer } from './entities/Timer/timer.class';
 import { weather } from './entities/Weather/weather.class';
 import { WeatherChange } from './entities/Weather/actions/GetCityWeather';
 import { RemoveRoleFromChannel } from './entities/Discord/reactions/RemoveRoleFromChannel';
+import { CreatePage } from './entities/Notion/reaction/UpdatePage';
 
 export let allServices: IService[] = [];
 allServices.push(notion);
@@ -52,6 +53,9 @@ const reactionsMap = {
 
 	//Google
 	"Create an event": CreateEvent,
+
+	//NOTION
+	"Create page": CreatePage
 }
 
 /*
