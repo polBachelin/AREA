@@ -2,6 +2,7 @@ import { ATrigger } from "src/interfaces/trigger.interface";
 import { IUser } from "src/models/User";
 import axios, {AxiosRequestConfig} from 'axios';
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { properties } from "src/interfaces/task.interface";
 
 const WEATHER_URL = "api.openweathermap.org/data/2.5/weather?q="
 const API_KEY = "&appid=899c451b2f906345aeab6458c2febc9d"
