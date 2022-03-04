@@ -23,7 +23,7 @@
             <v-row class="align-center align-content-center ml-3">
               <v-col cols="9">
                 <v-card-text class="text-center mt-1 mb-1" style="color: black; font-size: 35px">
-                  {{ area.isenabled }}
+                  {{ area.name }}
                 </v-card-text>
               </v-col>
               <v-col cols="2" class="align-end mr-2">
