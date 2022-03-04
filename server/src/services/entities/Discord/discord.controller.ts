@@ -5,7 +5,6 @@ import { AuthService } from "src/auth/auth.service";
 import { UsersService } from "src/users/users.service";
 import { DiscordService, DiscordOauthToken } from "./discord.service";
 import { AddRoleToChannel } from "./reactions/AddRoleToChannel";
-import { RemoveRoleFromChannel } from "./reactions/RemoveRoleFromChannel";
 import { SendMessage } from "./reactions/SendMessage";
 
 @ApiTags('discord')
@@ -50,7 +49,7 @@ export class DiscordController {
 			["guild_id", "286961972589625344"],
 			["role_id", "948618505400492162"]
 		]);
-		const instance = new RemoveRoleFromChannel("test", props);
+		const instance = new AddRoleToChannel("test", props);
 		const user = {
 			"discord": {
 				"access_token": "Mjg2OTU5NTgxNDg4NDgwMjY3.WLiB7w.XApM2voxDIVQ_nHBdhBwRBdEyuc"

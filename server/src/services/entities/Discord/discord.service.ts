@@ -51,7 +51,6 @@ export class DiscordService {
 		let token: DiscordOauthToken;
 
 		try {
-			Logger.log(process.env.DISCORD_CLIENT_ID);
 			let res = await oauth.tokenRequest({
 				clientId: process.env.DISCORD_CLIENT_ID,
 				clientSecret: process.env.DISCORD_CLIENT_SECRET,

@@ -96,7 +96,6 @@
 import axios from "axios";
 import {notionUrlState} from '@/oauth/Notion';
 import {discordUrlState} from '@/oauth/Discord';
-import {setUser} from "@/auth";
 
 export default {
   name: "MyApps",
@@ -132,9 +131,10 @@ export default {
     },
 
     connectToIntra() {
-      axios.post('http://localhost:3000/intra/token', {link: this.autologin},)
+      const token = localStorage.getItem("accessToken");
+      axios.post(`http://localhost:3000/intra/token?state=${token}`, {link: this.autologin},)
           .then((response) => {
-            setUser(response.data.email, response.data.token.access_token)
+            console.log(response.data)
             this.$router.go(0) //refresh page
           })
           .catch( (error) => {
