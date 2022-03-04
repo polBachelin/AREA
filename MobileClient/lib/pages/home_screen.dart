@@ -1,3 +1,4 @@
+import 'package:area/pages/areas_page.dart';
 import 'package:area/pages/services_screen.dart';
 import 'package:area/pages/dashboard.dart';
 import 'package:area/pages/settings.dart';
@@ -18,10 +19,7 @@ class HomeScreenState extends State<HomeScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: theme.white);
   static const List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
-    Text(
-      'Areas',
-      style: optionStyle,
-    ),
+    AreasPage(),
     ServicesPage(),
     SettingsScreen(),
   ];
