@@ -10,7 +10,6 @@ import 'pages/auth_screen.dart';
 import 'pages/login_screen.dart';
 
 Future main() async {
-  await dotenv.load(fileName: "credentials.env");
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }

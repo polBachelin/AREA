@@ -62,7 +62,6 @@ flutter:
   uses-material-design: true
   assets:
     - images/
-    - credentials.env
 
 
 flutter_icons:
