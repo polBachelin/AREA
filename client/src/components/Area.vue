@@ -677,6 +677,51 @@
                     </v-dialog>
                   </v-col>
                 </v-row>
+
+                <v-row v-if="selectedReaction === 'Create page'" class="justify-center text-center">
+                  <v-col cols="4">
+                    <v-menu
+                        rounded
+                        offset-y
+                    >
+                      <template v-slot:activator="{ attrs, on }">
+                        <v-btn
+                            class="mt-2"
+                            v-bind="attrs"
+                            v-on="on"
+                            color="orange"
+                        >
+                          Choose Database
+                        </v-btn>
+                      </template>
+
+                      <v-list>
+                        <v-list-item
+                            v-for="item in databases"
+                            :key="item.id"
+                            @click="selectDatabase(item.id, item.title[0].text.content)"
+                            link
+                        >
+                          <v-list-item-title v-text="item.title[0].text.content"></v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                    <v-card-text class="text-center" style="font-size: 20px; font-weight: bold">
+                      {{databaseName}}
+                    </v-card-text>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-text-field
+                        label="Page Name"
+                        v-model="selectedPageName"
+                    />
+                  </v-col>
+                  <v-col cols="4">
+                    <v-btn color="orange" class="mt-2 ml-7" @click="checkPageName">
+                      Create
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-row>
 
             </v-card>
@@ -786,6 +831,7 @@ export default {
       timerValue: 0,
       cityName: 'Paris',
       newChannelName: '',
+      selectedPageName: '',
     }
   },
 
@@ -970,6 +1016,14 @@ export default {
         this.areaBody.reactionData = {role_id: this.selectedRole, guild_id: this.selectedGuild}
       }
 
+      if (this.selectedReaction === 'Create page') {
+        if (!this.selectedPageName) {
+          this.rightCardError = 'Please name your page'
+          return
+        }
+        this.areaBody.reactionData = {title: this.selectedPageName, database_id: this.selectedDatabase}
+      }
+
       if (this.selectedReaction === 'Create an event') {
         if (!this.eventName) {
           this.rightCardError = 'Please give a name to the event'
@@ -1123,6 +1177,14 @@ export default {
 
     checkCity() {
       if (this.cityName.length > 0) {
+        this.currentDestination.isConfirmed = true
+      } else {
+        this.currentDestination.isConfirmed = false
+      }
+    },
+
+    checkPageName() {
+      if (this.selectedPageName.length > 0 && this.selectedDatabase.length > 0) {
         this.currentDestination.isConfirmed = true
       } else {
         this.currentDestination.isConfirmed = false
