@@ -1,3 +1,4 @@
+import 'package:area/models/area.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/notion_api.dart';
 import 'package:area/utils/server_requests.dart';
@@ -107,5 +108,41 @@ class Server {
     } else {
       throw Exception();
     }
+  }
+
+  Future<List> getAreas() async {
+    updateToken();
+    final myAreas = await ServerRequest.getRequest(url, '/area', headers);
+    final List jsonBody = json.decode(myAreas.body);
+    return jsonBody;
+  }
+
+  void enableArea(String name) async {
+    updateToken();
+    final res = await ServerRequest.getRequest(url, '/area/' + name + '/enable', headers);
+  }
+
+  void disableArea(String name) async {
+    updateToken();
+    final res = await ServerRequest.getRequest(url, '/area/' + name + '/disable', headers);
+  }
+
+  Future<bool> getStatus(String name) async {
+    updateToken();
+    final res = await ServerRequest.getRequest(url, '/area/' + name + '/isEnabled', headers);
+    final joe = json.decode(res.body);
+    return joe;
+  }
+
+  Future<List<List>> getAreasData() async {
+    final List areas = await getAreas();
+    final List<bool> status = List<bool>.empty(growable: true);
+
+    for (int i = 0; i < areas.length; i++) {
+      final bool s = await getStatus(areas[i]["name"]);
+      status.add(s);
+    }
+    final List<List> obj = [areas, status];
+    return obj;
   }
 }
