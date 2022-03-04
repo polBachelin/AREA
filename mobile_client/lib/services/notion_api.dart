@@ -13,14 +13,17 @@ class NotionAPI {
     "Authorization": "Bearer "
   };
 
+  void updateUrl() {
+    prefs.then((p) => url = "http://" + p.getString('server_ip')! + ":3000" ?? "");
+  }
+
   Future<List> getDatabases() async {
-    var ret = <String, String>{};
+    updateUrl();
     final response =
         await ServerRequest.getRequest(url, '/notion/databases', headers);
 
     final List dbs = json.decode(response.body)["results"];
 
-    print(dbs);
     return dbs;
     //   print(item);
     //   ret[item["title"]["text"]["content"].toString()] = item["id"].toString();

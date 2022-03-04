@@ -33,30 +33,31 @@ class DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      const Text('Create an AREA',
-          textDirection: TextDirection.ltr,
-          style: TextStyle(
-            fontSize: 32,
-            color: theme.white,
-          )),
-      const Text('When',
-          textDirection: TextDirection.ltr,
-          style: TextStyle(
-            fontSize: 15,
-            color: theme.white,
-          )),
-      const DropDownMenuActions(),
-      //CreateAREAWidget(hint: "Search for actions..."),
-      const Text('do',
-          textDirection: TextDirection.ltr,
-          style: TextStyle(
-            fontSize: 30,
-            color: Colors.white,
-          )),
-      const DropDownMenuReactions(),
-      showValueValidator(context)
-      // CreateAREAWidget(hint: "Search for reactions..."),
-    ]);
+    return Expanded(
+          child : Column(children: [
+            const Text('Create an AREA',
+                textDirection: TextDirection.ltr,
+                style: TextStyle(
+                  fontSize: 32,
+                  color: theme.white,
+                )),
+            const Text('When',
+                textDirection: TextDirection.ltr,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: theme.white,
+                )),
+            const DropDownMenuActions(),
+            //CreateAREAWidget(hint: "Search for actions..."),
+            const Text('do',
+                textDirection: TextDirection.ltr,
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.white,
+                )),
+            const DropDownMenuReactions(),
+            showValueValidator(context)
+            // CreateAREAWidget(hint: "Search for reactions..."),
+          ]));
   }
 }

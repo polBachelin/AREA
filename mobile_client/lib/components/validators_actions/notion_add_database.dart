@@ -47,14 +47,14 @@ class NotionAddDatabaseState extends State<NotionAddDatabaseForm> {
                 validator: (value) => value == null ? "Select a service" : null,
                 dropdownColor: Colors.white,
                 value: selectedDB,
-                itemHeight: 30,
+                isExpanded: true,
                 onChanged: (String? newValue) {
                   setState(() {
                     selectedDB = newValue!;
                   });
                 },
                 items: snapshot.data!.map((db) {
-                  var name;
+                  var name = "Unknown";
                   try {
                     var name = db["title"][0]["text"]["content"];
                   } on RangeError {
