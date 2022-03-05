@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../components/delayed_animation.dart';
-import '../widgets/login_form.dart';
+import '../components/authentification/login_form.dart';
 
 // ignore: constant_identifier_names
 const d_red = Color(0xFFE9717D);

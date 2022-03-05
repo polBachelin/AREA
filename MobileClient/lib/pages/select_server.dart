@@ -19,10 +19,8 @@ class ServerPageState extends State<ServerPage> {
     setState(() {
       _prefs.then((SharedPreferences prefs) {
         print("Base IP : " + prefs.getString('server_url')!);
-        prefs.setString('server_url', "http://" + server + ":3000");
-        Manager.of(context)
-            .api
-            .changeUrl(prefs.getString('server_url')!);
+        prefs.setString('server_url', "http://" + server + ":8080");
+        Manager.of(context).api.changeUrl(prefs.getString('server_url')!);
         print("Update IP : " + prefs.getString('server_url')!);
       });
     });
@@ -33,7 +31,7 @@ class ServerPageState extends State<ServerPage> {
     super.initState();
     _prefs.then((SharedPreferences prefs) {
       return prefs.getString('server_url') ??
-          prefs.setString('server_url', 'http://192.168.43.15:3000');
+          prefs.setString('server_url', 'http://192.168.43.15:8080');
     });
   }
 

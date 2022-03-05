@@ -5,7 +5,6 @@ import 'package:area/components/dropdown_menu_actions.dart';
 import 'package:area/components/dropdown_menu_reactions.dart';
 import 'package:area/services/AREA_creator.dart';
 import 'package:area/services/manager.dart';
-import 'package:area/widgets/create_area_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:shared_preferences/shared_preferences.dart';

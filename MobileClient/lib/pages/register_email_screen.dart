@@ -1,4 +1,4 @@
-import 'package:area/widgets/register_form.dart';
+import 'package:area/components/authentification/register_form.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:area/theme.dart' as theme;
