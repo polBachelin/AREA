@@ -37,7 +37,6 @@ void loginOauth(BuildContext context, String serviceName) async {
   print("Serveur launch on " +
       server.address.toString() +
       server.port.toString());
-  print("SErvice name == " + urls.toString());
   try {
     var l = await launch(urls[serviceName]! + "&state=" + _prefs.getString("token_session")!,
       enableJavaScript: true,
