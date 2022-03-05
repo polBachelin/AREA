@@ -251,6 +251,7 @@
                   </v-row>
                 </v-row>
 
+<!--                WEATHER-->
                 <v-row v-if="selectedActionService.name === 'Weather'" >
                   <v-row v-if="selectedAction === 'City\'s weather change'" class="text-center justify-center mb-2">
                     <v-col cols="6">
@@ -266,6 +267,36 @@
                   </v-row>
                 </v-row>
 
+<!--                DISCORD-->
+                <v-row v-if="selectedAction === 'Receive a message'">
+                  <v-col cols="12" class="text-center justify-center mb-4 ml-3">
+                    <v-menu
+                        rounded
+                        offset-y
+                    >
+                      <template v-slot:activator="{ attrs, on }">
+                        <v-btn
+                            v-bind="attrs"
+                            v-on="on"
+                            color="orange"
+                        >
+                          {{ $t('message.chooseChannel') }}
+                        </v-btn>
+                      </template>
+
+                      <v-list>
+                        <v-list-item
+                            v-for="item in channels"
+                            :key="item.channel_id"
+                            @click="selectGuild(item.channel_id, item.name)"
+                            link
+                        >
+                          <v-list-item-title v-text="item.name"></v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </v-col>
+                </v-row>
                 </v-row>
 
 
@@ -953,9 +984,6 @@ export default {
     selectAction(id) {
       this.selectedAction = this.selectedActionService.actions[id]
       this.currentDestination.isClicked = true
-      if (this.selectedAction === 'Receive a message') {
-        this.currentDestination.isConfirmed = true
-      }
       if (this.selectedAction === 'GPA changes') {
         this.currentDestination.isConfirmed = true
       }
@@ -1123,6 +1151,9 @@ export default {
         this.currentDestination.isConfirmed = true
       } else {
         this.currentDestination.isConfirmed = false
+      }
+      if (this.selectedAction === 'Receive a message') {
+        this.currentDestination.isConfirmed = true
       }
     },
 

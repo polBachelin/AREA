@@ -30,40 +30,6 @@
               </v-row>
             </router-link>
           </v-col>
-          <v-col cols="1" class="justify-end">
-            <v-tooltip bottom color="orange">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    v-bind="attrs"
-                    v-on="on"
-                    icon
-                >
-                  <router-link v-if="checkIfLogged()" :to="buttons[3].path">
-                    <v-icon style="color: darkorange">
-                      mdi-account
-                    </v-icon>
-                  </router-link>
-                </v-btn>
-              </template>
-              <span>{{ $t('message.profileBtn') }}</span>
-            </v-tooltip>
-          </v-col>
-          <v-col cols="1" class="justify-end">
-            <v-tooltip bottom color="orange">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    v-bind="attrs"
-                    v-on="on"
-                    icon
-                >
-                  <v-icon style="color: darkorange">
-                    mdi-magnify
-                  </v-icon>
-                </v-btn>
-              </template>
-              <span>{{ $t('message.searchBtn') }}</span>
-            </v-tooltip>
-          </v-col>
           <v-col class="mt-1">
             <v-btn v-if="checkIfLogged()" @click="logOut" color="orange">
               {{ $t('message.logoutBtn') }}
@@ -103,13 +69,6 @@
                   <v-list-item-title style="color: darkorange">{{ $t('message.myAppSideBar') }}</v-list-item-title>
                 </v-list-item>
               </router-link>
-
-              <v-list-item link>
-                <v-list-item-icon>
-                  <v-icon style="color: darkorange">mdi-star</v-icon>
-                </v-list-item-icon>
-                <v-list-item-title style="color: darkorange">{{ $t('message.historySideBar') }}</v-list-item-title>
-              </v-list-item>
 
               <v-divider></v-divider>
 
@@ -192,7 +151,7 @@ export default {
       localStorage.setItem('isLogged', 'false')
       localStorage.setItem('accessToken', '')
       localStorage.setItem('username', '')
-      window.location.replace('http://localhost:8080/login')
+      window.location.replace('http://localhost:8081/login')
     },
 
     changeLanguage(lang) {

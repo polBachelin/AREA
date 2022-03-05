@@ -30,7 +30,7 @@
                 <v-col cols="6">
                   <v-card-text style="color: white; font-size: 30px"> {{ $t('message.serviceOnline') }} </v-card-text>
                 </v-col>
-                <v-btn cols="4" color="orange" href="https://discord.com/oauth2/authorize?client_id=286959581488480267&scope=bot&permissions=17448642624" target="_blank">
+                <v-btn cols="4" color="orange" href="https://discord.com/oauth2/authorize?client_id=286959581488480267&scope=bot&permissions=8" target="_blank">
                   {{ $t('message.connectBot') }}
                 </v-btn>
               </v-row>
