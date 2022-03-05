@@ -9,13 +9,13 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:visa/google.dart';
 
 const Map<String, String> urls = {
-  "discord":
+  "Discord":
       "https://discord.com/api/oauth2/authorize?client_id=286959581488480267&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fdiscord%2Fauth&response_type=code&scope=identify%20email",
-  "googleCalendar": "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline" +
+  "Goggle": "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline" +
       "&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.app.created%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.calendarlist.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.events%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.events.owned" +
       "&response_type=code&client_id=338854183277-1u6esadfcuu84km6jvh9pd1adnq6vc9g.apps.googleusercontent.com" +
       "&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2FgoogleCalendar%2Fauth",
-  "notion": "https://api.notion.com/v1/oauth/authorize?" +
+  "Notion": "https://api.notion.com/v1/oauth/authorize?" +
       "client_id=69156507-b2a0-46ac-aea9-afe5a4227b1f" +
       "&response_type=code&owner=user"
 };
@@ -33,19 +33,26 @@ Future<Tuple3<String, String, bool>> interceptToken(BuildContext context,
 
 void loginOauth(BuildContext context, String serviceName) async {
   final SharedPreferences _prefs = await SharedPreferences.getInstance();
-  var server = await HttpServer.bind("localhost", 3000);
-
+  var server = await HttpServer.bind("localhost", 3000, shared: true);
+  
   print("Serveur launch on " +
       server.address.toString() +
       server.port.toString());
-
-  if (!await launch(urls[serviceName]! + "&state=" + _prefs.getString("token_session")!,
+  print("SErvice name == " + urls.toString());
+  try {
+    var l = await launch(urls[serviceName]! + "&state=" + _prefs.getString("token_session")!,
       enableJavaScript: true,
       forceWebView: true,
       enableDomStorage: true,
       universalLinksOnly: true,
-      )) {
-    throw "Could not start OAuth";
+      );
+    if (l == false) {
+      server.close();
+      throw "Could not start OAuth";
+    }
+  } catch(err) {
+    server.close(force: true);
+    throw 'Could not launch oauth';
   }
 
   await server.forEach((HttpRequest request) {
@@ -53,12 +60,14 @@ void loginOauth(BuildContext context, String serviceName) async {
     if (request.uri.path != "/" + serviceName + "/auth") {
       request.response.statusCode = HttpStatus.notFound;
       request.response.close();
-      return;
+      server.close();
+    return;
     }
 
     print(request.uri);
     final code = request.uri.queryParameters["code"];
     if (code == null) {
+      server.close();
       throw "Missing code";
     }
     print(code);
