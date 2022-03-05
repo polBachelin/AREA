@@ -3,6 +3,7 @@ import 'package:area/components/validators_actions/weather_name_a_city.dart';
 import 'package:area/components/validators_actions/timer_time.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
+import 'package:area/theme.dart';
 import 'package:flutter/material.dart';
 
 class DropDownMenuActions extends StatefulWidget {
@@ -68,17 +69,19 @@ class DropDownMenuState extends State<DropDownMenuActions> {
     Manager.of(context).creator["actionName"] = selectedAction.toString();
     switch (selectedAction) {
       case "Add to database":
-        return Builder(builder: (context) => NotionAddDatabaseForm());
+        return Builder(builder: (context) => const NotionAddDatabaseForm());
       case "Start timer":
-        return Builder(builder: (context) => TimerTimeForm());
+        return Builder(builder: (context) => const TimerTimeForm());
       case "City's weather change":
-        return Builder(builder: (context) => WeatherSelectCity());
+        return Builder(builder: (context) => const WeatherSelectCity());
       case "Receive a message":
         Manager.of(context).creator["action_defined"] = true;
         break;
       case "GPA changes":
+        Manager.of(context).creator["action_defined"] = true;
         break;
       case "New notification":
+        Manager.of(context).creator["action_defined"] = true;
         break;
       default:
         return const Text("");
@@ -98,21 +101,8 @@ class DropDownMenuState extends State<DropDownMenuActions> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     DropdownButtonFormField(
-                        icon: Icon(Icons.api),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
+                        icon: const Icon(Icons.api),
+                        decoration: decorationInput,
                         hint: Text(
                             selectedService == null ? "Select a service" : ""),
                         validator: (value) =>
@@ -127,21 +117,8 @@ class DropDownMenuState extends State<DropDownMenuActions> {
                         },
                         items: getServicesList(snapshot)),
                     DropdownButtonFormField(
-                        icon: Icon(Icons.attractions),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
+                        icon: const Icon(Icons.attractions),
+                        decoration: decorationInput,
                         hint: Text(
                             selectedAction == null ? "Select an action" : ""),
                         validator: (value) =>
@@ -154,6 +131,7 @@ class DropDownMenuState extends State<DropDownMenuActions> {
                           });
                         },
                         items: getActionsList(snapshot)),
+                    const SizedBox(height: 5),
                     setConfigAction(context),
                   ],
                 );

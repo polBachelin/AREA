@@ -3,6 +3,16 @@
 import 'package:area/services/api.dart';
 import 'package:flutter/material.dart';
 
+var creatorDefault = {
+  "action_defined": false,
+  "reaction_defined": false,
+  "name": "",
+  "actionName": "",
+  "actionData": {},
+  "reactionName": "",
+  "reactionData": {},
+};
+
 class _Manager extends InheritedWidget {
   const _Manager({
     required Widget child,
@@ -33,18 +43,11 @@ class Manager extends StatefulWidget {
 
 class ManagerState extends State<Manager> {
   final api = Server(url: 'http://192.168.43.15:8080');
-  var creator = {
-    "action_defined": false,
-    "reaction_defined": false,
-    "name": "",
-    "actionName": "",
-    "actionData": {},
-    "reactionName": "",
-    "reactionData": {},
-  };
+  var creator = {};
 
   @override
   void initState() {
+    creator.addAll(creatorDefault);
     super.initState();
   }
 

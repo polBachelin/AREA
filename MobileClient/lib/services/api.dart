@@ -1,9 +1,8 @@
-import 'package:area/models/area.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/discord_api.dart';
+import 'package:area/services/google_api.dart';
 import 'package:area/services/notion_api.dart';
 import 'package:area/utils/server_requests.dart';
-import 'package:flutter/foundation.dart';
 
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +15,7 @@ class Server {
 
   final notion = NotionAPI(prefs: SharedPreferences.getInstance());
   final discord = DiscordAPI(prefs: SharedPreferences.getInstance());
+  final google = GoogleAPI(prefs: SharedPreferences.getInstance());
 
   Map<String, String> headers = {
     "Content-Type": "application/json",
@@ -24,11 +24,14 @@ class Server {
 
   void updateToken() {
     prefs.then((SharedPreferences p) {
+      p.reload();
       if (p.getString("access_token") != null) {
         headers["Authorization"] = "Bearer " + p.getString("access_token")!;
       }
       notion.headers = headers;
       discord.headers = headers;
+      google.headers = headers;
+      print("TOKEN UPDATED ==> " + p.getString("access_token")!);
     });
   }
 
@@ -36,6 +39,7 @@ class Server {
     url = newUrl;
     notion.url = newUrl;
     discord.url = newUrl;
+    google.url = newUrl;
   }
 
   Future<bool> register(dynamic data) async {
@@ -44,7 +48,6 @@ class Server {
         await ServerRequest.postRequest(url, '/auth/register', data, headers);
     if (response.statusCode >= 300) {
       print(response.body.toString());
-      final error = json.decode(response.body.toString())['message'];
       return false;
     }
     prefs.then((SharedPreferences p) {
@@ -56,7 +59,7 @@ class Server {
     return true;
   }
 
-  Future<bool> postIntraRequest(dynamic data, bool login) async {
+  Future<bool> postIntraRequest2(dynamic data, bool login) async {
     final SharedPreferences p = await prefs;
 
     if (login == true) {
@@ -70,11 +73,11 @@ class Server {
         final error = json.decode(response.body.toString())['message'];
         return false;
       }
-      return true;
     }
+    return true;
   }
 
-  Future<bool> postIntraRequest2(dynamic data) async {
+  Future<bool> postIntraRequest(dynamic data, bool login) async {
     updateToken();
     final response = await ServerRequest.postRequest(
         url, '/intra/token', {"link": data}, headers);
