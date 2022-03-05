@@ -29,7 +29,6 @@
               <v-col cols="2" class="align-end mr-2">
                 <v-switch
                     color="orange"
-                    :input-value="area.isenabled"
                     :append-icon="area.isenabled ? 'mdi-checkbox-marked-circle' : 'mdi-cancel'"
                     @change="changeArea(index, area)"
                 >
@@ -104,10 +103,11 @@ export default {
 
   methods: {
     async changeArea(index, area) {
-      if (!area.isenabled) {
+      if (!await this.checkAreaStatus(area.name)) {
         await axios.get(`http://localhost:8080/area/${area.name}/enable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
             .then((response) => {
               console.log(response.data, "area enabled")
+              area.isenabled = true
               this.areas[index].isenabled = true
             })
             .catch(() => {
@@ -117,6 +117,7 @@ export default {
         await axios.get(`http://localhost:8080/area/${area.name}/disable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
             .then((response) => {
               console.log(response.data, "area disabled")
+              area.isenabled = false
               this.areas[index].isenabled = false
             })
             .catch(() => {
@@ -140,8 +141,8 @@ export default {
       await axios.get('http://localhost:8080/area', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
           .then((response) => {
             this.areas = response.data
-            console.log("areas received: ", this.areas)
-            this.areas.forEach(e => e.isenabled = this.checkAreaStatus(e.name)) //IT fukinnn RETURN A PROMISE OBJECT
+            if (this.areas)
+              this.areas.forEach(e => e.isenabled = this.checkAreaStatus(e.name)) //IT fukinnn RETURN A PROMISE OBJECT
           })
           .catch((error) => {
             console.log(error, "area get error")
