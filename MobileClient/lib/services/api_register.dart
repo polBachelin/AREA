@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
-import 'package:oauth2_client/google_oauth2_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:visa/google.dart';
 
 const Map<String, String> urls = {
   "discord":

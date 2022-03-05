@@ -14,7 +14,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class SettingsScreenState extends State<SettingsScreen> {
-
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late Future<String> _username;
 
@@ -26,16 +25,15 @@ class SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
-
   Future<void> clearSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.get('username') != null) {
       prefs.remove('username');
     }
-    if (prefs.get('server_ip') != null) {
-      prefs.remove('server_ip');
+    if (prefs.get('server_url') != null) {
+      prefs.remove('server_url');
     }
-    if (prefs.get('server_ip') != null) {
+    if (prefs.get('server_url') != null) {
       prefs.remove('token_session');
     }
     prefs.remove('token_session');
@@ -91,14 +89,12 @@ class SettingsScreenState extends State<SettingsScreen> {
                     if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else {
-                      return Text(
-                        'Profile Name ${snapshot.data}}.',
-                        style: GoogleFonts.poppins(
+                      return Text('Profile Name ${snapshot.data}}.',
+                          style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-            )
-                      );
+                          ));
                     }
                 }
               })

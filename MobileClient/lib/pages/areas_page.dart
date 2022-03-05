@@ -84,7 +84,7 @@ class AreasPageState extends State<AreasPage> {
                   ),
                 ));
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: Text("No AREAS availables", style: TextStyle(color: theme.white, fontFamily: "Comic Sans MS", fontSize: 30)));
             }
           },
       ));

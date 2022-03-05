@@ -1,5 +1,5 @@
 import 'package:area/components/validators_actions/notion_add_database.dart';
-import 'package:area/components/validators_reactions/discord_send_message.dart';
+import 'package:area/components/validators_reactions/discord/discord_send_message_rename_channel.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
@@ -60,12 +60,15 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
         {const DropdownMenuItem<String>(child: Text("None"), value: "None")});
   }
 
-  Widget setConfigAction(BuildContext context) {
+  Widget setConfigReaction(BuildContext context) {
+    Manager.of(context).creator["actionName"] = selectedReaction.toString();
     switch (selectedReaction) {
       case "Update Page":
-        return Builder(builder: (context) => NotionAddDatabaseForm());
+        return Builder(builder: (context) => const NotionAddDatabaseForm());
       case "Send a message":
-        return Builder(builder: (context) => DiscordSendMessageForm());
+        return Builder(builder: (context) => const DiscordSendMessageForm("message_content"));
+      case "Rename channel":
+        return Builder(builder: (context) => const DiscordSendMessageForm("channel_name"));
       default:
         return const Text("Setup Reaction");
     }
@@ -83,16 +86,16 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     DropdownButtonFormField(
-                        icon: Icon(Icons.api),
+                        icon: const Icon(Icons.api),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
+                                const BorderSide(color: Colors.blue, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
+                                const BorderSide(color: Colors.blue, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           filled: true,
@@ -111,16 +114,16 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
                         },
                         items: getServicesList(snapshot)),
                     DropdownButtonFormField(
-                        icon: Icon(Icons.attractions),
+                        icon: const Icon(Icons.attractions),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
+                                const BorderSide(color: Colors.blue, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
+                                const BorderSide(color: Colors.blue, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           filled: true,
@@ -138,7 +141,7 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
                           });
                         },
                         items: getActionsList(snapshot)),
-                    setConfigAction(context),
+                    setConfigReaction(context),
                   ],
                 );
               } else {
