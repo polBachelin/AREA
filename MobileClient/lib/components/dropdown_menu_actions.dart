@@ -71,12 +71,14 @@ class DropDownMenuState extends State<DropDownMenuActions> {
         return Builder(builder: (context) => NotionAddDatabaseForm());
       case "Start timer":
         return Builder(builder: (context) => TimerTimeForm());
-        break;
       case "City's weather change":
         return Builder(builder: (context) => WeatherSelectCity());
-        break;
       case "Receive a message":
         Manager.of(context).creator["action_defined"] = true;
+        break;
+      case "GPA changes":
+        break;
+      case "New notification":
         break;
       default:
         return const Text("Setup Action");
@@ -120,6 +122,7 @@ class DropDownMenuState extends State<DropDownMenuActions> {
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedService = newValue!;
+                            selectedAction = null;
                           });
                         },
                         items: getServicesList(snapshot)),
