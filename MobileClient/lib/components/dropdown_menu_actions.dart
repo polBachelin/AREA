@@ -1,4 +1,5 @@
-import 'package:area/components/validators_actions/notion_add_database.dart';
+import 'package:area/components/validators_actions/notion_add_to_database.dart';
+import 'package:area/components/validators_actions/weather_name_a_city.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,7 @@ class DropDownMenuState extends State<DropDownMenuActions> {
       case "Start timer":
         break;
       case "City's weather change":
-        return Builder(builder: (context) => NotionAddDatabaseForm());
+        return Builder(builder: (context) => WeatherSelectCity());
         break;
       case "Receive a message":
         Manager.of(context).creator["action_defined"] = true;

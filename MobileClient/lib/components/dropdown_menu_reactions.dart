@@ -1,4 +1,4 @@
-import 'package:area/components/validators_actions/notion_add_database.dart';
+import 'package:area/components/validators_actions/notion_add_to_database.dart';
 import 'package:area/components/validators_reactions/discord/discord_role_inputs.dart';
 import 'package:area/components/validators_reactions/discord/discord_send_message_rename_channel.dart';
 import 'package:area/models/services.dart';
@@ -62,7 +62,10 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
   }
 
   Widget setConfigReaction(BuildContext context) {
-    Manager.of(context).creator["actionName"] = selectedReaction.toString();
+    if (selectedService == "Timer" || selectedService == "Weather")
+      Manager.of(context).creator["reactionName"] = selectedService.toString();
+    else
+      Manager.of(context).creator["reactionName"] = selectedReaction.toString();
     switch (selectedReaction) {
       case "Update Page":
         return Builder(builder: (context) => const NotionAddDatabaseForm());
@@ -75,7 +78,7 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
       case "Add role to channel":
         return Builder(builder: (context) => const DiscordRolesForm("add"));
       default:
-        return const Text("Setup Reaction");
+        return const Text("");
     }
   }
 
