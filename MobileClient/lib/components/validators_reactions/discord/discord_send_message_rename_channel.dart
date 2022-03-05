@@ -46,7 +46,7 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
     if (isValid) {
       Manager.of(context).creator["reaction_defined"] = true;
       Manager.of(context).creator["reactionData"] = {
-        widget._action_string: _text,
+        widget._action_string : _text,
         "guild_id": _selectedChannel
       };
     } else {
