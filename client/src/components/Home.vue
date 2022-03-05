@@ -105,7 +105,7 @@ export default {
   methods: {
     async changeArea(index, area) {
       if (!area.isenabled) {
-        await axios.get(`http://localhost:3000/area/${area.name}/enable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+        await axios.get(`http://localhost:8080/area/${area.name}/enable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
             .then((response) => {
               console.log(response.data, "area enabled")
               this.areas[index].isenabled = true
@@ -114,7 +114,7 @@ export default {
               console.log("Enable area error")
             })
       } else {
-        await axios.get(`http://localhost:3000/area/${area.name}/disable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+        await axios.get(`http://localhost:8080/area/${area.name}/disable`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
             .then((response) => {
               console.log(response.data, "area disabled")
               this.areas[index].isenabled = false
@@ -128,7 +128,7 @@ export default {
 
     async checkAreaStatus(name) {
       try {
-          let response = await axios.get(`http://localhost:3000/area/${name}/isEnabled`, {'headers': {'Authorization': 'Bearer ' + localStorage.getItem('accessToken')}})
+          let response = await axios.get(`http://localhost:8080/area/${name}/isEnabled`, {'headers': {'Authorization': 'Bearer ' + localStorage.getItem('accessToken')}})
           console.log(name, ' is enabled ? ',response.data)
           return response.data
       } catch (error)  {
@@ -137,7 +137,7 @@ export default {
     },
 
     async getAreas() {
-      await axios.get('http://localhost:3000/area', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+      await axios.get('http://localhost:8080/area', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
           .then((response) => {
             this.areas = response.data
             console.log("areas received: ", this.areas)
@@ -149,7 +149,7 @@ export default {
     },
 
     async deleteArea(name) {
-      await axios.delete(`http://localhost:3000/area/${name}`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+      await axios.delete(`http://localhost:8080/area/${name}`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
           .then((response) => {
             console.log(response.data, "area deleted")
             this.getAreas()

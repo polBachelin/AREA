@@ -33,7 +33,7 @@ Future<Tuple3<String, String, bool>> interceptToken(BuildContext context,
 
 void loginOauth(BuildContext context, String serviceName) async {
   final SharedPreferences _prefs = await SharedPreferences.getInstance();
-  var server = await HttpServer.bind("localhost", 3000);
+  var server = await HttpServer.bind("localhost", 8080);
 
   print("Serveur launch on " +
       server.address.toString() +

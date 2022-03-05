@@ -14,7 +14,7 @@ export class NotionController {
 				private userService: UsersService) {}
 
 	@Get('/auth')
-	@Redirect('http://localhost:8080/home')
+	@Redirect('http://localhost:8081/home')
 	@ApiOperation({ summary: "Get the access token from the authorization code"})
     async notionCallback(@Req() req, @Query() query, @Response() res) {
 		let email: string = null;

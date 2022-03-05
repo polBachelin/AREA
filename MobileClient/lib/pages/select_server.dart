@@ -20,7 +20,7 @@ class ServerPageState extends State<ServerPage> {
       _prefs.then((SharedPreferences prefs) {
         print("Base IP : " + prefs.getString('server_ip')!);
         prefs.setString('server_ip', server);
-        Manager.of(context).api.changeUrl("http://" + prefs.getString('server_ip')! + ":3000");
+        Manager.of(context).api.changeUrl("http://" + prefs.getString('server_ip')! + ":8080");
         print("Update IP : " + Manager.of(context).api.url);
       });
     });
@@ -38,7 +38,7 @@ class ServerPageState extends State<ServerPage> {
   void _connectServer(BuildContext context) async {
     final SharedPreferences prefs = await _prefs;
     final String server = prefs.getString('server_ip') ?? "";
-    Manager.of(context).api.changeUrl("http://" + server + ":3000");
+    Manager.of(context).api.changeUrl("http://" + server + ":8080");
     print("Connect to server IP : " + Manager.of(context).api.url);
     Navigator.pushNamed(context, '/register');
 

@@ -87,7 +87,7 @@ export class NotionService {
 			}
 			this.setNotionToken(email, notionToken);
 			const token = await this.authService.signUser(user);
-			return { url: 'http://localhost:8080/home?email=' + email + '&token=' + token.access_token};
+			return { url: 'http://localhost:8081/home?email=' + email + '&token=' + token.access_token};
 		}
 	}
 

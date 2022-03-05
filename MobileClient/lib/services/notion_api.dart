@@ -14,7 +14,7 @@ class NotionAPI {
   };
 
   void updateUrl() {
-    prefs.then((p) => url = "http://" + p.getString('server_ip')! + ":3000" ?? "");
+    prefs.then((p) => url = "http://" + p.getString('server_ip')! + ":8080" ?? "");
   }
 
   Future<List> getDatabases() async {

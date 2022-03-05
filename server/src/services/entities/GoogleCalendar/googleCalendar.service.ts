@@ -19,7 +19,7 @@ const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly',
 				'https://www.googleapis.com/auth/calendar.events',
 				'https://www.googleapis.com/auth/calendar.events.owned'];
 
-const REDIRECT_URI = "http://localhost:3000/googleCalendar/auth";
+const REDIRECT_URI = "http://localhost:8080/googleCalendar/auth";
 
 @Injectable()
 export class GoogleCalendarService {
@@ -70,7 +70,7 @@ export class GoogleCalendarService {
 			}
 			this.setToken(email, token);
 			const t = await this.authService.signUser(user);
-			return { url: 'http://localhost:8080/home?email=' + email + '&token=' + t.access_token};
+			return { url: 'http://localhost:8081/home?email=' + email + '&token=' + t.access_token};
 		}
 	}
 

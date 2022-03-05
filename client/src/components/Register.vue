@@ -73,7 +73,7 @@ export default {
     confirmUserCreation() {
       if (this.password.length !== 0 && this.username.length !== 0) {
         if (this.password === this.confirmPass) {
-          axios.post('http://localhost:3000/auth/register', {email: this.username, password: this.password,})
+          axios.post('http://localhost:8080/auth/register', {email: this.username, password: this.password,})
               .then((response) => {
                 console.log(response);
                 this.info = response.data

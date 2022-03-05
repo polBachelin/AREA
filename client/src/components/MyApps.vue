@@ -140,7 +140,7 @@ export default {
 
     connectToIntra() {
       const token = localStorage.getItem("accessToken");
-      axios.post(`http://localhost:3000/intra/token?state=${token}`, {link: this.autologin},)
+      axios.post(`http://localhost:8080/intra/token?state=${token}`, {link: this.autologin},)
           .then((response) => {
             console.log(response.data)
             this.$router.go(0) //refresh page
@@ -154,7 +154,7 @@ export default {
   },
 
   mounted() {
-    axios.get('http://localhost:3000/services')
+    axios.get('http://localhost:8080/services')
         .then((response) => {
           this.services = response.data
         })
@@ -162,7 +162,7 @@ export default {
           console.log("services fetch error")
         })
     
-    axios.get('http://localhost:3000/services/logged', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+    axios.get('http://localhost:8080/services/logged', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
         .then((response) => {
           this.connectedServices = response.data
         })

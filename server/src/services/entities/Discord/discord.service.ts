@@ -12,7 +12,7 @@ import { Client, GuildChannel, TextChannel } from 'discord.js'
 const DiscordOauth2 = require("discord-oauth2");
 const oauth = new DiscordOauth2();
 
-const REDIRECT_URI = "http://localhost:3000/discord/auth"
+const REDIRECT_URI = "http://localhost:8080/discord/auth"
 
 export interface DiscordOauthToken {
 	access_token: string,
@@ -159,7 +159,7 @@ export class DiscordService {
 			}
 			this.setDiscordToken(email, discToken);
 			const token = await this.authService.signUser(user);
-			return { url: 'http://localhost:8080/home?email=' + email + '&token=' + token.access_token};
+			return { url: 'http://localhost:8081/home?email=' + email + '&token=' + token.access_token};
 		}
 	}
 }
