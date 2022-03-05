@@ -5,14 +5,14 @@ import 'package:area/theme.dart' as theme;
 import 'package:area/services/manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class IntraFormLogin extends StatefulWidget {
-  const IntraFormLogin({Key? key}) : super(key: key);
+class IntraFormRegister extends StatefulWidget {
+  const IntraFormRegister({Key? key}) : super(key: key);
 
   @override
-  IntraFormLoginState createState() => IntraFormLoginState();
+  IntraFormRegisterState createState() => IntraFormRegisterState();
 }
 
-class IntraFormLoginState extends State<IntraFormLogin> {
+class IntraFormRegisterState extends State<IntraFormRegister> {
   String _autologinLink = "";
 
   void _getNewLink(String autologin) {
@@ -27,8 +27,7 @@ class IntraFormLoginState extends State<IntraFormLogin> {
   }
 
   void _connectServer(BuildContext context) async {
-    print("LOGIN -=>");
-    final reponse = Manager.of(context).api.postIntraRequest(_autologinLink, true);
+    final reponse = Manager.of(context).api.postIntraRequest(_autologinLink, false);
 
     reponse.then((value) {
       if (value == true) {

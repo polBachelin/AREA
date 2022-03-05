@@ -56,7 +56,25 @@ class Server {
     return true;
   }
 
-  Future<bool> postIntraRequest(dynamic data) async {
+  Future<bool> postIntraRequest(dynamic data, bool login) async {
+    final SharedPreferences p = await prefs;
+
+    if (login == true) {
+      final token = p.getString("token_session");
+      if (token == null) {
+        return false;
+      }
+      final response = await ServerRequest.postRequest(
+          url, '/intra/token?state=' + token, {"link": data}, headers);
+      if (response.statusCode >= 300) {
+        final error = json.decode(response.body.toString())['message'];
+        return false;
+      }
+      return true;
+    }
+  }
+
+  Future<bool> postIntraRequest2(dynamic data) async {
     updateToken();
     final response = await ServerRequest.postRequest(
         url, '/intra/token', {"link": data}, headers);
@@ -64,7 +82,6 @@ class Server {
       final error = json.decode(response.body.toString())['message'];
       return false;
     }
-    print(response.body.toString());
     prefs.then((SharedPreferences p) {
       p.setString("username", json.decode(response.body.toString())['email']);
       p.setString("access_token",
@@ -74,8 +91,7 @@ class Server {
   }
 
   Future<Tuple3<String, String, bool>> oauthGetToken(
-      dynamic code, String serviceName) async
-  {
+      dynamic code, String serviceName) async {
     updateToken();
     final response = await ServerRequest.getRequest(
         url, '/' + serviceName + '/auth_mobile?code=$code', headers);

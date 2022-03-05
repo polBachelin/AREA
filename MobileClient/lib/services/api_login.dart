@@ -32,9 +32,13 @@ Future<Tuple3<String, String, bool>> interceptToken(BuildContext context,
 }
 
 void loginOauth(BuildContext context, String serviceName) async {
+  if (serviceName == "Intra") {
+    Navigator.pushNamed(context, '/login_epitech');
+    return;
+  }
   final SharedPreferences _prefs = await SharedPreferences.getInstance();
   var server = await HttpServer.bind("localhost", 8080, shared: true);
-
+  
   print("Serveur launch on " +
       server.address.toString() +
       server.port.toString());

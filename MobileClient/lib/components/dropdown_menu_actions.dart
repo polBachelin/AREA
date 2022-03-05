@@ -76,6 +76,10 @@ class DropDownMenuState extends State<DropDownMenuActions> {
       case "Receive a message":
         Manager.of(context).creator["action_defined"] = true;
         break;
+      case "GPA changes":
+        break;
+      case "New notification":
+        break;
       default:
         return const Text("");
     }
@@ -118,6 +122,7 @@ class DropDownMenuState extends State<DropDownMenuActions> {
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedService = newValue!;
+                            selectedAction = null;
                           });
                         },
                         items: getServicesList(snapshot)),
