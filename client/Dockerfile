@@ -9,4 +9,4 @@ RUN npm run build
 
 ENV HOST 0.0.0.0
 
-CMD ["npm", "run", "serve"]
+CMD ["npm", "run", "serve", "--", "--port", "8081"]

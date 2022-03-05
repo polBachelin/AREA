@@ -22,7 +22,7 @@ export class NewNotification extends ATrigger {
                 if (!this.isRunning() && (date.getTime() !== user_notif.getTime())) {
                     Logger.log("New notification callback")
                     callback()
-                    axios.post('localhost:3000/intra/change_lnotif?email='+user.email+'&last_notif='+date.getTime());
+                    axios.post('localhost:8080/intra/change_lnotif?email='+user.email+'&last_notif='+date.getTime());
                     this.setRunning();
                     this.lastExec = new Date();
                 }

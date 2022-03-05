@@ -18,14 +18,14 @@ services:
   server:
     build: "./"
     ports:
-      - "3000:3000"
+      - "8080:8080"
     environment:
       DB_DEBUG: 'mongodb://db:27017/db'
       DB_HOST: 127.0.0.1
       DB_PORT: 27017
       DB_USERNAME: root
       DB_PASSWORD: pass12345
-      PORT: 3000
+      PORT: 8080
     restart: "no"
     depends_on:
       - db

@@ -251,6 +251,7 @@
                   </v-row>
                 </v-row>
 
+<!--                WEATHER-->
                 <v-row v-if="selectedActionService.name === 'Weather'" >
                   <v-row v-if="selectedAction === 'City\'s weather change'" class="text-center justify-center mb-2">
                     <v-col cols="6">
@@ -266,6 +267,36 @@
                   </v-row>
                 </v-row>
 
+<!--                DISCORD-->
+                <v-row v-if="selectedAction === 'Receive a message'">
+                  <v-col cols="12" class="text-center justify-center mb-4 ml-3">
+                    <v-menu
+                        rounded
+                        offset-y
+                    >
+                      <template v-slot:activator="{ attrs, on }">
+                        <v-btn
+                            v-bind="attrs"
+                            v-on="on"
+                            color="orange"
+                        >
+                          {{ $t('message.chooseChannel') }}
+                        </v-btn>
+                      </template>
+
+                      <v-list>
+                        <v-list-item
+                            v-for="item in channels"
+                            :key="item.channel_id"
+                            @click="selectGuild(item.channel_id, item.name)"
+                            link
+                        >
+                          <v-list-item-title v-text="item.name"></v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </v-col>
+                </v-row>
                 </v-row>
 
 
@@ -848,7 +879,7 @@ export default {
     this.resetArea()
     this.accessToken = localStorage.getItem('accessToken')
 
-    axios.get('http://localhost:3000/services', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
+    axios.get('http://localhost:8080/services', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
         .then((response) => {
           this.services = response.data
         })
@@ -856,7 +887,7 @@ export default {
           console.log("services fetch error")
         })
 
-    axios.get('http://localhost:3000/services/logged', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
+    axios.get('http://localhost:8080/services/logged', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
         .then((response) => {
           this.connectedServices = response.data
         })
@@ -864,7 +895,7 @@ export default {
           console.log("logged services fetch error")
         })
 
-    axios.get('http://localhost:3000/notion/databases', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+    axios.get('http://localhost:8080/notion/databases', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.databases = response.data.results
         })
@@ -872,7 +903,7 @@ export default {
           console.log("databases fetch error")
         })
 
-    axios.get('http://localhost:3000/discord/getChannels', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+    axios.get('http://localhost:8080/discord/getChannels', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.channels = response.data
         })
@@ -880,7 +911,7 @@ export default {
           console.log("channels fetch error")
         })
 
-    axios.get('http://localhost:3000/discord/getRoles', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+    axios.get('http://localhost:8080/discord/getRoles', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.roles = response.data
         })
@@ -888,7 +919,7 @@ export default {
           console.log("channels fetch error")
         })
 
-    axios.get('http://localhost:3000/googleCalendar/listCalendars', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+    axios.get('http://localhost:8080/googleCalendar/listCalendars', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.calendars = response.data
         })
@@ -953,9 +984,6 @@ export default {
     selectAction(id) {
       this.selectedAction = this.selectedActionService.actions[id]
       this.currentDestination.isClicked = true
-      if (this.selectedAction === 'Receive a message') {
-        this.currentDestination.isConfirmed = true
-      }
       if (this.selectedAction === 'GPA changes') {
         this.currentDestination.isConfirmed = true
       }
@@ -1065,7 +1093,7 @@ export default {
     sendAreaToBack() {
       let body = this.areaBody
 
-      axios.post('http://localhost:3000/area/create', body, {headers: {'Authorization': 'Bearer ' + this.accessToken, 'Content-Type': 'application/json'}})
+      axios.post('http://localhost:8080/area/create', body, {headers: {'Authorization': 'Bearer ' + this.accessToken, 'Content-Type': 'application/json'}})
           .then((response) => {
             console.log(response.data)
           })
@@ -1123,6 +1151,9 @@ export default {
         this.currentDestination.isConfirmed = true
       } else {
         this.currentDestination.isConfirmed = false
+      }
+      if (this.selectedAction === 'Receive a message') {
+        this.currentDestination.isConfirmed = true
       }
     },
 

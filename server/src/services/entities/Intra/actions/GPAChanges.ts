@@ -22,7 +22,7 @@ export class GPAChanges extends ATrigger {
                 if (!this.isRunning() && (new_gpa && gpa && (new_gpa != gpa))) {
                     Logger.log("GPA CHANGE CALLBACK")
                     callback()
-                    axios.post('localhost:3000/intra/change_gpa?email='+user.email+'&gpa='+new_gpa);
+                    axios.post('localhost:8080/intra/change_gpa?email='+user.email+'&gpa='+new_gpa);
                     this.setRunning();
                     this.lastExec = new Date();
                 }

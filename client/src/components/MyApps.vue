@@ -30,7 +30,7 @@
                 <v-col cols="6">
                   <v-card-text style="color: white; font-size: 30px"> {{ $t('message.serviceOnline') }} </v-card-text>
                 </v-col>
-                <v-btn cols="4" color="orange" href="https://discord.com/oauth2/authorize?client_id=286959581488480267&scope=bot&permissions=17448642624" target="_blank">
+                <v-btn cols="4" color="orange" href="https://discord.com/oauth2/authorize?client_id=286959581488480267&scope=bot&permissions=8" target="_blank">
                   {{ $t('message.connectBot') }}
                 </v-btn>
               </v-row>
@@ -140,7 +140,7 @@ export default {
 
     connectToIntra() {
       const token = localStorage.getItem("accessToken");
-      axios.post(`http://localhost:3000/intra/token?state=${token}`, {link: this.autologin},)
+      axios.post(`http://localhost:8080/intra/token?state=${token}`, {link: this.autologin},)
           .then((response) => {
             console.log(response.data)
             this.$router.go(0) //refresh page
@@ -154,7 +154,7 @@ export default {
   },
 
   mounted() {
-    axios.get('http://localhost:3000/services')
+    axios.get('http://localhost:8080/services')
         .then((response) => {
           this.services = response.data
         })
@@ -162,7 +162,7 @@ export default {
           console.log("services fetch error")
         })
     
-    axios.get('http://localhost:3000/services/logged', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+    axios.get('http://localhost:8080/services/logged', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
         .then((response) => {
           this.connectedServices = response.data
         })

@@ -24,12 +24,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "htpp://localhost:3000/discord/getChannels",
+							"raw": "htpp://localhost:8080/discord/getChannels",
 							"protocol": "htpp",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "8080",
 							"path": [
 								"discord",
 								"getChannels"
