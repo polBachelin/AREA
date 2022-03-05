@@ -110,7 +110,7 @@ export default {
   methods: {
     confirmUserPass() {
      if (this.password.length !== 0 && this.username.length !== 0) {
-        axios.post('http://localhost:3000/auth/login', {email: this.username, password: this.password},)
+        axios.post('http://localhost:8080/auth/login', {email: this.username, password: this.password},)
             .then((response) => {
               this.info = response.data;
               setUser(this.info.user.email, this.info.token.access_token);
@@ -150,7 +150,7 @@ export default {
         this.isError = "Please enter an autologin link"
         return
       }
-      axios.post('http://localhost:3000/intra/token', {link: this.autoLogin},)
+      axios.post('http://localhost:8080/intra/token', {link: this.autoLogin},)
           .then((response) => {
             setUser(response.data.email, response.data.token.access_token);
             this.$router.push({name: 'home'})

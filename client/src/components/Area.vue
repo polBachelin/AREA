@@ -879,7 +879,7 @@ export default {
     this.resetArea()
     this.accessToken = localStorage.getItem('accessToken')
 
-    axios.get('http://localhost:3000/services', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
+    axios.get('http://localhost:8080/services', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
         .then((response) => {
           this.services = response.data
         })
@@ -887,7 +887,7 @@ export default {
           console.log("services fetch error")
         })
 
-    axios.get('http://localhost:3000/services/logged', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
+    axios.get('http://localhost:8080/services/logged', {headers: {'Authorization': 'Bearer ' + this.accessToken}})
         .then((response) => {
           this.connectedServices = response.data
         })
@@ -895,7 +895,7 @@ export default {
           console.log("logged services fetch error")
         })
 
-    axios.get('http://localhost:3000/notion/databases', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+    axios.get('http://localhost:8080/notion/databases', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.databases = response.data.results
         })
@@ -903,7 +903,7 @@ export default {
           console.log("databases fetch error")
         })
 
-    axios.get('http://localhost:3000/discord/getChannels', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+    axios.get('http://localhost:8080/discord/getChannels', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.channels = response.data
         })
@@ -911,7 +911,7 @@ export default {
           console.log("channels fetch error")
         })
 
-    axios.get('http://localhost:3000/discord/getRoles', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+    axios.get('http://localhost:8080/discord/getRoles', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.roles = response.data
         })
@@ -919,7 +919,7 @@ export default {
           console.log("channels fetch error")
         })
 
-    axios.get('http://localhost:3000/googleCalendar/listCalendars', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
+    axios.get('http://localhost:8080/googleCalendar/listCalendars', {headers: {'Authorization': 'Bearer ' + this.accessToken }})
         .then((response) => {
           this.calendars = response.data
         })
@@ -1093,7 +1093,7 @@ export default {
     sendAreaToBack() {
       let body = this.areaBody
 
-      axios.post('http://localhost:3000/area/create', body, {headers: {'Authorization': 'Bearer ' + this.accessToken, 'Content-Type': 'application/json'}})
+      axios.post('http://localhost:8080/area/create', body, {headers: {'Authorization': 'Bearer ' + this.accessToken, 'Content-Type': 'application/json'}})
           .then((response) => {
             console.log(response.data)
           })
