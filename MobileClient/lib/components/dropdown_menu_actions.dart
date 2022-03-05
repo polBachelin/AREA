@@ -1,4 +1,5 @@
 import 'package:area/components/validators_actions/notion_add_database.dart';
+import 'package:area/components/validators_actions/timer_time.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
@@ -68,6 +69,7 @@ class DropDownMenuState extends State<DropDownMenuActions> {
       case "Add to database":
         return Builder(builder: (context) => NotionAddDatabaseForm());
       case "Start timer":
+        return Builder(builder: (context) => TimerTimeForm());
         break;
       case "City's weather change":
         return Builder(builder: (context) => NotionAddDatabaseForm());

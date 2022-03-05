@@ -62,7 +62,7 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
   }
 
   Widget setConfigReaction(BuildContext context) {
-    Manager.of(context).creator["actionName"] = selectedReaction.toString();
+    Manager.of(context).creator["reactionName"] = selectedReaction.toString();
     switch (selectedReaction) {
       case "Update Page":
         return Builder(builder: (context) => const NotionAddDatabaseForm());
