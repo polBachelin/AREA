@@ -38,6 +38,8 @@ class SettingsScreenState extends State<SettingsScreen> {
     }
     prefs.remove('token_session');
     prefs.setBool('isLogged', false);
+
+    Navigator.popAndPushNamed(context, "/");
   }
 
   @override

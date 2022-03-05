@@ -33,7 +33,7 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
       return snapshot.data?.map((item) {
         return DropdownMenuItem<String>(
           child: Text(item.name),
-          value: item.name,
+          value: item.id,
         );
       }).toList();
     }
@@ -41,18 +41,17 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
         {const DropdownMenuItem<String>(child: Text("None"), value: "None")});
   }
 
-  void validateStep()
-  {
+  void validateStep() {
     final isValid = _validateKey.currentState!.validate();
     if (isValid) {
       Manager.of(context).creator["reaction_defined"] = true;
-      Manager.of(context).creator["ReactionData"] = {
-        widget._action_string : _text,
+      Manager.of(context).creator["reactionData"] = {
+        widget._action_string: _text,
         "guild_id": _selectedChannel
       };
     } else {
       Manager.of(context).creator["reaction_defined"] = false;
-      Manager.of(context).creator["ReactionData"] = "";
+      Manager.of(context).creator["reactionData"] = "";
     }
   }
 
@@ -100,7 +99,9 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
                     TextFormField(
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(12),
-                        labelText: widget._action_string == "message_content" ? 'Type your message' : "Rename your channel",
+                        labelText: widget._action_string == "message_content"
+                            ? 'Type your message'
+                            : "Rename your channel",
                         filled: true,
                         fillColor: theme.white,
                         border: OutlineInputBorder(

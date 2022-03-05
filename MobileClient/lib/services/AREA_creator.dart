@@ -13,5 +13,6 @@ createAREA(BuildContext context) {
       manager.creator["name"] == "") {
     return toast(context, "Missing informations");
   }
+  //TODO: reset le creator JSON dans le context
   print("WSH");
 }

@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const Map<String, String> urls = {
+const Map<String, String> urlsRegister = {
   "discord":
       "https://discord.com/api/oauth2/authorize?client_id=286959581488480267&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fdiscord%2Fauth&response_type=code&scope=identify%20email",
   "googleCalendar": "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline" +
@@ -34,14 +34,16 @@ Future<Tuple3<String, String, bool>> interceptToken(BuildContext context,
 void registerOauth(BuildContext context, String serviceName) async {
   final SharedPreferences _prefs = await SharedPreferences.getInstance();
 
-  var server = await HttpServer.bind("localhost", 3000);
+  var server = await HttpServer.bind("localhost", 3000, shared: true);
 
-  try {
+  try
+  {
     print("Serveur launch on " +
         server.address.toString() +
         server.port.toString());
 
-    if (!await launch(urls[serviceName]!,
+    if (!await launch(
+      urlsRegister[serviceName]!,
       enableJavaScript: true,
       forceWebView: true,
       enableDomStorage: true,
@@ -57,26 +59,27 @@ void registerOauth(BuildContext context, String serviceName) async {
         request.response.close();
         server.close();
         return;
-    }
-
-    print("URI ==>" + request.uri.toString());
-    final code = request.uri.queryParameters["code"];
-    if (code == null) {
-      throw "Missing code";
-    }
-    request.response.close();
-    server.close();
-    interceptToken(context, serviceName, code, _prefs).then((value) {
-      closeWebView();
-      if (value.item3 == true) {
-        server.close();
-        Navigator.pushNamed(context, '/home');
-      } else {
-        server.close();
-        //TODO: toast System
-        Navigator.pushNamed(context, '/login');
       }
-    });
+
+      print("URI ==>" + request.uri.toString());
+      final code = request.uri.queryParameters["code"];
+      if (code == null) {
+        throw "Missing code";
+      }
+      request.response.close();
+      server.close();
+      interceptToken(context, serviceName, code, _prefs).then((value) {
+        closeWebView();
+        if (value.item3 == true) {
+          print(_prefs);
+          server.close();
+          Navigator.pushNamed(context, '/home');
+        } else {
+          server.close();
+          //TODO: toast System
+          Navigator.pushNamed(context, '/login');
+        }
+      });
     });
   } finally {
     server.close();

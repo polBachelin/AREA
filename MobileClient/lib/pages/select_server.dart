@@ -33,7 +33,7 @@ class ServerPageState extends State<ServerPage> {
     super.initState();
     _prefs.then((SharedPreferences prefs) {
       return prefs.getString('server_url') ??
-          prefs.setString('server_url', '192.168.43.15');
+          prefs.setString('server_url', 'http://192.168.43.15:3000');
     });
   }
 

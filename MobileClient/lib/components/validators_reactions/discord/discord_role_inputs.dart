@@ -33,7 +33,7 @@ class DiscordRolesFormState extends State<DiscordRolesForm> {
       return snapshot.data?.map((item) {
         return DropdownMenuItem<String>(
           child: Text(item.name),
-          value: item.name,
+          value: item.id,
         );
       }).toList();
     }
@@ -46,7 +46,7 @@ class DiscordRolesFormState extends State<DiscordRolesForm> {
       return snapshot.data?.map((item) {
         return DropdownMenuItem<String>(
           child: Text(item.name),
-          value: item.name,
+          value: item.id,
         );
       }).toList();
     }
@@ -58,13 +58,13 @@ class DiscordRolesFormState extends State<DiscordRolesForm> {
     final isValid = _validateKey.currentState!.validate();
     if (isValid) {
       Manager.of(context).creator["reaction_defined"] = true;
-      Manager.of(context).creator["ReactionData"] = {
+      Manager.of(context).creator["reactionData"] = {
         "role_id": _selectedRole,
         "guild_id": _selectedChannel
       };
     } else {
       Manager.of(context).creator["reaction_defined"] = false;
-      Manager.of(context).creator["ReactionData"] = "";
+      Manager.of(context).creator["reactionData"] = "";
     }
   }
 

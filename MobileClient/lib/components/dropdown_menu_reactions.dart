@@ -62,6 +62,7 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
   }
 
   Widget setConfigReaction(BuildContext context) {
+    //TODO : check si ce if est utile
     if (selectedService == "Timer" || selectedService == "Weather")
       Manager.of(context).creator["reactionName"] = selectedService.toString();
     else

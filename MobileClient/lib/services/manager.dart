@@ -36,11 +36,11 @@ class ManagerState extends State<Manager> {
   var creator = {
     "action_defined": false,
     "reaction_defined": false,
-    "name" : "",
-    "actionName" : "",
-    "actionData" : {},
-    "reactionName" : "",
-    "reactionData" : {},
+    "name": "",
+    "actionName": "",
+    "actionData": {},
+    "reactionName": "",
+    "reactionData": {},
   };
 
   @override

@@ -27,10 +27,10 @@ class WheatherSelectCity extends State<WeatherSelectCity> {
     final isValid = _validateKey.currentState!.validate();
     if (isValid) {
       Manager.of(context).creator["reaction_defined"] = true;
-      Manager.of(context).creator["ReactionData"] = {"city": _selectedCity};
+      Manager.of(context).creator["reactionData"] = {"city": _selectedCity};
     } else {
       Manager.of(context).creator["reaction_defined"] = false;
-      Manager.of(context).creator["ReactionData"] = "";
+      Manager.of(context).creator["reactionData"] = "";
     }
   }
 
