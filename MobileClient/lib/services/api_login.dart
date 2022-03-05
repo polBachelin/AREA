@@ -34,7 +34,7 @@ void loginOauth(BuildContext context, String serviceName) async {
   final SharedPreferences _prefs = await SharedPreferences.getInstance();
   
   if (serviceName == "Intra") {
-    Navigator.pushNamed(context, '/register_epitech');
+    Navigator.pushNamed(context, '/login_epitech');
     return;
   }
   var server = await HttpServer.bind("localhost", 3000, shared: true);

@@ -1,4 +1,5 @@
 import 'package:area/pages/intra_form_login.dart';
+import 'package:area/pages/intra_form_register.dart';
 import 'package:area/pages/register_email_screen.dart';
 import 'package:area/pages/select_server.dart';
 import 'package:area/services/manager.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
           '/register_email': (context) => const RegisterEmailScreen(),
           '/home': (context) => const HomeScreen(),
           '/login': (context) => const LoginScreen(),
-          '/register_epitech' : (context) => const IntraFormLogin(),
+          '/register_epitech' : (context) => const IntraFormRegister(),
+          '/login_epitech' : (context) => const IntraFormLogin(),
         }));
   }
 }

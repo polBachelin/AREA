@@ -55,14 +55,28 @@ class Server {
     return true;
   }
 
-  Future<bool> postIntraRequest(dynamic data) async {
+  Future<bool> postIntraRequest(dynamic data, bool login) async {
+    final SharedPreferences p = await prefs;
+
+    if (login == true) {
+      final token = p.getString("token_session");
+      if (token == null) {
+        return false;
+      }
+      final response = await ServerRequest.postRequest(url, 
+      '/intra/token?state=' + token, {"link": data}, headers);
+      if (response.statusCode >= 300) {
+        final error = json.decode(response.body.toString())['message'];
+        return false;
+      }
+      return true;
+    }
     final response = await ServerRequest.postRequest(
         url, '/intra/token', {"link": data}, headers);
     if (response.statusCode >= 300) {
       final error = json.decode(response.body.toString())['message'];
       return false;
     }
-    print(response.body.toString());
     prefs.then((SharedPreferences p) {
       p.setString("username", json.decode(response.body.toString())['email']);
       p.setString("token_session",
