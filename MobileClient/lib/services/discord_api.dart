@@ -25,4 +25,14 @@ class DiscordAPI {
     final List channels = json.decode(response.body);
     return channels.map((json) => DiscordChannel.fromJson(json)).toList();
   }
+
+  Future<List<DiscordRole>> getRoles() async {
+    updateUrl();
+    final response =
+        await ServerRequest.getRequest(url, '/discord/getRoles', headers);
+
+    print(response.body);
+    final List roles = json.decode(response.body);
+    return roles.map((json) => DiscordRole.fromJson(json)).toList();
+  }
 }
