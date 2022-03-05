@@ -119,6 +119,7 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedService = newValue!;
+                            selectedReaction = null;
                           });
                         },
                         items: getServicesList(snapshot)),
