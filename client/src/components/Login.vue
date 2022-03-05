@@ -1,9 +1,9 @@
 <template style="background-color: black">
   <v-container style="background-color: black">
-    <v-img src="../assets/background2.gif" max-height="800">
+    <v-img src="../assets/loginBackground.png" max-height="800">
     <v-row class="justify-center">
       <v-card-text class="text-center title_text mt-10" style="color: darkorange">
-        Bienvenue sur l'area
+        {{ $t('message.welcomeTitle') }}
       </v-card-text>
     </v-row>
     <v-row class="justify-center">
@@ -12,7 +12,7 @@
               width="500"
               :style="isError !== 'none' ? 'border: 10px solid red;' : 'border: 5px solid black'"
       >
-        <v-card-title class="font-weight-bold">Veuillez vous connecter :</v-card-title>
+        <v-card-title class="font-weight-bold">{{ $t('message.pleaseConnectTitle') }}</v-card-title>
         <v-card-text class="mt-3">
           <v-text-field
               v-model="username"
@@ -22,7 +22,7 @@
           />
           <v-text-field
               v-model="password"
-              label="Mot de passe"
+              :label="passLabel"
               prepend-icon="mdi-lock"
               type="password"
           />
@@ -34,18 +34,18 @@
 
         <v-row style="margin-top: 0px">
           <v-col cols="5" class="ml-5">
-            <v-btn color="orange" style="color: black; width: 200px" @click="confirmUserPass"> Confirmer </v-btn>
+            <v-btn color="orange" style="color: black; width: 200px" @click="confirmUserPass"> {{ $t('message.confirmBtn') }} </v-btn>
           </v-col>
           <v-col cols="6" class="ml-5">
-            <v-btn color="orange" style="color: black; width: 200px" @click="goToRegister"> Créer un compte </v-btn>
+            <v-btn color="orange" style="color: black; width: 200px" @click="goToRegister"> {{ $t('message.createAccountBtn') }} </v-btn>
           </v-col>
         </v-row>
         <v-row>
           <v-col cols="5" class="ml-5">
-              <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeNotion"> Connect to Notion </v-btn>
+              <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeNotion"> {{ $t('message.connectNotionBtn') }} </v-btn>
           </v-col>
           <v-col cols="5" class="ml-5">
-              <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeDiscord"> Connect to Discord </v-btn>
+              <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeDiscord"> {{ $t('message.connectDiscordBtn') }} </v-btn>
           </v-col>
         </v-row>
         <v-row>
@@ -56,12 +56,12 @@
             />
           </v-col>
           <v-col cols="5" class="ml-5 mt-2">
-            <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeEpitech"> Connect to Intra </v-btn>
+            <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeEpitech"> {{ $t('message.connectIntraBtn') }} </v-btn>
           </v-col>
         </v-row>
         <v-row>
           <v-col cols="5" class="ml-5 mb-3">
-            <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeGoogle"> Connect to Google </v-btn>
+            <v-btn color="black" style="color: darkorange; width: 200px" @click="authorizeGoogle"> {{ $t('message.connectGoogleBtn') }} </v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -90,7 +90,8 @@ export default {
       ],
       isError: 'none',
       info: [],
-      autoLogin: ''
+      autoLogin: '',
+      passLabel: this.$t("message.passwordLabel"),
     }
   },
 
@@ -119,13 +120,13 @@ export default {
               this.requestError()
             })
       } else {
-        this.isError = 'Nom ou mot de passe non valide !'
+        this.isError = this.$t("message.wrongPass")
       }
     },
 
     requestError() {
       console.log("user doesnt exist");
-      this.isError = 'Utilisateur ' + this.username + ' n\'existe pas !'
+      this.isError = 'User ' + this.username + this.$t("message.unknownUser")
     },
 
     goToRegister() {

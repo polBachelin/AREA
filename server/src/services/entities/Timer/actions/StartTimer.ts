@@ -9,13 +9,15 @@ export class StartTimer extends ATrigger {
 
     public save() {
         this.lastExec = new Date()
-        this.lastExec.setTime(this.lastExec.getTime() + (this.data.get('time_s') * 1000))
+        this.lastExec.setTime(this.lastExec.getTime() + (this.data['time_s'] * 1000))
     }
 
     public setup(callback: () => Promise<void>, user: IUser): void {
-        const delay = this.data.get('time_s')
+        const delay = this.data['time_s']
         this.setChecking();
+
         this.intervalObj = setInterval(async () => {
+            Logger.log("IS CHECKING")
         if (!this.lastExec)
             this.save();
         const act = new Date()

@@ -6,7 +6,7 @@
       <v-card width="800" style=" background-color: white; border-radius: 0px 0px 10px 10px; margin: 0px 0px -110px;">
         <v-row class="mt-1 mb-1"></v-row>
         <v-row v-if="areas.length === 0">
-            <v-card-text class="text-center mt-10 mb-10" style=" color: grey; font-size: 40px; border-radius: 0px">Aucune Aréa</v-card-text>
+            <v-card-text class="text-center mt-10 mb-10" style=" color: grey; font-size: 40px; border-radius: 0px">{{ $t('message.noAreaText') }}</v-card-text>
         </v-row>
         <v-row v-else
             v-for="(area, index) in getComputedAreas"
@@ -21,9 +21,9 @@
               elevation="10"
           >
             <v-row class="align-center align-content-center ml-3">
-              <v-col cols="9">
+              <v-col cols="7">
                 <v-card-text class="text-center mt-1 mb-1" style="color: black; font-size: 35px">
-                  {{ area.isenabled }}
+                  {{ area.name }}
                 </v-card-text>
               </v-col>
               <v-col cols="2" class="align-end mr-2">
@@ -34,6 +34,13 @@
                     @change="changeArea(index, area)"
                 >
                 </v-switch>
+              </v-col>
+              <v-col cols="2">
+                <v-btn color="red" small @click="deleteArea(area.name)">
+                    <v-icon>
+                      mdi-delete
+                    </v-icon>
+                </v-btn>
               </v-col>
             </v-row>
 
@@ -50,7 +57,7 @@
             <v-col  cols="4">
             </v-col>
             <v-col  cols="4">
-              <v-card-text class="text-center mt-4 mb-4" style="color: white; font-size: 60px; border-radius: 0px"> Mes Aréas</v-card-text>
+              <v-card-text class="text-center mt-4 mb-4" style="color: white; font-size: 60px; border-radius: 0px"> {{ $t('message.myAreaText') }} </v-card-text>
             </v-col>
             <v-col cols="4" class="text-right d-flex justify-center align-center">
               <v-hover v-slot="{ hover }">
@@ -141,6 +148,16 @@ export default {
           })
     },
 
+    async deleteArea(name) {
+      await axios.delete(`http://localhost:3000/area/${name}`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem('accessToken') }} )
+          .then((response) => {
+            console.log(response.data, "area deleted")
+            this.getAreas()
+          })
+          .catch(() => {
+            console.log("Delete area error")
+          })
+    }
 
   },
   

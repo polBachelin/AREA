@@ -3,7 +3,7 @@
 
     <v-row class="mt-10 text-center justify-center">
       <h1 class="mt-10" style="color: white; font-size: 80px">
-        Mes Services
+        {{ $t('message.myAppsTitle') }}
       </h1>
     </v-row>
 
@@ -26,9 +26,17 @@
         <v-col cols="4" class="justify-center align-center">
           <v-col cols="12" class="mt-2 mb-2">
             <v-card v-if="checkIfServiceConnected(app.name)" style="background-color: darkorange">
-              <v-row class="align-center justify-center">
+              <v-row v-if="app.name === 'Discord'" class="align-center justify-center">
                 <v-col cols="6">
-                  <v-card-text style="color: white; font-size: 30px"> connecté </v-card-text>
+                  <v-card-text style="color: white; font-size: 30px"> {{ $t('message.serviceOnline') }} </v-card-text>
+                </v-col>
+                <v-btn cols="4" color="orange" href="https://discord.com/oauth2/authorize?client_id=286959581488480267&scope=bot&permissions=17448642624" target="_blank">
+                  {{ $t('message.connectBot') }}
+                </v-btn>
+              </v-row>
+              <v-row v-else class="align-center justify-center">
+                <v-col cols="6">
+                  <v-card-text style="color: white; font-size: 30px"> {{ $t('message.serviceOnline') }} </v-card-text>
                 </v-col>
                 <v-col cols="4">
                   <v-icon style="color: white"> mdi-checkbox-marked-circle </v-icon>
@@ -51,7 +59,7 @@
               </v-row>
               <v-row v-else class="align-center justify-center">
                 <v-col cols="6">
-                  <v-card-text style="color: darkorange; font-size: 30px"> hors-ligne </v-card-text>
+                  <v-card-text style="color: darkorange; font-size: 30px"> {{ $t('message.serviceOffline') }} </v-card-text>
                 </v-col>
                 <v-col cols="4">
                   <v-icon style="color: darkorange"> mdi-cancel </v-icon>
@@ -64,7 +72,7 @@
             <v-tooltip bottom color="orange">
               <template v-slot:activator="{ on, attrs }">
                 <v-card v-bind="attrs" v-on="on" :style="checkIfServiceConnected(app.name) ? 'background-color: darkorange' : 'background-color: black'">
-                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.actions.length}} actions </v-card-text>
+                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{app.actions.length}} {{ $t('message.actions') }} </v-card-text>
                 </v-card>
               </template>
               <span v-for="action in app.actions" v-bind:key="action.id"> - {{ action }}</span>
@@ -74,7 +82,7 @@
             <v-tooltip bottom color="orange">
               <template v-slot:activator="{ on, attrs }">
                 <v-card v-bind="attrs" v-on="on" :style="checkIfServiceConnected(app.name) ? 'background-color: darkorange' : 'background-color: black'">
-                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{ (app.reactions.length === 1 && app.reactions[0] === '') ? 0 : app.reactions.length}} réactions </v-card-text>
+                  <v-card-text :style="checkIfServiceConnected(app.name) ? 'color: white; font-size: 25px' : 'color: darkorange; font-size: 25px'"> {{ (app.reactions.length === 1 && app.reactions[0] === '') ? 0 : app.reactions.length}} {{ $t('message.reactions') }} </v-card-text>
                 </v-card>
               </template>
               <span v-for="reaction in app.reactions" v-bind:key="reaction.id"> - {{ reaction }}</span>
@@ -96,7 +104,6 @@
 import axios from "axios";
 import {notionUrlState} from '@/oauth/Notion';
 import {discordUrlState} from '@/oauth/Discord';
-import {setUser} from "@/auth";
 
 export default {
   name: "MyApps",
@@ -112,10 +119,10 @@ export default {
   methods: {
     connectToService(name) {
      if (name === "Discord") {
-       window.location.replace(discordUrlState + localStorage.getItem("accessToken"));
+       window.location.replace(discordUrlState + localStorage.getItem("accessToken"))
      }
      if (name === "Notion") {
-       window.location.replace(notionUrlState + localStorage.getItem("accessToken"));
+       window.location.replace(notionUrlState + localStorage.getItem("accessToken"))
      }
     },
 
@@ -132,9 +139,10 @@ export default {
     },
 
     connectToIntra() {
-      axios.post('http://localhost:3000/intra/token', {link: this.autologin},)
+      const token = localStorage.getItem("accessToken");
+      axios.post(`http://localhost:3000/intra/token?state=${token}`, {link: this.autologin},)
           .then((response) => {
-            setUser(response.data.email, response.data.token.access_token)
+            console.log(response.data)
             this.$router.go(0) //refresh page
           })
           .catch( (error) => {

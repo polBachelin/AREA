@@ -9,9 +9,9 @@ export class CreateEvent extends ATask {
 		this.oAuth2Client = new google.auth.OAuth2(
 			process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET
 		);
-		const id = this.data.get('calendar_id');
+		const id = this.data['calendar_id'];
 		const token = user.google;
-		const event = this.data.get('event');
+		const event = this.data['event'];
 
 		this.oAuth2Client.setCredentials(token);
 		const calendar = google.calendar({version: "v3", auth: this.oAuth2Client});

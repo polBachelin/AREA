@@ -9,7 +9,7 @@
         >
           <v-card style="background-color: darkorange">
             <v-card-text  class="card-title text-center" style="color: black">
-              CREATION D'AREA
+              {{ $t('message.creationTitle') }}
             </v-card-text>
           </v-card>
 
@@ -17,7 +17,7 @@
             <v-spacer></v-spacer>
               <v-text-field
                   style="font-size: 25px"
-                  label="Donnez un nom à votre Area"
+                  :label="titlePlaceHolder"
                   v-model="areaName"
               />
             <v-spacer></v-spacer>
@@ -52,7 +52,7 @@
                     @click="actionsInbound"
                     style="background-color: black; color: darkorange; height: 70px; width: 170px ; font-size: 35px"
                 >
-                  Actions
+                  {{ $t('message.actions') }}
                 </v-btn>
               </v-row>
               <v-row v-if="this.selectedAction !== ''" class="text-center justify-center mt-5">
@@ -91,7 +91,7 @@
                       @click="reactionsInbound"
                       style="background-color: black; color: darkorange; height: 70px; width: 170px; font-size: 35px"
                   >
-                    Reactions
+                    {{ $t('message.reactions') }}
                   </v-btn>
                 </v-row>
                 <v-row v-if="this.selectedReaction !== ''" class="text-center justify-center mt-5">
@@ -113,12 +113,12 @@
             <v-spacer></v-spacer>
             <v-col>
               <v-btn @click="resetArea" style="background-color: darkorange; color: black; font-size: 20px; width: 150px">
-                REINITIALISER
+                {{ $t('message.resetBtn') }}
               </v-btn>
             </v-col>
             <v-col>
               <v-btn @click="confirmArea" style="background-color: darkorange; color: black; font-size: 20px; width: 150px">
-                CONFIRMER
+                {{ $t('message.confirmBtn') }}
               </v-btn>
             </v-col>
             <v-spacer></v-spacer>
@@ -148,7 +148,7 @@
               class="card-title text-center"
               style="color: darkorange"
           >
-            Choisissez des {{currentDestination.label}}
+            {{ $t('message.chooseServiceTitle') }} {{currentDestination.label}}
             <v-row class="mt-16"></v-row>
           </v-card-text>
           <v-row
@@ -158,7 +158,7 @@
             <v-col cols="1"></v-col>
             <v-col cols="10">
             <v-card class="mt-1" width="800" elevation="7">
-              <v-row v-if="currentDestination.label === 'services pour actions' || currentDestination.label === 'services pour reactions'">
+              <v-row v-if="currentDestination.label === 'services for actions' || currentDestination.label === 'services for reactions'">
                 <v-col cols="4">
                   <v-card-text class="text-center" style="font-size: 30px; font-weight: bold"> {{ item.name }} </v-card-text>
                 </v-col>
@@ -166,15 +166,15 @@
                   <v-img :src="item.icon" max-height="50" max-width="50"/>
                 </v-col>
                 <v-col cols="4" class="text-right">
-                  <v-btn v-if="currentDestination.label === 'services pour actions'"
+                  <v-btn v-if="currentDestination.label === 'services for actions'"
                          :disabled="checkIfServiceConnected(item.name)"
                          @click="selectActionService(index)" :style= "isButtonIndex(selectedActionService, index) ? 'background-color: lime' : ''">
-                    SELECT
+                    {{ $t('message.selectBtn') }}
                   </v-btn>
-                  <v-btn v-if="currentDestination.label === 'services pour reactions'"
+                  <v-btn v-if="currentDestination.label === 'services for reactions'"
                          :disabled="checkIfServiceConnected(item.name)"
                          @click="selectReactionService(index)" :style= "isButtonIndex(selectedReactionService, index) ? 'background-color: lime' : ''">
-                    SELECT
+                    {{ $t('message.selectBtn') }}
                   </v-btn>
                 </v-col>
               </v-row>
@@ -188,11 +188,11 @@
                 <v-col cols="4" class="text-right">
                   <v-btn v-if="currentDestination.label === 'actions'"
                          @click="selectAction(index)" :style="isButtonIndexSigma(index, 1) ? 'background-color: lime' : ''">
-                    SELECT
+                    {{ $t('message.selectBtn') }}
                   </v-btn>
                   <v-btn v-if="currentDestination.label === 'reactions'"
                          @click="selectReaction(index)" :style="isButtonIndexSigma(index, 2) ? 'background-color: lime' : ''">
-                    SELECT
+                    {{ $t('message.selectBtn') }}
                   </v-btn>
                 </v-col>
               </v-row>
@@ -213,7 +213,7 @@
                             v-on="on"
                             color="orange"
                         >
-                          Choose Database
+                          {{ $t('message.chooseDatabase') }}
                         </v-btn>
                       </template>
 
@@ -241,7 +241,7 @@
                       <v-text-field
                         style="font-size: 20px"
                         v-model="timerValue"
-                        label="Timer Duration in Seconds"
+                        :label="timerDuration"
                         append-icon="mdi-clock"
                         type="number"
                         color="orange"
@@ -257,7 +257,7 @@
                       <v-text-field
                           style="font-size: 30px"
                           v-model="cityName"
-                          label="City name"
+                          :label="cityName"
                           append-icon="mdi-domain"
                           color="orange"
                           @input="checkCity"
@@ -287,7 +287,7 @@
                               v-on="on"
                               color="orange"
                           >
-                            Choose Guild
+                            {{ $t('message.chooseChannel') }}
                           </v-btn>
                         </template>
 
@@ -314,7 +314,7 @@
                     <v-row>
                       <v-col cols="5">
                       <v-card-text class="text-right" style="font-size: 20px">
-                        Selected channel:
+                        {{ $t('message.selectedChannel') }}
                       </v-card-text>
                       </v-col>
                       <v-col cols="5" class="text-left">
@@ -337,7 +337,7 @@
                               v-on="on"
                               color="orange"
                           >
-                            Choose Guild
+                            {{ $t('message.chooseChannel') }}
                           </v-btn>
                         </template>
 
@@ -364,7 +364,7 @@
                     <v-row>
                       <v-col cols="5">
                         <v-card-text class="text-right" style="font-size: 20px">
-                          Selected channel:
+                          {{ $t('message.selectedChannel') }}
                         </v-card-text>
                       </v-col>
                       <v-col cols="5" class="text-left">
@@ -389,7 +389,7 @@
                                   v-on="on"
                                   color="orange"
                               >
-                                Choose Guild
+                                {{ $t('message.chooseChannel') }}
                               </v-btn>
                             </template>
 
@@ -407,7 +407,7 @@
                         </v-col>
                         <v-col cols="3">
                           <v-card-text class="text-center" style="font-size: 20px">
-                            Selected channel:
+                            {{ $t('message.selectedChannel') }}
                           </v-card-text>
                         </v-col>
                         <v-col cols="5" class="text-left">
@@ -429,7 +429,7 @@
                                   v-on="on"
                                   color="orange"
                               >
-                                Choose Role
+                                {{ $t('message.chooseRole') }}
                               </v-btn>
                             </template>
 
@@ -447,7 +447,7 @@
                         </v-col>
                         <v-col cols="3">
                           <v-card-text class="text-center" style="font-size: 20px">
-                            Selected role:
+                            {{ $t('message.selectedRole') }}
                           </v-card-text>
                         </v-col>
                         <v-col cols="5" class="text-left">
@@ -473,7 +473,7 @@
                             v-on="on"
                             color="orange"
                         >
-                          Choose Calendar
+                          {{ $t('message.chooseCalendar') }}
                         </v-btn>
                       </template>
 
@@ -491,7 +491,7 @@
                     <v-row>
                       <v-col cols="5">
                         <v-card-text class="text-right" style="font-size: 20px">
-                          Selected calendar:
+                          {{ $t('message.selectedCalendar') }}
                         </v-card-text>
                       </v-col>
                       <v-col cols="5" class="text-left">
@@ -502,7 +502,7 @@
                     </v-row>
                     <v-col cols="6" class="text-center">
                       <v-text-field
-                          label="Event name"
+                          :label="eventNameLabel"
                           v-model="eventName"
                           prepend-icon="mdi-pen"
                           clearable
@@ -522,7 +522,7 @@
                         <v-text-field
                             style="font-size: 20px"
                             v-model="startEventDate"
-                            label="Start Date"
+                            :label="startEventDateLabel"
                             prepend-icon="mdi-calendar"
                             v-bind="attrs"
                             v-on="on"
@@ -539,7 +539,7 @@
                             color="orange"
                             @click="startDateModal = false"
                         >
-                          Cancel
+                          {{ $t('message.cancelBtn') }}
                         </v-btn>
                         <v-spacer></v-spacer>
                         <v-btn
@@ -547,7 +547,7 @@
                             color="orange"
                             @click="startDateModal = false"
                         >
-                          OK
+                          {{ $t('message.okBtn') }}
                         </v-btn>
                       </v-date-picker>
                     </v-dialog>
@@ -562,7 +562,7 @@
                         <v-text-field
                             style="font-size: 20px"
                             v-model="startEventTime"
-                            label="Start time"
+                            :label="startEventTimeLabel"
                             prepend-icon="mdi-clock-time-four-outline"
                             color="orange"
                             v-bind="attrs"
@@ -580,7 +580,7 @@
                             color="orange"
                             @click="startTimeModal = false"
                         >
-                          Cancel
+                          {{ $t('message.cancelBtn') }}
                         </v-btn>
                         <v-spacer></v-spacer>
                         <v-btn
@@ -588,7 +588,7 @@
                             color="orange"
                             @click="startTimeModal = false; checkIfEventOk()"
                         >
-                          OK
+                          {{ $t('message.okBtn') }}
                         </v-btn>
                       </v-time-picker>
                     </v-dialog>
@@ -605,7 +605,7 @@
                         <v-text-field
                             style="font-size: 20px"
                             v-model="endEventDate"
-                            label="End Date"
+                            :label="endEventDateLabel"
                             prepend-icon="mdi-calendar"
                             v-bind="attrs"
                             v-on="on"
@@ -622,7 +622,7 @@
                             color="orange"
                             @click="endDateModal = false"
                         >
-                          Cancel
+                          {{ $t('message.cancelBtn') }}
                         </v-btn>
                         <v-spacer></v-spacer>
                         <v-btn
@@ -630,7 +630,7 @@
                             color="orange"
                             @click="endDateModal = false; checkIfEventOk()"
                         >
-                          OK
+                          {{ $t('message.okBtn') }}
                         </v-btn>
                       </v-date-picker>
                     </v-dialog>
@@ -645,7 +645,7 @@
                         <v-text-field
                             style="font-size: 20px"
                             v-model="endEventTime"
-                            label="End time"
+                            :label="endEventTimeLabel"
                             prepend-icon="mdi-clock-time-four-outline"
                             color="orange"
                             v-bind="attrs"
@@ -663,7 +663,7 @@
                             color="orange"
                             @click="endTimeModal = false"
                         >
-                          Cancel
+                          {{ $t('message.cancelBtn') }}
                         </v-btn>
                         <v-spacer></v-spacer>
                         <v-btn
@@ -671,10 +671,55 @@
                             color="orange"
                             @click="endTimeModal = false; checkIfEventOk()"
                         >
-                          OK
+                          {{ $t('message.okBtn') }}
                         </v-btn>
                       </v-time-picker>
                     </v-dialog>
+                  </v-col>
+                </v-row>
+
+                <v-row v-if="selectedReaction === 'Create page'" class="justify-center text-center">
+                  <v-col cols="4">
+                    <v-menu
+                        rounded
+                        offset-y
+                    >
+                      <template v-slot:activator="{ attrs, on }">
+                        <v-btn
+                            class="mt-2"
+                            v-bind="attrs"
+                            v-on="on"
+                            color="orange"
+                        >
+                          {{ $t('message.chooseDatabase') }}
+                        </v-btn>
+                      </template>
+
+                      <v-list>
+                        <v-list-item
+                            v-for="item in databases"
+                            :key="item.id"
+                            @click="selectDatabase(item.id, item.title[0].text.content)"
+                            link
+                        >
+                          <v-list-item-title v-text="item.title[0].text.content"></v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                    <v-card-text class="text-center" style="font-size: 20px; font-weight: bold">
+                      {{databaseName}}
+                    </v-card-text>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-text-field
+                        label="Page Name"
+                        v-model="selectedPageName"
+                    />
+                  </v-col>
+                  <v-col cols="4">
+                    <v-btn color="orange" class="mt-2 ml-7" @click="checkPageName">
+                      {{ $t('message.createBtn') }}
+                    </v-btn>
                   </v-col>
                 </v-row>
               </v-row>
@@ -691,7 +736,7 @@
                 style="background-color: darkorange; color: black; font-size: 20px"
                 class="mb-3"
             >
-              SAUVEGARDER
+              {{ $t('message.saveBtn') }}
             </v-btn>
             <v-btn
                 v-else
@@ -700,7 +745,7 @@
                 style="background-color: darkorange; color: black; font-size: 20px"
                 class="mb-3"
             >
-              SUIVANT
+              {{ $t('message.nextBtn') }}
             </v-btn>
             <v-spacer></v-spacer>
           </v-row>
@@ -715,7 +760,7 @@
         <v-card v-else style="background-color: black; height: 800px" >
           <v-row style="margin-top: 400px">
           <v-card-text   style="color: darkorange; font-size: 40px; font-style: italic" class="text-center">
-            En attente de création ...
+            {{ $t('message.waitingCreation') }}
             <v-row class="mt-16"></v-row>
           </v-card-text>
           </v-row>
@@ -736,9 +781,9 @@ export default {
     return {
       destinations: [
         {label: 'none'},
-        {label: 'services pour actions', isConfirmed: false, isClicked: false, service: ''},
+        {label: 'services for actions', isConfirmed: false, isClicked: false, service: ''},
         {label: 'actions', isConfirmed: false, isClicked: false, service: ''},
-        {label: 'services pour reactions', isConfirmed: false, isClicked: false, service: ''},
+        {label: 'services for reactions', isConfirmed: false, isClicked: false, service: ''},
         {label: 'reactions', isConfirmed: false, isClicked: false, service: ''},
       ],
       currentDestination: {label: 'none'},
@@ -772,11 +817,16 @@ export default {
         reactionData: {}
       },
       startEventDate: null,
+      startEventDateLabel: this.$t('message.startDate'),
       startEventTime: null,
+      startEventTimeLabel: this.$t('message.startTime'),
       startDateModal: false,
       startTimeModal: false,
       endEventDate: null,
+      endEventDateLabel: this.$t('message.endDate'),
       endEventTime: null,
+      endEventTimeLabel: this.$t('message.endTime'),
+      eventNameLabel: this.$t('message.eventName'),
       endDateModal: false,
       endTimeModal: false,
       calendars: [],
@@ -786,6 +836,10 @@ export default {
       timerValue: 0,
       cityName: 'Paris',
       newChannelName: '',
+      selectedPageName: '',
+      titlePlaceHolder: this.$t('message.titlePlaceHolder'),
+      chooseServiceTitle: this.$t('message.chooseServiceTitle'),
+      timerDuration: '',
     }
   },
 
@@ -858,7 +912,7 @@ export default {
       this.currentDestination = this.destinations[4]
     },
     goToNextDestination() {
-      if (this.currentDestination.label === 'services pour actions') {
+      if (this.currentDestination.label === 'services for actions') {
         this.destinations[1].isConfirmed = true
         this.currentDestination = this.destinations[2]
         return
@@ -868,7 +922,7 @@ export default {
         this.currentDestination = this.destinations[3]
         return
       }
-      if (this.currentDestination.label === 'services pour reactions') {
+      if (this.currentDestination.label === 'services for reactions') {
         this.destinations[3].isConfirmed = true
         this.currentDestination = this.destinations[4]
         return
@@ -878,7 +932,7 @@ export default {
     selectInfo() {
       let info = []
 
-      if (this.currentDestination.label === 'services pour actions' || this.currentDestination.label === 'services pour reactions') {
+      if (this.currentDestination.label === 'services for actions' || this.currentDestination.label === 'services for reactions') {
         info = this.services
       }
       if (this.currentDestination.label === 'actions') {
@@ -924,7 +978,7 @@ export default {
     saveArea() {
 
       if (!this.areaName) {
-        this.rightCardError = 'Veuillez entrer un nom pour votre aréa !'
+        this.rightCardError = this.$t('message.noNameArea')
         return
       }
       this.areaBody.name = this.areaName
@@ -950,7 +1004,7 @@ export default {
       //REACTIONS -------------------------------------
       if (this.selectedReaction === 'Send a message') {
         if (!this.discordMessage) {
-          this.rightCardError = 'Please fill a message'
+          this.rightCardError = this.$t('message.noName')
           return
         }
         this.areaBody.reactionData = {message_content: this.discordMessage, guild_id: this.selectedGuild}
@@ -970,9 +1024,17 @@ export default {
         this.areaBody.reactionData = {role_id: this.selectedRole, guild_id: this.selectedGuild}
       }
 
+      if (this.selectedReaction === 'Create page') {
+        if (!this.selectedPageName) {
+          this.rightCardError = this.$t('message.noName')
+          return
+        }
+        this.areaBody.reactionData = {title: this.selectedPageName, database_id: this.selectedDatabase}
+      }
+
       if (this.selectedReaction === 'Create an event') {
         if (!this.eventName) {
-          this.rightCardError = 'Please give a name to the event'
+          this.rightCardError = this.$t('message.noName')
           return
         }
         this.areaBody.reactionData = {
@@ -994,16 +1056,16 @@ export default {
       if (this.areaBody.actionName && this.areaBody.reactionName) {
         this.sendAreaToBack(this.areaBody)
         this.rightCardError = ''
-        this.goodMessage = "Area created!"
+        this.goodMessage = "Area created !"
       } else {
-        this.rightCardError = 'Please select an action AND a reaction'
+        this.rightCardError = this.$t('message.noActionSelected')
       }
     },
 
     sendAreaToBack() {
       let body = this.areaBody
 
-      axios.post('http://localhost:3000/area/create', body, {headers: {'Authorization': 'Bearer ' + this.accessToken}})
+      axios.post('http://localhost:3000/area/create', body, {headers: {'Authorization': 'Bearer ' + this.accessToken, 'Content-Type': 'application/json'}})
           .then((response) => {
             console.log(response.data)
           })
@@ -1020,7 +1082,7 @@ export default {
     },
     confirmArea() {
       if (this.destinations[1].isConfirmed === false || this.destinations[2].isConfirmed === false || !this.areaName) {
-        this.errorMsg = 'Veuillez remplir toutes les conditions !'
+        this.errorMsg = this.$t('message.notFilled')
       }
     },
 
@@ -1123,6 +1185,14 @@ export default {
 
     checkCity() {
       if (this.cityName.length > 0) {
+        this.currentDestination.isConfirmed = true
+      } else {
+        this.currentDestination.isConfirmed = false
+      }
+    },
+
+    checkPageName() {
+      if (this.selectedPageName.length > 0 && this.selectedDatabase.length > 0) {
         this.currentDestination.isConfirmed = true
       } else {
         this.currentDestination.isConfirmed = false

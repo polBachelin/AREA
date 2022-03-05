@@ -1,9 +1,9 @@
 <template>
-  <v-container class="ml-14">
-    <v-img src="../assets/background.gif" max-height="800">
+  <v-container>
+    <v-img src="../assets/loginBackground.png" max-height="800">
       <v-row class="justify-center">
         <v-card-text class="text-center title_text mt-10">
-          Bienvenue sur l'area
+          {{ $t('message.welcomeTitle') }}
         </v-card-text>
       </v-row>
       <v-row class="justify-center">
@@ -13,7 +13,7 @@
                 height="500"
                 :style="isError !== 'none' ? 'border: 10px solid red;' : 'border: 5px solid black;'"
         >
-          <v-card-title class="font-weight-bold">Création de compte :</v-card-title>
+          <v-card-title class="font-weight-bold">{{ $t('message.accountCreationTitle') }}</v-card-title>
           <v-card-text class="mt-3">
             <v-text-field
                 v-model="username"
@@ -23,13 +23,13 @@
             />
             <v-text-field
                 v-model="password"
-                label="Mot de passe"
+                :label="passLabel"
                 prepend-icon="mdi-lock"
                 type="password"
             />
             <v-text-field
                 v-model="confirmPass"
-                label="Mot de passe"
+                :label="passLabel"
                 prepend-icon="mdi-lock"
                 type="password"
             />
@@ -41,7 +41,7 @@
 
           <v-row class="mt-14">
             <v-col cols="12" class="mt-10 text-center">
-              <v-btn color="black" style="color: darkorange" @click="confirmUserCreation"> Valider </v-btn>
+              <v-btn color="black" style="color: darkorange" @click="confirmUserCreation"> {{ $t('message.confirmBtn') }} </v-btn>
             </v-col>
           </v-row>
         </v-card>
@@ -62,9 +62,10 @@ export default {
       password: '',
       confirmPass: '',
       emailRules: [
-        v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || this.$t("message.invalidEmail")
       ],
       isError: 'none',
+      passLabel: this.$t("message.passwordLabel"),
     }
   },
 
@@ -82,14 +83,14 @@ export default {
                 this.$router.push({name: 'home'})
               })
               .catch( () => {
-                this.isError = "Utilisateur " + this.username + " existe déjà !"
+                this.isError = "User " + this.username + " already exists !"
               })
 
         } else {
-          this.isError = "Les mots de passes sont différents !"
+          this.isError = this.$t("message.passwordDoesNotMatch")
         }
       } else {
-        this.isError = 'Nom ou mot de passe non valide !'
+        this.isError = this.$t("message.invalidEmail")
       }
     },
 
