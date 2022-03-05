@@ -11,7 +11,7 @@ class GoogleAuthPage extends StatelessWidget {
       /// Simply Provide all the necessary credentials
       body: GoogleAuth().visa.authenticate(
           clientID: '338854183277-1u6esadfcuu84km6jvh9pd1adnq6vc9g.apps.googleusercontent.com',
-          redirectUri: 'http%3A%2F%2Flocalhost%3A3000%2FgoogleCalendar%2Fauth',
+          redirectUri: 'http%3A%2F%2Flocalhost%3A8080%2FgoogleCalendar%2Fauth',
           scope: "https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.app.created%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.calendarlist.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.events%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.events.owned",
           state: 'googleAuth',
           onDone: done,
