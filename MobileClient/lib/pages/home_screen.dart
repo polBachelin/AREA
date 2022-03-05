@@ -24,9 +24,19 @@ class HomeScreenState extends State<HomeScreen> {
     SettingsScreen(),
   ];
 
+  final List<String> _widgetNames = <String>[
+    "Dashboard",
+    "Areas",
+    "My Services",
+    "Settings",
+  ];
+
+  var titleCurrentWidget = "Dashboard";
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      titleCurrentWidget = _widgetNames[index];
     });
   }
 
@@ -34,7 +44,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AREA'),
+        title: Text(titleCurrentWidget),
         backgroundColor: theme.primaryColor,
         leading: IconButton(
             icon: const Icon(Icons.logout),
@@ -54,12 +64,12 @@ class HomeScreenState extends State<HomeScreen> {
             backgroundColor: theme.primaryColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.api),
             label: 'Areas',
             backgroundColor: theme.primaryLightColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(Icons.apps),
             label: 'Services',
             backgroundColor: theme.primaryColor,
           ),

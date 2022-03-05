@@ -37,10 +37,10 @@ class ManagerState extends State<Manager> {
     "action_defined": false,
     "reaction_defined": false,
     "name" : "",
-    "ActionName" : "",
-    "ActionData" : {},
-    "ReactionName" : "",
-    "ReactionData" : {},
+    "actionName" : "",
+    "actionData" : {},
+    "reactionName" : "",
+    "reactionData" : {},
   };
 
   @override

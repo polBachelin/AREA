@@ -1,21 +1,26 @@
+import 'dart:convert';
+
 import 'package:area/components/validators_actions/notion_add_database.dart';
 import 'package:area/models/discord.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
+import 'package:area/theme.dart' as theme;
 import 'package:flutter/material.dart';
 
 class DiscordSendMessageForm extends StatefulWidget {
-  const DiscordSendMessageForm({Key? key}) : super(key: key);
+  final String _action_string;
+  const DiscordSendMessageForm(this._action_string);
 
   @override
   State<DiscordSendMessageForm> createState() => DiscordSendMessageFormState();
 }
 
 class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
-  String? selectedChannel;
-  String? selectedAction;
-  final _dropdownFormKey = GlobalKey<FormState>();
+  String? _selectedChannel;
+  String? _text;
+  final _validateKey = GlobalKey<FormState>();
   List<DropdownMenuItem<String>>? servicesList;
+  Future<List<DiscordChannel>>? _futureChannels;
 
   @override
   void initState() {
@@ -36,11 +41,27 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
         {const DropdownMenuItem<String>(child: Text("None"), value: "None")});
   }
 
+  void validateStep()
+  {
+    final isValid = _validateKey.currentState!.validate();
+    if (isValid) {
+      Manager.of(context).creator["reaction_defined"] = true;
+      Manager.of(context).creator["ReactionData"] = {
+        widget._action_string : _text,
+        "guild_id": _selectedChannel
+      };
+    } else {
+      Manager.of(context).creator["reaction_defined"] = false;
+      Manager.of(context).creator["ReactionData"] = "";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: _dropdownFormKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        key: _validateKey,
+        onChanged: () => validateStep(),
         child: FutureBuilder<List<DiscordChannel>>(
             future: Manager.of(context).api.discord.getChannels(),
             builder: (context, snapshot) {
@@ -65,18 +86,44 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
                           fillColor: Colors.white,
                         ),
                         hint: Text(
-                            selectedChannel == null ? "Select a service" : ""),
+                            _selectedChannel == null ? "Select a channel" : ""),
                         validator: (value) =>
-                            value == null ? "Select a service" : null,
+                            value == null ? "Select a channel" : null,
                         dropdownColor: Colors.white,
-                        value: selectedChannel,
+                        value: _selectedChannel,
                         onChanged: (String? newValue) {
                           setState(() {
-                            selectedChannel = newValue!;
+                            _selectedChannel = newValue!;
                           });
                         },
                         items: getChannelsList(snapshot)),
-                      ],
+                    TextFormField(
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(12),
+                        labelText: widget._action_string == "message_content" ? 'Type your message' : "Rename your channel",
+                        filled: true,
+                        fillColor: theme.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelStyle: TextStyle(
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      keyboardType: TextInputType.text,
+                      onChanged: (value) {
+                        setState(() {
+                          _text = value;
+                        });
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Text is required';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
                 );
               } else {
                 return const Center(child: CircularProgressIndicator());

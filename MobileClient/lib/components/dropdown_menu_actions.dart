@@ -25,7 +25,8 @@ class DropDownMenuState extends State<DropDownMenuActions> {
   List<DropdownMenuItem<String>>? getActionsList(
       AsyncSnapshot<List<Service>> snapshot) {
     if (selectedService != null) {
-      return snapshot.data?.firstWhere((element) => element.name == selectedService)
+      return snapshot.data
+          ?.firstWhere((element) => element.name == selectedService)
           .actions
           .map((item) {
         return DropdownMenuItem<String>(
@@ -41,7 +42,9 @@ class DropDownMenuState extends State<DropDownMenuActions> {
   List<DropdownMenuItem<String>>? getServicesList(
       AsyncSnapshot<List<Service>> snapshot) {
     if (snapshot.hasData) {
-      return snapshot.data?.where((element) => element.connected == true).map((item) {
+      return snapshot.data
+          ?.where((element) => element.connected == true)
+          .map((item) {
         return DropdownMenuItem<String>(
           child: Row(
             children: [
@@ -59,19 +62,22 @@ class DropDownMenuState extends State<DropDownMenuActions> {
   }
 
   Widget setConfigAction(BuildContext context) {
+    Manager.of(context).creator["action_defined"] = false;
+    Manager.of(context).creator["actionName"] = selectedAction.toString();
     switch (selectedAction) {
       case "Add to database":
         return Builder(builder: (context) => NotionAddDatabaseForm());
       case "Start timer":
         break;
       case "City's weather change":
+        return Builder(builder: (context) => NotionAddDatabaseForm());
         break;
-      case "Received a message":
+      case "Receive a message":
+        Manager.of(context).creator["action_defined"] = true;
         break;
       default:
         return const Text("Setup Action");
     }
-    Manager.of(context).creator["Action_name"] = selectedAction!;
     return const Text("Setup Action");
   }
 

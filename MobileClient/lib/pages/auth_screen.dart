@@ -144,7 +144,6 @@ class AuthScreen extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         registerOauth(context, "googleCalendar");
-                        //Navigator.pushNamed(context, "/google_oauth");
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
