@@ -34,9 +34,9 @@ class SettingsScreenState extends State<SettingsScreen> {
       prefs.remove('server_url');
     }
     if (prefs.get('server_url') != null) {
-      prefs.remove('token_session');
+      prefs.remove('access_token');
     }
-    prefs.remove('token_session');
+    prefs.remove('access_token');
     prefs.setBool('isLogged', false);
 
     Navigator.popAndPushNamed(context, "/");

@@ -10,7 +10,7 @@ class ServerRequest {
       print("GET - $url$route - $headers");
     }
     final response = await http.get(Uri.parse(url + route), headers: headers);
-    print("GET - " + response.body);
+    print("GET "+ response.statusCode.toString() + " - " + response.body);
     //updateCookie(response, headers);
     return response;
   }

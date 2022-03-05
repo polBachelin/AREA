@@ -24,8 +24,8 @@ class Server {
 
   void updateToken() {
     prefs.then((SharedPreferences p) {
-      if (p.getString("token_session") != null) {
-        headers["Authorization"] = "Bearer " + p.getString("token_session")!;
+      if (p.getString("access_token") != null) {
+        headers["Authorization"] = "Bearer " + p.getString("access_token")!;
       }
       notion.headers = headers;
       discord.headers = headers;
@@ -39,6 +39,7 @@ class Server {
   }
 
   Future<bool> register(dynamic data) async {
+    updateToken();
     final response =
         await ServerRequest.postRequest(url, '/auth/register', data, headers);
     if (response.statusCode >= 300) {
@@ -49,13 +50,14 @@ class Server {
     prefs.then((SharedPreferences p) {
       p.setString(
           "username", json.decode(response.body.toString())['user']['email']);
-      p.setString("token_session",
+      p.setString("access_token",
           json.decode(response.body.toString())['token']['access_token']);
     });
     return true;
   }
 
   Future<bool> postIntraRequest(dynamic data) async {
+    updateToken();
     final response = await ServerRequest.postRequest(
         url, '/intra/token', {"link": data}, headers);
     if (response.statusCode >= 300) {
@@ -65,14 +67,16 @@ class Server {
     print(response.body.toString());
     prefs.then((SharedPreferences p) {
       p.setString("username", json.decode(response.body.toString())['email']);
-      p.setString("token_session",
+      p.setString("access_token",
           json.decode(response.body.toString())['token']['access_token']);
     });
     return true;
   }
 
   Future<Tuple3<String, String, bool>> oauthGetToken(
-      dynamic code, String serviceName) async {
+      dynamic code, String serviceName) async
+  {
+    updateToken();
     final response = await ServerRequest.getRequest(
         url, '/' + serviceName + '/auth_mobile?code=$code', headers);
     var ret = const Tuple3<String, String, bool>("", "", false);
@@ -89,7 +93,6 @@ class Server {
       ret = ret.withItem2(uri.queryParameters["token"]!);
       ret = ret.withItem3(true);
     }
-    print("TUPLE returned ==> " + ret.toString());
     return ret;
   }
 
@@ -125,17 +128,20 @@ class Server {
 
   void enableArea(String name) async {
     updateToken();
-    final res = await ServerRequest.getRequest(url, '/area/' + name + '/enable', headers);
+    final res = await ServerRequest.getRequest(
+        url, '/area/' + name + '/enable', headers);
   }
 
   void disableArea(String name) async {
     updateToken();
-    final res = await ServerRequest.getRequest(url, '/area/' + name + '/disable', headers);
+    final res = await ServerRequest.getRequest(
+        url, '/area/' + name + '/disable', headers);
   }
 
   Future<bool> getStatus(String name) async {
     updateToken();
-    final res = await ServerRequest.getRequest(url, '/area/' + name + '/isEnabled', headers);
+    final res = await ServerRequest.getRequest(
+        url, '/area/' + name + '/isEnabled', headers);
     final joe = json.decode(res.body);
     return joe;
   }
