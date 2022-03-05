@@ -1,6 +1,6 @@
 <template>
-  <v-container class="ml-14">
-    <v-img src="../assets/background.gif" max-height="800">
+  <v-container>
+    <v-img src="../assets/loginBackground.png" max-height="800">
       <v-row class="justify-center">
         <v-card-text class="text-center title_text mt-10">
           {{ $t('message.welcomeTitle') }}

@@ -9,7 +9,7 @@
           style="background-color: black; border-bottom: 1px solid darkorange"
       >
         <v-row>
-          <v-col cols="3"/>
+          <v-col cols="2"/>
           <v-col cols="3" class="mt-2" style="display: flex">
             <v-btn color="orange" @click="changeLanguage('fr')" style="font-weight: bold">
               FR
@@ -192,12 +192,12 @@ export default {
       localStorage.setItem('isLogged', 'false')
       localStorage.setItem('accessToken', '')
       localStorage.setItem('username', '')
-      this.$router.push('/login')
+      window.location.replace('http://localhost:8080/login')
     },
 
     changeLanguage(lang) {
       localStorage.setItem('lang', lang)
-      this.$router.go()
+      this.$router.go(0)
     },
   },
   created() {
