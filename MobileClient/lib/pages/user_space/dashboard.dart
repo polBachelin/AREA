@@ -1,13 +1,7 @@
-<<<<<<< HEAD:client/mobile_client/lib/pages/dashboard.dart
-import 'package:area/components/delayed_animation.dart';
-import 'package:area/components/dropdown_menu_actions.dart';
-import 'package:area/components/dropdown_menu_reactions.dart';
-=======
 
 import 'package:area/components/animations/delayed_animation.dart';
 import 'package:area/components/dropdowns/dropdown_menu_actions.dart';
 import 'package:area/components/dropdowns/dropdown_menu_reactions.dart';
->>>>>>> dev:MobileClient/lib/pages/user_space/dashboard.dart
 import 'package:area/services/AREA_creator.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
