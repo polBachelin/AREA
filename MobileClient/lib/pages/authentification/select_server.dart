@@ -53,6 +53,8 @@ class ServerPageState extends State<ServerPage> {
             right: 40.0,
           ),
           child: ListView(shrinkWrap: true, children: <Widget>[
+            Text("Select an AREA server", style: theme.titleStyle),
+            const SizedBox(height: 30),
             Input(
               inputName: 'newserver',
               inputIcon: Icons.dns,
@@ -60,7 +62,7 @@ class ServerPageState extends State<ServerPage> {
               inputType: TextInputType.text,
               inputHidden: false,
               getInputValue: _getNewServer,
-              errorText: 'Bad Ip Adress',
+              errorText: "",
             ),
             Container(
               margin: const EdgeInsets.only(top: 15.0),
