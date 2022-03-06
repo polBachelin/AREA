@@ -37,6 +37,7 @@
     "googleapis": "^39.2.0",
     "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
+    "nestjs-real-ip": "^2.0.0",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
