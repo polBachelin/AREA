@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:area/components/roundedFlatButton.dart';
-import 'package:area/components/inputText.dart';
+import 'package:area/components/buttons/roundedFlatButton.dart';
+import 'package:area/components/buttons/inputText.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:area/services/manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,7 +39,7 @@ class ServerPageState extends State<ServerPage> {
     final SharedPreferences prefs = await _prefs;
     Manager.of(context).api.changeUrl(prefs.getString('server_url'));
     print("Connect to server IP : " + Manager.of(context).api.url);
-    Navigator.pushNamed(context, '/register');
+    Navigator.pushReplacementNamed(context, '/authentification');
   }
 
   @override

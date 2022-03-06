@@ -1,13 +1,11 @@
-import 'dart:ffi';
 
-import 'package:area/components/delayed_animation.dart';
-import 'package:area/components/dropdown_menu_actions.dart';
-import 'package:area/components/dropdown_menu_reactions.dart';
+import 'package:area/components/animations/delayed_animation.dart';
+import 'package:area/components/dropdowns/dropdown_menu_actions.dart';
+import 'package:area/components/dropdowns/dropdown_menu_reactions.dart';
 import 'package:area/services/AREA_creator.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:area/theme.dart' as theme;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -102,8 +100,8 @@ class DashboardState extends State<Dashboard> {
                             createAREA(context);
                           },
                           style: ElevatedButton.styleFrom(
-                              primary: Color.fromARGB(255, 45, 192, 0),
-                              fixedSize: Size(200, 50))),
+                              primary: const Color.fromARGB(255, 45, 192, 0),
+                              fixedSize: const Size(200, 50))),
                       const SizedBox(width: 30),
                       ElevatedButton(
                         child: const Text("Reset"),
@@ -114,7 +112,7 @@ class DashboardState extends State<Dashboard> {
                           Navigator.pushReplacementNamed(context, "/home");
                         },
                         style: ElevatedButton.styleFrom(
-                            primary: theme.reset, fixedSize: Size(100, 50)),
+                            primary: theme.reset, fixedSize: const Size(100, 50)),
                       ),
                     ],
                   ),

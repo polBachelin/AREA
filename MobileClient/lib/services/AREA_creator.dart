@@ -1,4 +1,4 @@
-import 'package:area/components/toast.dart';
+import 'package:area/components/animations/toast.dart';
 import 'package:area/services/api.dart';
 import 'package:area/services/manager.dart';
 import 'package:area/utils/server_requests.dart';

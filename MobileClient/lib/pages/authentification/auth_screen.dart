@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:area/services/api_register.dart';
 import 'package:area/theme.dart' as theme;
 
-import '../components/delayed_animation.dart';
+import '../../components/animations/delayed_animation.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -65,7 +64,8 @@ class AuthScreen extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/register_email');
+                        Navigator.pushNamed(
+                            context, '/login_email');
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
@@ -79,11 +79,7 @@ class AuthScreen extends StatelessWidget {
                           const SizedBox(width: 10),
                           Text(
                             'Email',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: theme.buttonTextStyle
                           )
                         ],
                       ),
@@ -105,11 +101,7 @@ class AuthScreen extends StatelessWidget {
                           const SizedBox(width: 10),
                           Text(
                             'Discord',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: theme.buttonTextStyle
                           ),
                         ],
                       ),
@@ -131,11 +123,7 @@ class AuthScreen extends StatelessWidget {
                           const SizedBox(width: 10),
                           Text(
                             'Notion',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: theme.buttonTextStyle
                           ),
                         ],
                       ),
@@ -157,11 +145,7 @@ class AuthScreen extends StatelessWidget {
                           const SizedBox(width: 10),
                           Text(
                             'Google',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: theme.buttonTextStyle
                           ),
                         ],
                       ),
@@ -169,7 +153,8 @@ class AuthScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, "/register_epitech");
+                        Navigator.pushNamed(
+                            context, "/register_epitech");
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
@@ -209,7 +194,8 @@ class AuthScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, "/register_email");
+                        Navigator.pushReplacementNamed(
+                            context, "/register_email");
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),

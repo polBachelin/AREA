@@ -1,8 +1,5 @@
-import 'package:area/models/notion.dart';
-import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
 
 class NotionAddDatabaseForm extends StatefulWidget {
   const NotionAddDatabaseForm({Key? key}) : super(key: key);
@@ -30,14 +27,14 @@ class NotionAddDatabaseState extends State<NotionAddDatabaseForm> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return DropdownButtonFormField(
-                icon: Icon(Icons.api),
+                icon: const Icon(Icons.api),
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                    borderSide: const BorderSide(color: Colors.blue, width: 2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                    borderSide: const BorderSide(color: Colors.blue, width: 2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   filled: true,

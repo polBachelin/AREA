@@ -1,6 +1,7 @@
 library color_theme;
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const Color primaryColor = Color.fromARGB(255, 211, 109, 42);
 const Color primaryLightColor = Color.fromARGB(255, 214, 86, 0);
@@ -16,14 +17,23 @@ const Color background = Color(0xff171515);
 const Color disable = Color.fromARGB(255, 156, 156, 156);
 const Color validate = Color.fromARGB(255, 224, 167, 8);
 
+TextStyle titleStyle = GoogleFonts.poppins(
+    color: primaryColor, fontSize: 25, fontWeight: FontWeight.w600);
+TextStyle buttonTextStyle = GoogleFonts.poppins(
+  color: const Color.fromARGB(255, 255, 255, 255),
+  fontSize: 16,
+  fontWeight: FontWeight.w500,
+);
+
 InputDecoration decorationInput = InputDecoration(
-    enabledBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.blue, width: 2),
-      borderRadius: BorderRadius.circular(20),
-    ),
-    border: OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.blue, width: 2),
-      borderRadius: BorderRadius.circular(20),
-    ),
-    filled: true,
-    fillColor: Colors.white,);
+  enabledBorder: OutlineInputBorder(
+    borderSide: const BorderSide(color: Colors.blue, width: 2),
+    borderRadius: BorderRadius.circular(20),
+  ),
+  border: OutlineInputBorder(
+    borderSide: const BorderSide(color: Colors.blue, width: 2),
+    borderRadius: BorderRadius.circular(20),
+  ),
+  filled: true,
+  fillColor: Colors.white,
+);

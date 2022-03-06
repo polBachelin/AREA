@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:area/components/roundedFlatButton.dart';
-import 'package:area/components/inputText.dart';
+import 'package:area/components/buttons/roundedFlatButton.dart';
+import 'package:area/components/buttons/inputText.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:area/services/manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,14 +27,15 @@ class IntraFormRegisterState extends State<IntraFormRegister> {
   }
 
   void _connectServer(BuildContext context) async {
-    final reponse = Manager.of(context).api.postIntraRequest(_autologinLink, false);
+    final reponse =
+        Manager.of(context).api.postIntraRequest(_autologinLink, false);
 
     reponse.then((value) {
       if (value == true) {
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/home');
       } else {
         Navigator.pop(context);
-        Navigator.pushNamed(context, '/register');
+        Navigator.pushReplacementNamed(context, '/authentification');
       }
     });
   }

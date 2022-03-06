@@ -1,5 +1,5 @@
-import 'package:area/components/delayed_animation.dart';
-import 'package:area/components/roundedFlatButton.dart';
+import 'package:area/components/animations/delayed_animation.dart';
+import 'package:area/components/buttons/roundedFlatButton.dart';
 import 'package:area/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,21 +25,11 @@ class SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
-  Future<void> clearSharedPrefs() async {
+  static Future<void> clearSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.get('username') != null) {
-      prefs.remove('username');
-    }
-    if (prefs.get('server_url') != null) {
-      prefs.remove('server_url');
-    }
-    if (prefs.get('server_url') != null) {
-      prefs.remove('access_token');
-    }
+    prefs.remove('username');
     prefs.remove('access_token');
     prefs.setBool('isLogged', false);
-
-    Navigator.popAndPushNamed(context, "/");
   }
 
   @override
@@ -60,6 +50,7 @@ class SettingsScreenState extends State<SettingsScreen> {
               child: ElevatedButton(
                   onPressed: () {
                     clearSharedPrefs();
+                    Navigator.popAndPushNamed(context, "/");
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),

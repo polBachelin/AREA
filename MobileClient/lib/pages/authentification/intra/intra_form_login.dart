@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:area/components/roundedFlatButton.dart';
-import 'package:area/components/inputText.dart';
+import 'package:area/components/buttons/roundedFlatButton.dart';
+import 'package:area/components/buttons/inputText.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:area/services/manager.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class IntraFormLogin extends StatefulWidget {
   const IntraFormLogin({Key? key}) : super(key: key);
@@ -27,16 +26,12 @@ class IntraFormLoginState extends State<IntraFormLogin> {
   }
 
   void _connectServer(BuildContext context) async {
-    print("LOGIN -=>");
-    final reponse = Manager.of(context).api.postIntraRequest(_autologinLink, true);
+    print("LOGIN -=> INTRA");
+    final reponse =
+        Manager.of(context).api.postIntraRequest(_autologinLink, true);
 
     reponse.then((value) {
-      if (value == true) {
-        Navigator.pushNamed(context, '/home');
-      } else {
-        Navigator.pop(context);
-        Navigator.pushNamed(context, '/register');
-      }
+        Navigator.popAndPushNamed(context, '/services');
     });
   }
 
@@ -47,8 +42,8 @@ class IntraFormLoginState extends State<IntraFormLogin> {
         body: Center(
             child: Container(
           margin: const EdgeInsets.only(
-            left: 40.0,
-            right: 40.0,
+            left: 10.0,
+            right: 10.0,
           ),
           child: ListView(shrinkWrap: true, children: <Widget>[
             Input(

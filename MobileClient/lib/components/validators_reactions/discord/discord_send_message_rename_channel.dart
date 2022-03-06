@@ -1,8 +1,5 @@
-import 'dart:convert';
 
-import 'package:area/components/validators_actions/notion_add_to_database.dart';
 import 'package:area/models/discord.dart';
-import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:flutter/material.dart';
@@ -69,16 +66,16 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     DropdownButtonFormField(
-                        icon: Icon(Icons.api),
+                        icon: const Icon(Icons.api),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
+                                const BorderSide(color: Colors.blue, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
+                                const BorderSide(color: Colors.blue, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           filled: true,
@@ -98,7 +95,7 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
                         items: getChannelsList(snapshot)),
                     TextFormField(
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(12),
+                        contentPadding: const EdgeInsets.all(12),
                         labelText: widget._action_string == "message_content"
                             ? 'Type your message'
                             : "Rename your channel",

@@ -1,7 +1,7 @@
-import 'package:area/pages/areas_page.dart';
-import 'package:area/pages/services_screen.dart';
-import 'package:area/pages/dashboard.dart';
-import 'package:area/pages/settings.dart';
+import 'package:area/pages/user_space/areas_page.dart';
+import 'package:area/pages/user_space/services_screen.dart';
+import 'package:area/pages/user_space/dashboard.dart';
+import 'package:area/pages/user_space/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:area/theme.dart' as theme;
 
@@ -48,7 +48,8 @@ class HomeScreenState extends State<HomeScreen> {
         leading: IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
-              Navigator.pop(context);
+              SettingsScreenState.clearSharedPrefs();
+              Navigator.popAndPushNamed(context, "/authentification");
             }),
       ),
       backgroundColor: theme.background,

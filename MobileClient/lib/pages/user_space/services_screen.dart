@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:area/components/delayed_animation.dart';
-import 'package:area/components/roundedFlatButtonLarge.dart';
+import 'package:area/components/animations/delayed_animation.dart';
+import 'package:area/components/buttons/roundedFlatButtonLarge.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/api_login.dart';
 import 'package:area/services/api_register.dart';
@@ -63,10 +63,10 @@ class ServicePageState extends State<ServicesPage> {
                                     RFLargeButton(
                                       backgroundColor: Color.fromARGB(255, 41, 194, 27),
                                       buttonIcon: Icons.api,
-                                      passedFunction: registerOauth,
+                                      passedFunction: loginOauth,
                                       buttonText: 'Connected',
                                       parentContext: context,
-                                      passedString: snapshot.data![index].name
+                                      passedString: snapshot.data![index].name.toLowerCase() == "google" ? "googleCalendar" : snapshot.data![index].name.toLowerCase()
                                     )
                                   else
                                     RFLargeButton(
@@ -75,7 +75,7 @@ class ServicePageState extends State<ServicesPage> {
                                       passedFunction: loginOauth,
                                       buttonText: 'Disconnected',
                                       parentContext: context,
-                                      passedString: snapshot.data![index].name.toLowerCase()
+                                      passedString: snapshot.data![index].name.toLowerCase() == "google" ? "googleCalendar" : snapshot.data![index].name.toLowerCase()
                                     )
                                   ])
                             ],
