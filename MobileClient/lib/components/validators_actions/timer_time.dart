@@ -11,7 +11,7 @@ class TimerTimeForm extends StatefulWidget {
 }
 
 class TimerTimeState extends State<TimerTimeForm> {
-  int timeToWait = 0;
+  int timeToWait = 1;
 
   void validateStep(String value) {
     timeToWait = int.parse(value);
@@ -30,7 +30,7 @@ class TimerTimeState extends State<TimerTimeForm> {
       onSubmitted: (value) => validateStep(value),
       decoration: const InputDecoration(
           fillColor: theme.white,
-          labelText: "Enter your number",
+          labelText: "Enter your number in seconds",
           labelStyle: TextStyle(color: theme.white),
           hintStyle: TextStyle(color: theme.white)),
       style: TextStyle(color: theme.white),
@@ -40,6 +40,7 @@ class TimerTimeState extends State<TimerTimeForm> {
       ],
       onChanged: (value) {
         setState(() {
+          timeToWait = int.parse(value);
           validateStep(value);
         });
       },

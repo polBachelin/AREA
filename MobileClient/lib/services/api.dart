@@ -200,4 +200,9 @@ class Server {
     final List<List> obj = [areas, status];
     return obj;
   }
+
+  void deleteArea(String name) async {
+    updateToken();
+    final res = await ServerRequest.deleteRequest(url, '/area/' + name, {}, headers);
+  }
 }

@@ -46,7 +46,7 @@ class ServerRequest {
     print("DELETE - $route");
     print("Payload : $data");
     final response =
-        await http.delete(Uri.dataFromString(url + route), headers: headers);
+        await http.delete(Uri.parse(url + route), headers: headers);
     headers = updateCookie(response, headers);
     return response;
   }

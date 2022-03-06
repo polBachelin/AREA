@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 createAREA(BuildContext context) async {
   final manager = Manager.of(context);
 
-  print(manager.creator);
-
   if (manager.creator["action_defined"] == false ||
       manager.creator["reaction_defined"] == false ||
       manager.creator["name"] == "") {

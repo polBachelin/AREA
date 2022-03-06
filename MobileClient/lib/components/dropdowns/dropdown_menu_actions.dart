@@ -70,6 +70,7 @@ class DropDownMenuState extends State<DropDownMenuActions> {
       case "Add to database":
         return Builder(builder: (context) => const NotionAddDatabaseForm());
       case "Start timer":
+        Manager.of(context).creator["action_defined"] = true;
         return Builder(builder: (context) => const TimerTimeForm());
       case "City's weather change":
         return Builder(builder: (context) => const WeatherSelectCity());
