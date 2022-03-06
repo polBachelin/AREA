@@ -7,18 +7,15 @@ import 'package:flutter/material.dart';
 createAREA(BuildContext context) async {
   final manager = Manager.of(context);
 
-  print(manager.creator);
-
   if (manager.creator["action_defined"] == false ||
       manager.creator["reaction_defined"] == false ||
       manager.creator["name"] == "") {
     return toast(context, "Missing informations");
   }
+  final response = await ServerRequest.postRequest(
+      manager.api.url, "/area/create", manager.creator, manager.api.headers);
+  toast(context, "Contragulations ! AREA Created");
   Manager.of(context).creator.clear();
   Manager.of(context).creator.addAll(creatorDefault);
-  final response = await ServerRequest.postRequest(
-      manager.api.url, "", manager.creator, manager.api.headers);
-  print("Response AREA CREATION ==>" + response.body);
-  toast(context, "Contragulations ! AREA Created");
   Navigator.pushReplacementNamed(context, "/home");
 }

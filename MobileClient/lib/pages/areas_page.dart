@@ -57,7 +57,7 @@ class AreasPageState extends State<AreasPage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const SizedBox(width: 160),
+                            const SizedBox(width: 100),
                             FlutterSwitch(
                               width: 80.0,
                               height: 35.0,
@@ -76,7 +76,15 @@ class AreasPageState extends State<AreasPage> {
                                     Manager.of(context).api.disableArea(snapshot.data![0][index]["name"]);
                                   }
                                 });
-                              })
+                              }),
+                            IconButton(
+                              icon: const Icon(Icons.close),
+                              color: theme.githubBlack ,
+                              onPressed: () {
+                                Manager.of(context).api.deleteArea(snapshot.data![0][index]["name"]);
+                                setState(() {});
+                              },
+                            )
                           ],
                         ),
                       ],
