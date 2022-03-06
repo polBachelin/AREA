@@ -39,14 +39,14 @@ services:
       context: "./client"
       dockerfile: Dockerfile.android
     volumes:
-      - data:/build:Z
+      - data:/data/mobile_client
 
   client_web:
     build: ./client
     ports:
       - "8081:8081"
     volumes:
-      - data:/data/www/apk:Z
+      - data:/data/client
     depends_on:
       - server
       - client_mobile

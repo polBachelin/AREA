@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:area/components/delayed_animation.dart';
 import 'package:area/components/dropdown_menu_actions.dart';
 import 'package:area/components/dropdown_menu_reactions.dart';
@@ -7,7 +5,6 @@ import 'package:area/services/AREA_creator.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:area/theme.dart' as theme;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
