@@ -145,7 +145,7 @@ class Server {
     final loggedServices =
         await ServerRequest.getRequest(url, "/services/logged", headers);
     var joe = List<String>.from(json.decode(loggedServices.body));
-    print("Logged Services ==> " + joe.toString());
+    //print("Logged Services ==> " + joe.toString());
 
     if (response.statusCode == 200) {
       final List services = json.decode(response.body);

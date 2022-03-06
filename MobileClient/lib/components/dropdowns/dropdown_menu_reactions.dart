@@ -89,7 +89,7 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
         return Builder(builder: (context) => const DiscordRolesForm("add"));
       case "Create an event":
         return Builder(builder: (context) => const CreateGoogleEvent());
-      case "Create a page":
+      case "Create page":
         return Builder(builder: (context) => const NotionCreatePage());
       default:
         return const Text("");
@@ -123,6 +123,7 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
                           });
                         },
                         items: getServicesList(snapshot)),
+                    const SizedBox(height: 5),
                     DropdownButtonFormField(
                         icon: const Icon(Icons.attractions),
                         decoration: decorationInput,

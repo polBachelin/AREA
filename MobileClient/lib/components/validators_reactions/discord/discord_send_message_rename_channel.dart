@@ -1,4 +1,3 @@
-
 import 'package:area/models/discord.dart';
 import 'package:area/services/manager.dart';
 import 'package:area/theme.dart' as theme;
@@ -43,7 +42,7 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
     if (isValid) {
       Manager.of(context).creator["reaction_defined"] = true;
       Manager.of(context).creator["reactionData"] = {
-        widget._action_string : _text,
+        widget._action_string: _text,
         "guild_id": _selectedChannel
       };
     } else {
@@ -69,13 +68,13 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
                         icon: const Icon(Icons.api),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           border: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           filled: true,

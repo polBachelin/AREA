@@ -117,6 +117,7 @@ class DropDownMenuState extends State<DropDownMenuActions> {
                           });
                         },
                         items: getServicesList(snapshot)),
+                    const SizedBox(height: 5),
                     DropdownButtonFormField(
                         icon: const Icon(Icons.attractions),
                         decoration: decorationInput,

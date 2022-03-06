@@ -31,7 +31,7 @@ class IntraFormLoginState extends State<IntraFormLogin> {
         Manager.of(context).api.postIntraRequest(_autologinLink, true);
 
     reponse.then((value) {
-        Navigator.popAndPushNamed(context, '/services');
+        Navigator.popAndPushNamed(context, '/home');
     });
   }
 

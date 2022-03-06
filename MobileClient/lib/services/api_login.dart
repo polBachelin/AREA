@@ -82,10 +82,9 @@ void loginOauth(BuildContext context, String serviceName) async {
         closeWebView();
       }
       if (value.item3 == true) {
-        Navigator.pushReplacementNamed(context, '/services');
+        Navigator.pushReplacementNamed(context, '/home');
       } else {
         toast(context, "Can't login to " + serviceName);
-        Navigator.pushReplacementNamed(context, '/services');
       }
     });
     // else:

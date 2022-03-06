@@ -54,23 +54,23 @@ class NotionCreatePageState extends State<NotionCreatePage> {
         key: _validateKey,
         onChanged: () => validateStep(),
         child: FutureBuilder<List>(
-            future: Manager.of(context).api.discord.getChannels(),
+            future: Manager.of(context).api.notion.getDatabases(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     DropdownButtonFormField(
-                        icon: Icon(Icons.api),
+                        icon: const Icon(Icons.api),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           filled: true,
@@ -90,7 +90,7 @@ class NotionCreatePageState extends State<NotionCreatePage> {
                         items: getDatabasesList(snapshot)),
                     TextFormField(
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(12),
+                        contentPadding: const EdgeInsets.all(12),
                         labelText: "Name your page",
                         filled: true,
                         fillColor: theme.white,
@@ -105,6 +105,7 @@ class NotionCreatePageState extends State<NotionCreatePage> {
                       onChanged: (value) {
                         setState(() {
                           _newPageName = value;
+                          validateStep();
                         });
                       },
                       validator: (value) {

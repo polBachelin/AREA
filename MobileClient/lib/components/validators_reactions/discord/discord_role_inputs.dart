@@ -1,7 +1,7 @@
-
 import 'package:area/models/discord.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
+import 'package:area/theme.dart' as theme;
 
 class DiscordRolesForm extends StatefulWidget {
   final String _reaction_string;
@@ -80,13 +80,13 @@ class DiscordRolesFormState extends State<DiscordRolesForm> {
                         icon: const Icon(Icons.api),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           border: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           filled: true,
@@ -105,6 +105,7 @@ class DiscordRolesFormState extends State<DiscordRolesForm> {
                           });
                         },
                         items: getChannelsList(snapshot)),
+                        const SizedBox(height: 5),
                     FutureBuilder<List<DiscordRole>>(
                         future: Manager.of(context).api.discord.getRoles(),
                         builder: (context, snapshot) {
@@ -112,13 +113,13 @@ class DiscordRolesFormState extends State<DiscordRolesForm> {
                             icon: const Icon(Icons.api),
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.blue, width: 2),
+                                borderSide: const BorderSide(
+                                    color: theme.primaryColor, width: 2),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               border: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.blue, width: 2),
+                                borderSide: const BorderSide(
+                                    color: theme.primaryColor, width: 2),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               filled: true,

@@ -2,6 +2,7 @@ import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AreasPage extends StatefulWidget {
   const AreasPage({Key? key}) : super(key: key);
@@ -29,8 +30,8 @@ class AreasPageState extends State<AreasPage> {
                   itemBuilder: (_, index) => Container(
                         child: Container(
                           margin: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          padding: const EdgeInsets.all(20.0),
+                              horizontal: 5, vertical: 5),
+                          padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
                               color: theme.white,
                               borderRadius: BorderRadius.circular(15.0)),
@@ -53,7 +54,7 @@ class AreasPageState extends State<AreasPage> {
                                   ]),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   const SizedBox(width: 10),
                                   FlutterSwitch(
@@ -61,6 +62,8 @@ class AreasPageState extends State<AreasPage> {
                                       height: 35.0,
                                       valueFontSize: 0.0,
                                       toggleSize: 25.0,
+                                      activeColor: Colors.green,
+                                      inactiveColor: Colors.red,
                                       value: snapshot.data![1][index],
                                       borderRadius: 30.0,
                                       padding: 4.0,
@@ -79,7 +82,18 @@ class AreasPageState extends State<AreasPage> {
                                                     ["name"]);
                                           }
                                         });
-                                      })
+                                      }),
+                                      const SizedBox(width: 50, height: 0),
+                                      IconButton(
+                                        icon: const Icon(Icons.close_rounded),
+                                        color: theme.primaryColor ,
+                                        tooltip: "Delete Area",
+                                        iconSize: 50,
+                                        onPressed: () {
+                                          Manager.of(context).api.deleteArea(snapshot.data![0][index]["name"]);
+                                          setState(() {});
+                                        },
+                                      )
                                 ],
                               ),
                             ],

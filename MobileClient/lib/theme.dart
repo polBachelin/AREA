@@ -2,6 +2,7 @@ library color_theme;
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:area/theme.dart' as theme;
 
 const Color primaryColor = Color.fromARGB(255, 211, 109, 42);
 const Color primaryLightColor = Color.fromARGB(255, 214, 86, 0);
@@ -27,11 +28,11 @@ TextStyle buttonTextStyle = GoogleFonts.poppins(
 
 InputDecoration decorationInput = InputDecoration(
   enabledBorder: OutlineInputBorder(
-    borderSide: const BorderSide(color: Colors.blue, width: 2),
+    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
     borderRadius: BorderRadius.circular(20),
   ),
   border: OutlineInputBorder(
-    borderSide: const BorderSide(color: Colors.blue, width: 2),
+    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
     borderRadius: BorderRadius.circular(20),
   ),
   filled: true,

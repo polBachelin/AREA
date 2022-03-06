@@ -112,13 +112,13 @@ class CreateGoogleEventState extends State<CreateGoogleEvent> {
                     TextFormField(
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.blue, width: 2),
+                          borderSide: const BorderSide(
+                              color: theme.primaryColor, width: 2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         border: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.blue, width: 2),
+                          borderSide: const BorderSide(
+                              color: theme.primaryColor, width: 2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         labelText: 'Event summary',
@@ -145,13 +145,13 @@ class CreateGoogleEventState extends State<CreateGoogleEvent> {
                     DateTimeFormField(
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           border: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           labelText: 'Select a start date',
@@ -174,13 +174,13 @@ class CreateGoogleEventState extends State<CreateGoogleEvent> {
                     DateTimeFormField(
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           border: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           labelText: 'Select a end date',
