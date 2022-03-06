@@ -75,7 +75,7 @@ class ServicePageState extends State<ServicesPage> {
                                       passedFunction: loginOauth,
                                       buttonText: 'Disconnected',
                                       parentContext: context,
-                                      passedString: snapshot.data![index].name
+                                      passedString: snapshot.data![index].name.toLowerCase()
                                     )
                                   ])
                             ],

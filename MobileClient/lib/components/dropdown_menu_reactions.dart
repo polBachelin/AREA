@@ -1,8 +1,11 @@
 import 'package:area/components/validators_actions/notion_add_to_database.dart';
 import 'package:area/components/validators_reactions/discord/discord_role_inputs.dart';
 import 'package:area/components/validators_reactions/discord/discord_send_message_rename_channel.dart';
+import 'package:area/components/validators_reactions/google/create_google_event.dart';
+import 'package:area/components/validators_reactions/notion/notion_create_page.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
+import 'package:area/theme.dart';
 import 'package:flutter/material.dart';
 
 class DropDownMenuReactions extends StatefulWidget {
@@ -44,7 +47,9 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
   List<DropdownMenuItem<String>>? getServicesList(
       AsyncSnapshot<List<Service>> snapshot) {
     if (snapshot.hasData) {
-      return snapshot.data?.where((element) => element.connected == true).map((item) {
+      return snapshot.data
+          ?.where((element) => element.connected == true)
+          .map((item) {
         return DropdownMenuItem<String>(
           child: Row(
             children: [
@@ -63,21 +68,29 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
 
   Widget setConfigReaction(BuildContext context) {
     //TODO : check si ce if est utile
-    if (selectedService == "Timer" || selectedService == "Weather")
-      Manager.of(context).creator["reactionName"] = selectedService.toString();
-    else
+    if (selectedService == "Timer" || selectedService == "Weather") {
+      Manager.of(context).creator["reaction_defined"] = false;
+    } else {
       Manager.of(context).creator["reactionName"] = selectedReaction.toString();
+    }
     switch (selectedReaction) {
       case "Update Page":
         return Builder(builder: (context) => const NotionAddDatabaseForm());
       case "Send a message":
-        return Builder(builder: (context) => const DiscordSendMessageForm("message_content"));
+        return Builder(
+            builder: (context) =>
+                const DiscordSendMessageForm("message_content"));
       case "Rename channel":
-        return Builder(builder: (context) => const DiscordSendMessageForm("channel_name"));
+        return Builder(
+            builder: (context) => const DiscordSendMessageForm("channel_name"));
       case "Remove role from channel":
         return Builder(builder: (context) => const DiscordRolesForm("remove"));
       case "Add role to channel":
         return Builder(builder: (context) => const DiscordRolesForm("add"));
+      case "Create an event":
+        return Builder(builder: (context) => const CreateGoogleEvent());
+      case "Create a page":
+        return Builder(builder: (context) => const NotionCreatePage());
       default:
         return const Text("");
     }
@@ -96,20 +109,7 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
                   children: [
                     DropdownButtonFormField(
                         icon: const Icon(Icons.api),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
+                        decoration: decorationInput,
                         hint: Text(
                             selectedService == null ? "Select a service" : ""),
                         validator: (value) =>
@@ -119,27 +119,16 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedService = newValue!;
+                            selectedReaction = null;
                           });
                         },
                         items: getServicesList(snapshot)),
                     DropdownButtonFormField(
                         icon: const Icon(Icons.attractions),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
-                        hint: Text(
-                            selectedReaction == null ? "Select a reaction" : ""),
+                        decoration: decorationInput,
+                        hint: Text(selectedReaction == null
+                            ? "Select a reaction"
+                            : ""),
                         validator: (value) =>
                             value == null ? "Select a reaction" : null,
                         dropdownColor: Colors.white,
@@ -150,6 +139,7 @@ class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
                           });
                         },
                         items: getActionsList(snapshot)),
+                    const SizedBox(height: 5),
                     setConfigReaction(context),
                   ],
                 );

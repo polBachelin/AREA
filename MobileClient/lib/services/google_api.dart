@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:area/models/notion.dart';
+import 'package:area/models/google.dart';
 import 'package:area/utils/server_requests.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NotionAPI {
-  NotionAPI({required this.prefs});
+class GoogleAPI {
+  GoogleAPI({required this.prefs});
   Future<SharedPreferences> prefs;
   String url = "";
   Map<String, String> headers = {
@@ -17,14 +17,13 @@ class NotionAPI {
     prefs.then((p) => url = p.getString('server_url')!);
   }
 
-  Future<List> getDatabases() async {
+  Future<List<GoogleCalendar>> getCalendars() async {
     updateUrl();
     final response =
-        await ServerRequest.getRequest(url, '/notion/databases', headers);
+        await ServerRequest.getRequest(url, '/googleCalendar/listCalendars', headers);
 
-    final List dbs = json.decode(response.body)["results"];
-
-    return dbs;
-
+    final List calendars = json.decode(response.body);
+    print("CALENDARS => " + calendars.toString());
+    return calendars.map((json) => GoogleCalendar.fromJson(json)).toList();
   }
 }
