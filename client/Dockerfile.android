@@ -26,6 +26,6 @@ ENV PATH "$PATH:/project/mobile/flutter/bin"
 RUN flutter doctor
 
 COPY . .
-WORKDIR /project/mobile/androidClient/
+WORKDIR /project/mobile/android/
 
 RUN flutter build apk --no-sound-null-safety
