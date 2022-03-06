@@ -41,25 +41,33 @@ class NotionAddDatabaseState extends State<NotionAddDatabaseForm> {
                   fillColor: Colors.white,
                 ),
                 hint: Text(selectedDB == null ? "Select a database" : ""),
-                validator: (value) => value == null ? "Select a database" : null,
+                validator: (value) =>
+                    value == null ? "Select a database" : null,
                 dropdownColor: Colors.white,
                 value: selectedDB,
                 isExpanded: true,
                 onChanged: (String? newValue) {
                   setState(() {
                     selectedDB = newValue!;
+                    if (selectedDB != null) {
+                      Manager.of(context).creator["action_defined"] = true;
+                      Manager.of(context).creator["actionData"] = selectedDB;
+                    }
                   });
                 },
-                items: snapshot.data!.map((db) {
-                  var name = "Unknown";
-                  try {
-                    name = db["title"][0]["text"]["content"];
-                  } on RangeError {
-                    name = "Unknown";
-                  }
-                  return DropdownMenuItem(
-                      child: Text(name), value: db["id"].toString());
-                }).toList().sublist(0, 10));
+                items: snapshot.data!
+                    .map((db) {
+                      var name = "Unknown";
+                      try {
+                        name = db["title"][0]["text"]["content"];
+                      } on RangeError {
+                        name = "Unknown";
+                      }
+                      return DropdownMenuItem(
+                          child: Text(name), value: db["id"].toString());
+                    })
+                    .toList()
+                    .sublist(0, 10));
           } else {
             return const Center(child: CircularProgressIndicator());
           }
