@@ -1,35 +1,31 @@
-import 'package:area/models/discord.dart';
 import 'package:area/services/manager.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:flutter/material.dart';
 
-class DiscordSendMessageForm extends StatefulWidget {
-  final String _action_string;
-  const DiscordSendMessageForm(this._action_string);
+class NotionCreatePage extends StatefulWidget {
+  const NotionCreatePage();
 
   @override
-  State<DiscordSendMessageForm> createState() => DiscordSendMessageFormState();
+  State<NotionCreatePage> createState() => NotionCreatePageState();
 }
 
-class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
-  String? _selectedChannel;
-  String? _text;
+class NotionCreatePageState extends State<NotionCreatePage> {
+  String? _selectedDatabase;
+  String? _newPageName;
   final _validateKey = GlobalKey<FormState>();
-  List<DropdownMenuItem<String>>? servicesList;
-  Future<List<DiscordChannel>>? _futureChannels;
 
   @override
   void initState() {
     super.initState();
   }
 
-  List<DropdownMenuItem<String>>? getChannelsList(
+  List<DropdownMenuItem<String>>? getDatabasesList(
       AsyncSnapshot<List> snapshot) {
     if (snapshot.hasData) {
       return snapshot.data?.map((item) {
         return DropdownMenuItem<String>(
-          child: Text(item.name),
-          value: item.id,
+          child: item["title"][0]["text"]["content"],
+          value: item["id"],
         );
       }).toList();
     }
@@ -42,8 +38,8 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
     if (isValid) {
       Manager.of(context).creator["reaction_defined"] = true;
       Manager.of(context).creator["reactionData"] = {
-        widget._action_string: _text,
-        "guild_id": _selectedChannel
+        "page_name": _newPageName,
+        "database_id": _selectedDatabase
       };
     } else {
       Manager.of(context).creator["reaction_defined"] = false;
@@ -57,8 +53,8 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         key: _validateKey,
         onChanged: () => validateStep(),
-        child: FutureBuilder<List<DiscordChannel>>(
-            future: Manager.of(context).api.discord.getChannels(),
+        child: FutureBuilder<List>(
+            future: Manager.of(context).api.notion.getDatabases(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(
@@ -80,24 +76,22 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
                           filled: true,
                           fillColor: Colors.white,
                         ),
-                        hint: Text(
-                            _selectedChannel == null ? "Select a channel" : ""),
+                        hint: Text(_selectedDatabase == null
+                            ? "Select a database"
+                            : ""),
                         validator: (value) =>
-                            value == null ? "Select a channel" : null,
+                            value == null ? "Select a database" : null,
                         dropdownColor: Colors.white,
-                        value: _selectedChannel,
                         onChanged: (String? newValue) {
                           setState(() {
-                            _selectedChannel = newValue!;
+                            _selectedDatabase = newValue!;
                           });
                         },
-                        items: getChannelsList(snapshot)),
+                        items: getDatabasesList(snapshot)),
                     TextFormField(
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(12),
-                        labelText: widget._action_string == "message_content"
-                            ? 'Type your message'
-                            : "Rename your channel",
+                        labelText: "Name your page",
                         filled: true,
                         fillColor: theme.white,
                         border: OutlineInputBorder(
@@ -110,7 +104,8 @@ class DiscordSendMessageFormState extends State<DiscordSendMessageForm> {
                       keyboardType: TextInputType.text,
                       onChanged: (value) {
                         setState(() {
-                          _text = value;
+                          _newPageName = value;
+                          validateStep();
                         });
                       },
                       validator: (value) {

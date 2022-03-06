@@ -7,10 +7,10 @@ class ServerRequest {
   static Future<http.Response> getRequest(
       String url, String route, Map<String, String> headers) async {
     if (kDebugMode) {
-      print("GET - $url$route - $headers");
+      print("GET - $url$route");
     }
     final response = await http.get(Uri.parse(url + route), headers: headers);
-    print("GET - " + response.body);
+    //print("GET "+ response.statusCode.toString() + " - " + response.body);
     //updateCookie(response, headers);
     return response;
   }
@@ -18,7 +18,7 @@ class ServerRequest {
   static Future<http.Response> postRequest(String url, String route,
       dynamic data, Map<String, String> headers) async {
     if (kDebugMode) {
-      print("POST - $route");
+      print("POST - $url$route");
       print("Payload : $data");
     }
     final response = await http.post(Uri.parse(url + route),
@@ -46,7 +46,7 @@ class ServerRequest {
     print("DELETE - $route");
     print("Payload : $data");
     final response =
-        await http.delete(Uri.dataFromString(url + route), headers: headers);
+        await http.delete(Uri.parse(url + route), headers: headers);
     headers = updateCookie(response, headers);
     return response;
   }

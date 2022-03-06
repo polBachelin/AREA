@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:area/components/animations/toast.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,13 +19,16 @@ const Map<String, String> urlsRegister = {
       "&response_type=code&owner=user"
 };
 
-Future<Tuple3<String, String, bool>> interceptToken(BuildContext context,
+Future<Tuple3<String, String, bool>> interceptTokenRegister(BuildContext context,
     String oauthName, String code, SharedPreferences prefs) async {
-  var response = await Manager.of(context).api.oauthGetToken(code, oauthName);
+  var response = await Manager.of(context).api.oauthGetToken(code, oauthName, false);
 
+  print("TUPLE returned ==> " + response.toString());
   prefs.setString("username", response.item1);
-  prefs.setString("token_session", response.item2);
+  prefs.setString("access_token", response.item2);
   prefs.setBool("isLogged", response.item3);
+
+  Manager.of(context).api.updateToken();
 
   return response;
 }
@@ -38,10 +42,6 @@ void registerOauth(BuildContext context, String serviceName) async {
   var server = await HttpServer.bind("localhost", 8080, shared: true);
 
   try {
-    print("URL ==> " + urlsRegister[serviceName]!);
-    print("Serveur launch on " +
-        server.address.toString() +
-        server.port.toString());
     if (serviceName == "googleCalendar") {
       urlLaunched = await launch(urlsRegister[serviceName]!,
           enableJavaScript: true, enableDomStorage: true);
@@ -52,7 +52,7 @@ void registerOauth(BuildContext context, String serviceName) async {
 
     if (!urlLaunched) {
       server.close();
-      throw "Could not start OAuth";
+      throw "Could not register OAuth";
     }
 
     await server.forEach((HttpRequest request) {
@@ -64,23 +64,23 @@ void registerOauth(BuildContext context, String serviceName) async {
         return;
       }
 
-      print("URI ==>" + request.uri.toString());
+      print("Intercepted REQUEST ==> " + request.uri.toString());
       final code = request.uri.queryParameters["code"];
       if (code == null) {
         throw "Missing code";
       }
       request.response.close();
       server.close();
-      interceptToken(context, serviceName, code, _prefs).then((value) {
+      interceptTokenRegister(context, serviceName, code, _prefs).then((value) {
         if (serviceName != "googleCalendar") closeWebView();
         if (value.item3 == true) {
-          print(_prefs);
+          print(_prefs.getString("access_token"));
           server.close();
-          Navigator.pushNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/home');
         } else {
           server.close();
-          //TODO: toast System
-          Navigator.pushNamed(context, '/login');
+          toast(context, "Can't register with " + serviceName);
+          Navigator.pushReplacementNamed(context, '/authentification');
         }
       });
     });

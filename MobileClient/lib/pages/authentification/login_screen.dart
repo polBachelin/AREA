@@ -1,8 +1,9 @@
+import 'package:area/components/authentification/login_form.dart';
+import 'package:area/pages/user_space/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../components/delayed_animation.dart';
-import '../components/authentification/login_form.dart';
+import '../../components/animations/delayed_animation.dart';
 
 // ignore: constant_identifier_names
 const d_red = Color(0xFFE9717D);
@@ -23,7 +24,8 @@ class LoginScreen extends StatelessWidget {
             size: 30,
           ),
           onPressed: () {
-            Navigator.pop(context);
+            SettingsScreenState.clearSharedPrefs();
+            Navigator.pushReplacementNamed(context, "/authentification");
           },
         ),
       ),

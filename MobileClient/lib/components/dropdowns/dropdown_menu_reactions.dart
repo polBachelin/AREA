@@ -1,23 +1,26 @@
 import 'package:area/components/validators_actions/notion_add_to_database.dart';
-import 'package:area/components/validators_actions/weather_name_a_city.dart';
-import 'package:area/components/validators_actions/timer_time.dart';
+import 'package:area/components/validators_reactions/discord/discord_role_inputs.dart';
+import 'package:area/components/validators_reactions/discord/discord_send_message_rename_channel.dart';
+import 'package:area/components/validators_reactions/google/create_google_event.dart';
+import 'package:area/components/validators_reactions/notion/notion_create_page.dart';
 import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
+import 'package:area/theme.dart';
 import 'package:flutter/material.dart';
 
-class DropDownMenuActions extends StatefulWidget {
-  const DropDownMenuActions({Key? key}) : super(key: key);
+class DropDownMenuReactions extends StatefulWidget {
+  const DropDownMenuReactions({Key? key}) : super(key: key);
 
   @override
-  State<DropDownMenuActions> createState() => DropDownMenuState();
+  State<DropDownMenuReactions> createState() => DropDownMenuReactionsState();
 }
 
-class DropDownMenuState extends State<DropDownMenuActions> {
+class DropDownMenuReactionsState extends State<DropDownMenuReactions> {
   String? selectedService;
-  String? selectedAction;
+  String? selectedReaction;
   final _dropdownFormKey = GlobalKey<FormState>();
   List<DropdownMenuItem<String>>? servicesList;
-  List<DropdownMenuItem<String>>? actionsList;
+  List<DropdownMenuItem<String>>? reactionsList;
 
   @override
   void initState() {
@@ -29,7 +32,7 @@ class DropDownMenuState extends State<DropDownMenuActions> {
     if (selectedService != null) {
       return snapshot.data
           ?.firstWhere((element) => element.name == selectedService)
-          .actions
+          .reactions
           .map((item) {
         return DropdownMenuItem<String>(
           child: Text(item),
@@ -63,23 +66,34 @@ class DropDownMenuState extends State<DropDownMenuActions> {
         {const DropdownMenuItem<String>(child: Text("None"), value: "None")});
   }
 
-  Widget setConfigAction(BuildContext context) {
-    Manager.of(context).creator["action_defined"] = false;
-    Manager.of(context).creator["actionName"] = selectedAction.toString();
-    switch (selectedAction) {
-      case "Add to database":
-        return Builder(builder: (context) => NotionAddDatabaseForm());
-      case "Start timer":
-        return Builder(builder: (context) => TimerTimeForm());
-      case "City's weather change":
-        return Builder(builder: (context) => WeatherSelectCity());
-      case "Receive a message":
-        Manager.of(context).creator["action_defined"] = true;
-        break;
+  Widget setConfigReaction(BuildContext context) {
+    //TODO : check si ce if est utile
+    if (selectedService == "Timer" || selectedService == "Weather") {
+      Manager.of(context).creator["reaction_defined"] = false;
+    } else {
+      Manager.of(context).creator["reactionName"] = selectedReaction.toString();
+    }
+    switch (selectedReaction) {
+      case "Update Page":
+        return Builder(builder: (context) => const NotionAddDatabaseForm());
+      case "Send a message":
+        return Builder(
+            builder: (context) =>
+                const DiscordSendMessageForm("message_content"));
+      case "Rename channel":
+        return Builder(
+            builder: (context) => const DiscordSendMessageForm("channel_name"));
+      case "Remove role from channel":
+        return Builder(builder: (context) => const DiscordRolesForm("remove"));
+      case "Add role to channel":
+        return Builder(builder: (context) => const DiscordRolesForm("add"));
+      case "Create an event":
+        return Builder(builder: (context) => const CreateGoogleEvent());
+      case "Create page":
+        return Builder(builder: (context) => const NotionCreatePage());
       default:
         return const Text("");
     }
-    return const Text("");
   }
 
   @override
@@ -94,21 +108,8 @@ class DropDownMenuState extends State<DropDownMenuActions> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     DropdownButtonFormField(
-                        icon: Icon(Icons.api),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
+                        icon: const Icon(Icons.api),
+                        decoration: decorationInput,
                         hint: Text(
                             selectedService == null ? "Select a service" : ""),
                         validator: (value) =>
@@ -118,38 +119,29 @@ class DropDownMenuState extends State<DropDownMenuActions> {
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedService = newValue!;
+                            selectedReaction = null;
                           });
                         },
                         items: getServicesList(snapshot)),
+                    const SizedBox(height: 5),
                     DropdownButtonFormField(
-                        icon: Icon(Icons.attractions),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
-                        hint: Text(
-                            selectedAction == null ? "Select an action" : ""),
+                        icon: const Icon(Icons.attractions),
+                        decoration: decorationInput,
+                        hint: Text(selectedReaction == null
+                            ? "Select a reaction"
+                            : ""),
                         validator: (value) =>
-                            value == null ? "Select an action" : null,
+                            value == null ? "Select a reaction" : null,
                         dropdownColor: Colors.white,
-                        value: selectedAction,
+                        value: selectedReaction,
                         onChanged: (String? newValue) {
                           setState(() {
-                            selectedAction = newValue!;
+                            selectedReaction = newValue!;
                           });
                         },
                         items: getActionsList(snapshot)),
-                    setConfigAction(context),
+                    const SizedBox(height: 5),
+                    setConfigReaction(context),
                   ],
                 );
               } else {

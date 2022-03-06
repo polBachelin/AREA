@@ -1,12 +1,7 @@
-import 'dart:convert';
-
-import 'package:area/components/validators_actions/notion_add_to_database.dart';
 import 'package:area/models/discord.dart';
-import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
-import 'package:area/theme.dart' as theme;
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
+import 'package:area/theme.dart' as theme;
 
 class DiscordRolesForm extends StatefulWidget {
   final String _reaction_string;
@@ -82,16 +77,16 @@ class DiscordRolesFormState extends State<DiscordRolesForm> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     DropdownButtonFormField(
-                        icon: Icon(Icons.api),
+                        icon: const Icon(Icons.api),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 2),
+                            borderSide: const BorderSide(
+                                color: theme.primaryColor, width: 2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           filled: true,
@@ -110,20 +105,21 @@ class DiscordRolesFormState extends State<DiscordRolesForm> {
                           });
                         },
                         items: getChannelsList(snapshot)),
+                        const SizedBox(height: 5),
                     FutureBuilder<List<DiscordRole>>(
                         future: Manager.of(context).api.discord.getRoles(),
                         builder: (context, snapshot) {
                           return DropdownButtonFormField(
-                            icon: Icon(Icons.api),
+                            icon: const Icon(Icons.api),
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.blue, width: 2),
+                                borderSide: const BorderSide(
+                                    color: theme.primaryColor, width: 2),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.blue, width: 2),
+                                borderSide: const BorderSide(
+                                    color: theme.primaryColor, width: 2),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               filled: true,

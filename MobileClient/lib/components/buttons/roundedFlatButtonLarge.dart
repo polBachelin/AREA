@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:area/theme.dart' as theme;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class RFLargeButton extends StatefulWidget {
   final Color backgroundColor;
@@ -57,11 +55,7 @@ class RFLargeButtonState extends State<RFLargeButton> {
             const SizedBox(width: 10),
             Text(
               widget.buttonText,
-              style: GoogleFonts.poppins(
-                color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+              style: theme.buttonTextStyle,
             ),
           ],
         ),

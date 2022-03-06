@@ -26,11 +26,11 @@ class WheatherSelectCity extends State<WeatherSelectCity> {
   void validateStep() {
     final isValid = _validateKey.currentState!.validate();
     if (isValid) {
-      Manager.of(context).creator["reaction_defined"] = true;
-      Manager.of(context).creator["reactionData"] = {"city": _selectedCity};
+      Manager.of(context).creator["action_defined"] = true;
+      Manager.of(context).creator["actionData"] = {"city": _selectedCity};
     } else {
-      Manager.of(context).creator["reaction_defined"] = false;
-      Manager.of(context).creator["reactionData"] = "";
+      Manager.of(context).creator["action_defined"] = false;
+      Manager.of(context).creator["actionData"] = "";
     }
   }
 
@@ -57,6 +57,7 @@ class WheatherSelectCity extends State<WeatherSelectCity> {
           onChanged: (value) {
             setState(() {
               _selectedCity = value;
+              //validateStep();
             });
           },
           validator: (value) {

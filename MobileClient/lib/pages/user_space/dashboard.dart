@@ -1,13 +1,11 @@
-import 'dart:ffi';
 
-import 'package:area/components/delayed_animation.dart';
-import 'package:area/components/dropdown_menu_actions.dart';
-import 'package:area/components/dropdown_menu_reactions.dart';
+import 'package:area/components/animations/delayed_animation.dart';
+import 'package:area/components/dropdowns/dropdown_menu_actions.dart';
+import 'package:area/components/dropdowns/dropdown_menu_reactions.dart';
 import 'package:area/services/AREA_creator.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:area/theme.dart' as theme;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -32,7 +30,6 @@ class DashboardState extends State<Dashboard> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return DelayedAnimation(
@@ -56,7 +53,7 @@ class DashboardState extends State<Dashboard> {
                 child: Column(children: [
                   TextFormField(
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(12),
+                      contentPadding: const EdgeInsets.all(12),
                       labelText: 'Create an AREA',
                       filled: true,
                       fillColor: theme.white,
@@ -92,16 +89,34 @@ class DashboardState extends State<Dashboard> {
                         color: Colors.white,
                       )),
                   const DropDownMenuReactions(),
-                  ElevatedButton(
-                    child: Text("Create"),
-                    onPressed: () {
-                      createAREA(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: theme.validate
-                      //onPrimary: theme.githubBlack
-                    ),
-                  )
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ElevatedButton(
+                          child: const Text("Create"),
+                          onPressed: () {
+                            createAREA(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: const Color.fromARGB(255, 45, 192, 0),
+                              fixedSize: const Size(200, 50))),
+                      const SizedBox(width: 30),
+                      ElevatedButton(
+                        child: const Text("Reset"),
+                        onPressed: () {
+                          Manager.of(context).creator.clear();
+                          Manager.of(context).creator.addAll(creatorDefault);
+                          print("CREATOR reseted ==>" +Manager.of(context).creator.toString());
+                          Navigator.pushReplacementNamed(context, "/home");
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: theme.reset, fixedSize: const Size(100, 50)),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
                 ]))));
   }
 }
