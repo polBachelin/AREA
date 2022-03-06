@@ -1,8 +1,21 @@
-# B-YEP-500-REN-5-1-yearendproject-pol.bachelin
-## Server API documentation :
+---
+title: AREA v1.0.0
+language_tabs:
+  - shell: Shell
+  - http: HTTP
+  - javascript: JavaScript
+  - ruby: Ruby
+  - python: Python
+  - php: PHP
+  - java: Java
+  - go: Go
+toc_footers: []
+includes: []
+search: true
+highlight_theme: darkula
+headingLevel: 2
 
-Set the bearer access token in the **Authorization** header for private route
-
+---
 
 <!-- Generator: Widdershins v4.0.1 -->
 
@@ -888,6 +901,4 @@ and
 |code|integer(int32)|false|none|none|
 |type|string|false|none|none|
 |message|string|false|none|none|
-
-
 
