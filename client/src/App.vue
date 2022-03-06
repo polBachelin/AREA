@@ -125,6 +125,7 @@ export default {
   data() {
     return {
       buttons: [
+        {name: "APK", path: '/client.apk'},
         {name: "Accueil", path: '/home'},
         {name: "Area", path: '/area'},
         {name: "MyApps", path: '/myapps'},

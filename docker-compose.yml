@@ -34,10 +34,12 @@ services:
     networks:
       - server-net
   
-  # client_mobile:
-  #   build: 
-  #     context: "./client"
-  #     dockerfile: Dockerfile.android
+  client_mobile:
+    build: 
+      context: "./client"
+      dockerfile: Dockerfile.android
+    volumes:
+      - data:/build:Z
 
   client_web:
     build: ./client
@@ -47,6 +49,7 @@ services:
       - data:/data/www/apk:Z
     depends_on:
       - server
+      - client_mobile
 
 volumes:
   data:
