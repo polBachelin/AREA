@@ -1,8 +1,4 @@
-import 'dart:convert';
 
-import 'package:area/components/validators_actions/notion_add_to_database.dart';
-import 'package:area/models/discord.dart';
-import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:flutter/material.dart';
@@ -26,10 +22,10 @@ class WheatherSelectCity extends State<WeatherSelectCity> {
   void validateStep() {
     final isValid = _validateKey.currentState!.validate();
     if (isValid) {
-      Manager.of(context).creator["reaction_defined"] = true;
+      Manager.of(context).creator["action_defined"] = true;
       Manager.of(context).creator["actionData"] = {"city": _selectedCity};
     } else {
-      Manager.of(context).creator["reaction_defined"] = false;
+      Manager.of(context).creator["action_defined"] = false;
       Manager.of(context).creator["actionData"] = "";
     }
   }
@@ -57,6 +53,7 @@ class WheatherSelectCity extends State<WeatherSelectCity> {
           onChanged: (value) {
             setState(() {
               _selectedCity = value;
+              //validateStep();
             });
           },
           validator: (value) {

@@ -1,8 +1,6 @@
-import 'package:area/models/notion.dart';
-import 'package:area/models/services.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
+import 'package:area/theme.dart' as theme;
 
 class NotionAddDatabaseForm extends StatefulWidget {
   const NotionAddDatabaseForm({Key? key}) : super(key: key);
@@ -24,45 +22,53 @@ class NotionAddDatabaseState extends State<NotionAddDatabaseForm> {
 
   @override
   Widget build(BuildContext context) {
-    print(Manager.of(context).api.url);
     return FutureBuilder<List>(
         future: Manager.of(context).api.notion.getDatabases(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return DropdownButtonFormField(
-                icon: Icon(Icons.api),
+                icon: const Icon(Icons.api),
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                    borderSide:
+                        const BorderSide(color: theme.primaryColor, width: 2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                    borderSide:
+                        const BorderSide(color: theme.primaryColor, width: 2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   filled: true,
                   fillColor: Colors.white,
                 ),
                 hint: Text(selectedDB == null ? "Select a database" : ""),
-                validator: (value) => value == null ? "Select a database" : null,
+                validator: (value) =>
+                    value == null ? "Select a database" : null,
                 dropdownColor: Colors.white,
                 value: selectedDB,
                 isExpanded: true,
                 onChanged: (String? newValue) {
                   setState(() {
                     selectedDB = newValue!;
+                    if (selectedDB != null) {
+                      Manager.of(context).creator["action_defined"] = true;
+                      Manager.of(context).creator["actionData"] = selectedDB;
+                    }
                   });
                 },
-                items: snapshot.data!.map((db) {
-                  var name = "Unknown";
-                  try {
-                    name = db["title"][0]["text"]["content"];
-                  } on RangeError {
-                    name = "Unknown";
-                  }
-                  return DropdownMenuItem(
-                      child: Text(name), value: db["id"].toString());
-                }).toList().sublist(0, 10));
+                items: snapshot.data!
+                    .map((db) {
+                      var name = "Unknown";
+                      try {
+                        name = db["title"][0]["text"]["content"];
+                      } on RangeError {
+                        name = "Unknown";
+                      }
+                      return DropdownMenuItem(
+                          child: Text(name), value: db["id"].toString());
+                    })
+                    .toList());
           } else {
             return const Center(child: CircularProgressIndicator());
           }

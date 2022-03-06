@@ -1,7 +1,10 @@
-import 'dart:async';
+import 'package:area/components/buttons/roundedFlatButtonLarge.dart';
+import 'package:area/components/animations/toast.dart';
+import 'package:area/services/manager.dart';
+import 'package:area/theme.dart' as theme;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:area/components/delayed_animation.dart';
-import 'package:area/models/services.dart';
+import '../animations/delayed_animation.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -12,6 +15,39 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   var _obscureText = true;
+  String _email = "";
+  String _password = "";
+
+  void _getEmail(String email) {
+    setState(() {
+      _email = email;
+    });
+  }
+
+  void _getPassword(String password) {
+    setState(() {
+      _password = password;
+    });
+  }
+
+  void login(BuildContext context) {
+    Manager.of(context).api.login({
+      "email": _email,
+      "password": _password,
+    }).then((success) {
+      if (success)
+        Navigator.pushReplacementNamed(context, "/home");
+      else
+        toast(context, 'Login Error');
+    }).catchError((msg) {
+      toast(context, 'Server Error');
+      if (kDebugMode) {
+        print(msg.toString());
+      }
+    });
+  }
+
+//TODO: check email + password
 
   @override
   Widget build(BuildContext context) {
@@ -22,30 +58,24 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           DelayedAnimation(
-            delay: 500,
-            child: TextFormField(
+            delay: 300,
+            child: TextField(
               decoration: InputDecoration(
                 labelText: 'Your Email',
                 labelStyle: TextStyle(
                   color: Colors.grey[400],
                 ),
               ),
-              keyboardType: TextInputType.text,
-              onChanged: (value) {},
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Username is required';
-                }
-                return null;
-              },
+              onChanged: _getEmail,
             ),
           ),
           const SizedBox(height: 30),
           DelayedAnimation(
-            delay: 500,
-            child: TextFormField(
+            delay: 400,
+            child: TextField(
               obscureText: _obscureText,
               decoration: InputDecoration(
+                
                 labelStyle: TextStyle(
                   color: Colors.grey[400],
                 ),
@@ -62,16 +92,21 @@ class _LoginFormState extends State<LoginForm> {
                   },
                 ),
               ),
-              onSaved: (value) {},
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Password is required';
-                }
-                return null;
-              },
+              onChanged: _getPassword,
             ),
           ),
-          const SizedBox(height: 125),
+          const SizedBox(height: 30),
+          DelayedAnimation(
+            delay: 500,
+            child: RFLargeButton(
+              backgroundColor: theme.primaryColor,
+              buttonIcon: Icons.login,
+              passedFunction: login,
+              buttonText: 'Login',
+              parentContext: context,
+              passedString: "",
+              ),
+          ),
         ],
       ),
     );

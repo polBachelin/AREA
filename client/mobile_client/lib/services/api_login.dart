@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:area/components/toast.dart';
+import 'package:area/components/animations/toast.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
-import 'package:oauth2_client/google_oauth2_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,37 +19,36 @@ const Map<String, String> urls = {
       "&response_type=code&owner=user"
 };
 
-Future<Tuple3<String, String, bool>> interceptToken(BuildContext context,
+Future<Tuple3<String, String, bool>> interceptTokenLogin(BuildContext context,
     String oauthName, String code, SharedPreferences prefs) async {
-  var response = await Manager.of(context).api.oauthGetToken(code, oauthName);
-
-  prefs.setString("username", response.item1);
-  prefs.setString("access_token", response.item2);
-  prefs.setBool("isLogged", response.item3);
+  var response = await Manager.of(context).api.oauthGetToken(code, oauthName, true);
 
   return response;
 }
 
 void loginOauth(BuildContext context, String serviceName) async {
-  if (serviceName == "Intra") {
-    Navigator.pushNamed(context, '/login_epitech');
+  if (serviceName == "intra") {
+    Navigator.pushReplacementNamed(context, '/login_epitech');
     return;
   }
+  bool urlLaunched;
   final SharedPreferences _prefs = await SharedPreferences.getInstance();
   var server = await HttpServer.bind("localhost", 8080, shared: true);
-  
-  print("Serveur launch on " +
-      server.address.toString() +
-      server.port.toString());
+
   try {
-    var l = await launch(
-      urls[serviceName]! + "&state=" + _prefs.getString("access_token")!,
-      enableJavaScript: true,
-      forceWebView: true,
-      enableDomStorage: true,
-      universalLinksOnly: true,
-    );
-    if (l == false) {
+    if (serviceName == "googleCalendar") {
+      urlLaunched = await launch(
+          urls[serviceName]! + "&state=" + _prefs.getString("access_token")!,
+          enableJavaScript: true,
+          enableDomStorage: true);
+    } else {
+      urlLaunched = await launch(
+          urls[serviceName]! + "&state=" + _prefs.getString("access_token")!,
+          enableJavaScript: true,
+          forceWebView: true,
+          enableDomStorage: true);
+    }
+    if (urlLaunched == false) {
       server.close();
       throw "Could not start OAuth";
     }
@@ -74,13 +72,14 @@ void loginOauth(BuildContext context, String serviceName) async {
     }
     request.response.close();
     server.close();
-    interceptToken(context, serviceName, code, _prefs).then((value) {
-      closeWebView();
+    interceptTokenLogin(context, serviceName, code, _prefs).then((value) {
+      if (serviceName != "googleCalendar") {
+        closeWebView();
+      }
       if (value.item3 == true) {
         Navigator.pushNamed(context, '/home');
       } else {
         toast(context, "Can't login to " + serviceName);
-        Navigator.pushNamed(context, '/login');
       }
     });
     // else:

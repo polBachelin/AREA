@@ -8,6 +8,7 @@ import Register from "@/components/Register";
 import Profile from "@/components/Profile"
 import vuetify from './plugins/vuetify'
 import MyApps from "@/components/MyApps";
+import Apk from "@/components/Apk";
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import VueI18n from 'vue-i18n'
@@ -206,6 +207,7 @@ const router = new VueRouter({
 		{path: '/profile', component: Profile},
 		{path: '/login', component: Login},
 		{path: '/register', component: Register, name: 'register'},
+		{path: '/client.apk', component: Apk, name: 'apk'}
 	],
 })
 

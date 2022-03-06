@@ -1,12 +1,9 @@
-import 'package:area/components/roundedFlatButtonLarge.dart';
-import 'package:area/components/toast.dart';
+import 'package:area/components/buttons/roundedFlatButtonLarge.dart';
+import 'package:area/components/animations/toast.dart';
 import 'package:area/services/manager.dart';
 import 'package:area/theme.dart' as theme;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../delayed_animation.dart';
+import '../animations/delayed_animation.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key}) : super(key: key);
@@ -17,8 +14,9 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   var _obscureText = true;
-  String _email = "";
-  String _password = "";
+  String? _email;
+  String? _password;
+  String? _confirmedPassword;
 
   void _getEmail(String email) {
     setState(() {
@@ -32,20 +30,28 @@ class _RegisterFormState extends State<RegisterForm> {
     });
   }
 
+  void _getPasswordConfirmed(String password) {
+    setState(() {
+      _confirmedPassword = password;
+    });
+  }
+
   void register(BuildContext context) {
+    if (_password != _confirmedPassword) {
+      return toast(context, "Passwords differ");
+    }
     print("Try Register IP : " + Manager.of(context).api.url);
     Manager.of(context).api.register({
       "email": _email,
       "password": _password,
     }).then((success) {
-      print("Logged in! :D " + success.toString());
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil("/home", (Route<dynamic> route) => false);
-    }).catchError((msg) {
-      toast(context, 'Error while registering');
-      if (kDebugMode) {
-        print(msg.toString());
+      if (!success) {
+        return toast(context, 'User already exists');
       }
+      Navigator.pushReplacementNamed(context, "/home");
+    }).catchError((msg) {
+      print(msg);
+      toast(context, 'Login Error ! Retry');
     });
   }
 
@@ -54,62 +60,136 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 30,
-      ),
-      child: Column(
-        children: [
-          DelayedAnimation(
-            delay: 300,
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: 'Your Email',
-                labelStyle: TextStyle(
-                  color: Colors.grey[400],
-                ),
-              ),
-              onChanged: _getEmail,
-            ),
-          ),
-          const SizedBox(height: 30),
-          DelayedAnimation(
-            delay: 400,
-            child: TextField(
-              obscureText: _obscureText,
-              decoration: InputDecoration(
-                labelStyle: TextStyle(
-                  color: Colors.grey[400],
-                ),
-                labelText: 'Password',
-                suffixIcon: IconButton(
-                  icon: const Icon(
-                    Icons.visibility,
-                    color: Colors.black,
+        color: theme.background,
+        margin: const EdgeInsets.symmetric(
+          horizontal: 10,
+        ),
+        child: Form(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround ,
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _obscureText = !_obscureText;
-                    });
-                  },
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  alignLabelWithHint: true,
+                  floatingLabelAlignment: FloatingLabelAlignment.center,
+                  filled: true,
+                  fillColor: Colors.white,
+                  labelText: 'Your Email',
+                  labelStyle: const TextStyle(
+                    color: Color.fromARGB(255, 122, 122, 122),
+                    height: 2.5
+                  ),
+                  suffixIcon: const Icon(Icons.mail)
+                ),
+                onChanged: _getEmail,
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                obscureText: _obscureText,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  alignLabelWithHint: true,
+                  floatingLabelAlignment: FloatingLabelAlignment.center,
+                  labelStyle: TextStyle(
+                    color: Colors.grey[400],
+                    height: 2.5
+                  ),
+                  labelText: 'Password',
+                  suffixIcon: IconButton(
+                    icon: const Icon(
+                      Icons.visibility,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                  ),
+                ),
+                onChanged: _getPassword,
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                obscureText: _obscureText,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  alignLabelWithHint: true,
+                  floatingLabelAlignment: FloatingLabelAlignment.center,
+                  filled: true,
+                  fillColor: Colors.white,
+                  labelStyle: TextStyle(
+                    color: Colors.grey[400],
+                    height: 3
+                  ),
+                  labelText: 'Confirm password',
+                  suffixIcon: IconButton(
+                    icon: const Icon(
+                      Icons.visibility,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                  ),
+                ),
+                onChanged: _getPasswordConfirmed,
+              ),
+              const SizedBox(height: 30),
+              DelayedAnimation(
+                delay: 500,
+                child: RFLargeButton(
+                  backgroundColor: theme.primaryColor,
+                  buttonIcon: Icons.login,
+                  passedFunction: register,
+                  buttonText: 'Register',
+                  parentContext: context,
+                  passedString: "",
                 ),
               ),
-              onChanged: _getPassword,
-            ),
-          ),
-          const SizedBox(height: 30),
-          DelayedAnimation(
-            delay: 500,
-            child: RFLargeButton(
-              backgroundColor: theme.primaryColor,
-              buttonIcon: Icons.login,
-              passedFunction: register,
-              buttonText: 'Register',
-              parentContext: context,
-              passedString: "",
+              const SizedBox(height: 15),
+              Text("Or", style: theme.titleStyle,),
+              const SizedBox(height: 15),
+              DelayedAnimation(
+                delay: 500,
+                child: RFLargeButton(
+                  backgroundColor: theme.primaryLightColor,
+                  buttonIcon: Icons.arrow_back_outlined,
+                  passedFunction: Navigator.pushReplacementNamed,
+                  buttonText: 'Login',
+                  parentContext: context,
+                  passedString: "/authentification",
+                  size: const Size(200, 50),
+                ),
               ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }

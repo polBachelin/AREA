@@ -1,3 +1,4 @@
+import 'package:area/pages/user_space/settings.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,8 @@ AppBar drawAppBar(BuildContext context) {
           size: 30,
         ),
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.popAndPushNamed(context, "/authentification");
+          SettingsScreenState.clearSharedPrefs();
         },
       ));
   //return SizedBox(height: 180, child: Image.asset('./images/AREA.png'));

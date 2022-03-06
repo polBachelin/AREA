@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:area/components/toast.dart';
+import 'package:area/components/animations/toast.dart';
 import 'package:area/services/manager.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,9 +19,9 @@ const Map<String, String> urlsRegister = {
       "&response_type=code&owner=user"
 };
 
-Future<Tuple3<String, String, bool>> interceptToken(BuildContext context,
+Future<Tuple3<String, String, bool>> interceptTokenRegister(BuildContext context,
     String oauthName, String code, SharedPreferences prefs) async {
-  var response = await Manager.of(context).api.oauthGetToken(code, oauthName);
+  var response = await Manager.of(context).api.oauthGetToken(code, oauthName, false);
 
   print("TUPLE returned ==> " + response.toString());
   prefs.setString("username", response.item1);
@@ -42,9 +42,6 @@ void registerOauth(BuildContext context, String serviceName) async {
   var server = await HttpServer.bind("localhost", 8080, shared: true);
 
   try {
-    print("Serveur launch on " +
-        server.address.toString() +
-        server.port.toString());
     if (serviceName == "googleCalendar") {
       urlLaunched = await launch(urlsRegister[serviceName]!,
           enableJavaScript: true, enableDomStorage: true);
@@ -74,16 +71,16 @@ void registerOauth(BuildContext context, String serviceName) async {
       }
       request.response.close();
       server.close();
-      interceptToken(context, serviceName, code, _prefs).then((value) {
+      interceptTokenRegister(context, serviceName, code, _prefs).then((value) {
         if (serviceName != "googleCalendar") closeWebView();
         if (value.item3 == true) {
           print(_prefs.getString("access_token"));
           server.close();
-          Navigator.pushNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/home');
         } else {
           server.close();
           toast(context, "Can't register with " + serviceName);
-          Navigator.pushNamed(context, '/login');
+          Navigator.pushReplacementNamed(context, '/authentification');
         }
       });
     });

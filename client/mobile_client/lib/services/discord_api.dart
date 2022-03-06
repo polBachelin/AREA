@@ -14,7 +14,13 @@ class DiscordAPI {
   };
 
   void updateUrl() {
+    updateHeaders();
     prefs.then((p) => url = p.getString('server_url')!);
+  }
+
+  void updateHeaders() async {
+    prefs.then((p) => p.reload().then((value) =>
+        headers["Authorization"] = "Bearer " + p.getString('access_token')!));
   }
 
   Future<List<DiscordChannel>> getChannels() async {
