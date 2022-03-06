@@ -24,10 +24,6 @@ Future<Tuple3<String, String, bool>> interceptTokenLogin(BuildContext context,
   var response =
       await Manager.of(context).api.oauthGetToken(code, oauthName, true);
 
-  prefs.setString("username", response.item1);
-  prefs.setString("access_token", response.item2);
-  prefs.setBool("isLogged", response.item3);
-
   return response;
 }
 
@@ -82,7 +78,7 @@ void loginOauth(BuildContext context, String serviceName) async {
         closeWebView();
       }
       if (value.item3 == true) {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushNamed(context, '/home');
       } else {
         toast(context, "Can't login to " + serviceName);
       }

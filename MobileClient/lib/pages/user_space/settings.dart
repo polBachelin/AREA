@@ -14,15 +14,14 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class SettingsScreenState extends State<SettingsScreen> {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late Future<String> _username;
-
   @override
   void initState() {
     super.initState();
-    _username = _prefs.then((SharedPreferences prefs) {
-      return prefs.getString('username') ?? '';
-    });
+  }
+
+  Future<SharedPreferences> getSharedPrefs() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs;
   }
 
   static Future<void> clearSharedPrefs() async {
@@ -72,9 +71,10 @@ class SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ]))),
           const SizedBox(height: 20),
-          FutureBuilder<String>(
-              future: _username,
-              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          FutureBuilder<SharedPreferences>(
+              future: getSharedPrefs(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<SharedPreferences> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
                     return const CircularProgressIndicator();
@@ -82,12 +82,24 @@ class SettingsScreenState extends State<SettingsScreen> {
                     if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else {
-                      return Text('Profile Name ${snapshot.data}}.',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ));
+                      return Column(
+                        children: [
+                          Text(
+                              'Profile Name ${snapshot.data!.getString("username")}.',
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          Text(
+                              'Access Token ${snapshot.data!.getString("access_token")}',
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              )),
+                        ],
+                      );
                     }
                 }
               })

@@ -7,10 +7,10 @@ class ServerRequest {
   static Future<http.Response> getRequest(
       String url, String route, Map<String, String> headers) async {
     if (kDebugMode) {
-      print("GET - $url$route");
+      print("GET - $url$route - $headers");
     }
     final response = await http.get(Uri.parse(url + route), headers: headers);
-    //print("GET "+ response.statusCode.toString() + " - " + response.body);
+    print("GET "+ response.statusCode.toString() + " - " + response.body);
     //updateCookie(response, headers);
     return response;
   }

@@ -13,9 +13,9 @@ class Server {
   final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
   String url;
 
-  final notion = NotionAPI(prefs: SharedPreferences.getInstance());
-  final discord = DiscordAPI(prefs: SharedPreferences.getInstance());
-  final google = GoogleAPI(prefs: SharedPreferences.getInstance());
+  var notion = NotionAPI(prefs: SharedPreferences.getInstance());
+  var discord = DiscordAPI(prefs: SharedPreferences.getInstance());
+  var google = GoogleAPI(prefs: SharedPreferences.getInstance());
   String? accessToken;
 
   Map<String, String> headers = {
@@ -24,6 +24,7 @@ class Server {
   };
 
   void updateToken() {
+    changeUrl(url);
     prefs.then((SharedPreferences p) {
       p.reload();
       if (p.getString("access_token") != null) {
@@ -145,7 +146,6 @@ class Server {
     final loggedServices =
         await ServerRequest.getRequest(url, "/services/logged", headers);
     var joe = List<String>.from(json.decode(loggedServices.body));
-    //print("Logged Services ==> " + joe.toString());
 
     if (response.statusCode == 200) {
       final List services = json.decode(response.body);
@@ -158,6 +158,7 @@ class Server {
         return true;
       }).toList();
     } else {
+      print("FAIS CHIERR");
       throw Exception();
     }
   }
@@ -203,6 +204,7 @@ class Server {
 
   void deleteArea(String name) async {
     updateToken();
-    final res = await ServerRequest.deleteRequest(url, '/area/' + name, {}, headers);
+    final res =
+        await ServerRequest.deleteRequest(url, '/area/' + name, {}, headers);
   }
 }

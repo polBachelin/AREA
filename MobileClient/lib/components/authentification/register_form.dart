@@ -45,6 +45,9 @@ class _RegisterFormState extends State<RegisterForm> {
       "email": _email,
       "password": _password,
     }).then((success) {
+      if (!success) {
+        return toast(context, 'User already exists');
+      }
       Navigator.pushReplacementNamed(context, "/home");
     }).catchError((msg) {
       print(msg);

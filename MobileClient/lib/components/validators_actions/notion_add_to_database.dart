@@ -22,7 +22,6 @@ class NotionAddDatabaseState extends State<NotionAddDatabaseForm> {
 
   @override
   Widget build(BuildContext context) {
-    print(Manager.of(context).api.url);
     return FutureBuilder<List>(
         future: Manager.of(context).api.notion.getDatabases(),
         builder: (context, snapshot) {
