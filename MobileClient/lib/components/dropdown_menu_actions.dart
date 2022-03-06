@@ -65,7 +65,6 @@ class DropDownMenuState extends State<DropDownMenuActions> {
   }
 
   Widget setConfigAction(BuildContext context) {
-    Manager.of(context).creator["action_defined"] = false;
     Manager.of(context).creator["actionName"] = selectedAction.toString();
     switch (selectedAction) {
       case "Add to database":
@@ -84,6 +83,7 @@ class DropDownMenuState extends State<DropDownMenuActions> {
         Manager.of(context).creator["action_defined"] = true;
         break;
       default:
+        Manager.of(context).creator["action_defined"] = false;
         return const Text("");
     }
     return const Text("");

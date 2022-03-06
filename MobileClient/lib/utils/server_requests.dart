@@ -18,7 +18,7 @@ class ServerRequest {
   static Future<http.Response> postRequest(String url, String route,
       dynamic data, Map<String, String> headers) async {
     if (kDebugMode) {
-      print("POST - $route");
+      print("POST - $url$route");
       print("Payload : $data");
     }
     final response = await http.post(Uri.parse(url + route),

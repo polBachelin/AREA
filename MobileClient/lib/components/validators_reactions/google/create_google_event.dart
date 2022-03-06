@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:area/theme.dart';
 import 'package:date_field/date_field.dart';
 import 'package:area/models/google.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:area/models/discord.dart';
 import 'package:area/services/manager.dart';
 import 'package:area/theme.dart' as theme;
 import 'package:flutter/material.dart';
@@ -66,11 +64,11 @@ class CreateGoogleEventState extends State<CreateGoogleEvent> {
         "event": {
           "summary": _summary,
           "start": {
-            "dateTime": _selectedDateStart.toString(),
+            "dateTime": _selectedDateStart!.toIso8601String(),
             "timeZone": "Europe/Paris",
           },
           "end": {
-            "dateTime": _selectedDateEnd.toString(),
+            "dateTime": _selectedDateEnd!.toIso8601String(),
             "timeZone": "Europe/Paris"
           }
         },
@@ -193,9 +191,6 @@ class CreateGoogleEventState extends State<CreateGoogleEvent> {
                           )),
                       mode: DateTimeFieldPickerMode.dateAndTime,
                       autovalidateMode: AutovalidateMode.always,
-                      validator: (e) => (e?.day ?? 0) == 1
-                          ? 'Please not the first day'
-                          : null,
                       onDateSelected: (DateTime value) {
                         setState(() {
                           _selectedDateEnd = value;
