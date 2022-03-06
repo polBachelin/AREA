@@ -6,8 +6,8 @@ info:
 servers:
 - url: /
 tags:
-- name: user
-  description: Operations about user
+- name: auth
+  description: Operations about authentification
   externalDocs:
     description: Find out more about our store
     url: http://swagger.io
