@@ -2,7 +2,7 @@
   <v-container class="justify-center text-center">
     <v-divider class="mt-10"></v-divider>
     <v-row class="justify-center text-center mt-10">
-      <a id="ApkDL" href="/files/app-release.apk" download>
+      <a id="ApkDL" href="/files/client.apk" download>
         DOWNLOAD APK
       </a>
     </v-row>
