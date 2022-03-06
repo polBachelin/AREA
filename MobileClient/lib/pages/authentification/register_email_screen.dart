@@ -13,10 +13,11 @@ class RegisterEmailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: theme.background,
         appBar: AppBar(
           elevation: 0,
           centerTitle: true,
-          title: Image.asset("./images/AREA.png"),
+          title: Image.asset("./images/AREA.png", scale: 1.5),
           backgroundColor: theme.background,
           leading: IconButton(
             icon: const Icon(
@@ -39,6 +40,7 @@ class RegisterEmailScreen extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(height: 50),
                       DelayedAnimation(
                         delay: 500,
                         child: Text(

@@ -62,5 +62,6 @@ flutter:
     - images/
 
 flutter_native_splash:
-  color: "#42a5f5"
+  color: "#fa5c3a"
   background_image: assets/AREA.png
+  branding: assets/AREA.png

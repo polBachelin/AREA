@@ -68,8 +68,7 @@ class NotionAddDatabaseState extends State<NotionAddDatabaseForm> {
                       return DropdownMenuItem(
                           child: Text(name), value: db["id"].toString());
                     })
-                    .toList()
-                    .sublist(0, 10));
+                    .toList());
           } else {
             return const Center(child: CircularProgressIndicator());
           }

@@ -10,6 +10,7 @@ class RFLargeButton extends StatefulWidget {
   final Function passedFunction;
   final BuildContext parentContext;
   final String passedString;
+  final Size? size;
 
   const RFLargeButton(
       {Key? key,
@@ -18,7 +19,8 @@ class RFLargeButton extends StatefulWidget {
       required this.buttonText,
       required this.buttonIcon,
       required this.parentContext,
-      required this.passedString})
+      required this.passedString,
+      this.size})
       : super(key: key);
 
   @override
@@ -47,6 +49,7 @@ class RFLargeButtonState extends State<RFLargeButton> {
           shape: const StadiumBorder(),
           primary: widget.backgroundColor,
           padding: const EdgeInsets.all(13),
+          fixedSize: widget.size
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

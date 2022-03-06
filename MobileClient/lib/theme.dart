@@ -13,7 +13,7 @@ const Color white = Color(0xffffffff);
 const Color lightText = Color(0xffffffff);
 
 const Color githubBlack = Color(0xff171515);
-const Color background = Color(0xff171515);
+const Color background = Color.fromARGB(255, 0, 0, 0);
 
 const Color disable = Color.fromARGB(255, 156, 156, 156);
 const Color validate = Color.fromARGB(255, 224, 167, 8);

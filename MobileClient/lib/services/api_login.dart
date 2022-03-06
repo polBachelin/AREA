@@ -21,8 +21,7 @@ const Map<String, String> urls = {
 
 Future<Tuple3<String, String, bool>> interceptTokenLogin(BuildContext context,
     String oauthName, String code, SharedPreferences prefs) async {
-  var response =
-      await Manager.of(context).api.oauthGetToken(code, oauthName, true);
+  var response = await Manager.of(context).api.oauthGetToken(code, oauthName, true);
 
   return response;
 }

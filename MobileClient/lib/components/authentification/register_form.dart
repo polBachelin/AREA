@@ -60,27 +60,56 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: theme.background,
         margin: const EdgeInsets.symmetric(
-          horizontal: 20,
+          horizontal: 10,
         ),
         child: Form(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround ,
             children: [
               TextField(
                 decoration: InputDecoration(
-                  labelText: 'Your Email',
-                  labelStyle: TextStyle(
-                    color: Colors.grey[400],
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
                   ),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  alignLabelWithHint: true,
+                  floatingLabelAlignment: FloatingLabelAlignment.center,
+                  filled: true,
+                  fillColor: Colors.white,
+                  labelText: 'Your Email',
+                  labelStyle: const TextStyle(
+                    color: Color.fromARGB(255, 122, 122, 122),
+                    height: 2.5
+                  ),
+                  suffixIcon: const Icon(Icons.mail)
                 ),
                 onChanged: _getEmail,
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               TextField(
                 obscureText: _obscureText,
                 decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  alignLabelWithHint: true,
+                  floatingLabelAlignment: FloatingLabelAlignment.center,
                   labelStyle: TextStyle(
                     color: Colors.grey[400],
+                    height: 2.5
                   ),
                   labelText: 'Password',
                   suffixIcon: IconButton(
@@ -97,13 +126,27 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
                 onChanged: _getPassword,
               ),
+              const SizedBox(height: 20),
               TextField(
                 obscureText: _obscureText,
                 decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: theme.primaryColor, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  alignLabelWithHint: true,
+                  floatingLabelAlignment: FloatingLabelAlignment.center,
+                  filled: true,
+                  fillColor: Colors.white,
                   labelStyle: TextStyle(
                     color: Colors.grey[400],
+                    height: 3
                   ),
-                  labelText: 'Password',
+                  labelText: 'Confirm password',
                   suffixIcon: IconButton(
                     icon: const Icon(
                       Icons.visibility,
@@ -128,6 +171,21 @@ class _RegisterFormState extends State<RegisterForm> {
                   buttonText: 'Register',
                   parentContext: context,
                   passedString: "",
+                ),
+              ),
+              const SizedBox(height: 15),
+              Text("Or", style: theme.titleStyle,),
+              const SizedBox(height: 15),
+              DelayedAnimation(
+                delay: 500,
+                child: RFLargeButton(
+                  backgroundColor: theme.primaryLightColor,
+                  buttonIcon: Icons.arrow_back_outlined,
+                  passedFunction: Navigator.pushReplacementNamed,
+                  buttonText: 'Login',
+                  parentContext: context,
+                  passedString: "/authentification",
+                  size: const Size(200, 50),
                 ),
               ),
             ],

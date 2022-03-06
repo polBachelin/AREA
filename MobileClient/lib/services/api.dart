@@ -123,6 +123,7 @@ class Server {
         : '/auth_mobile?code=$code';
     final response = await ServerRequest.getRequest(
         url, '/' + serviceName + routeEnd, headers);
+    print("REPONSE API ==>" + response.body + response.statusCode.toString());
     var ret = const Tuple3<String, String, bool>("", "", false);
 
     if (response.statusCode >= 300) {

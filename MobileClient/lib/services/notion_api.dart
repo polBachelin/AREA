@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:area/models/notion.dart';
 import 'package:area/utils/server_requests.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
