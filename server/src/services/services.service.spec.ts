@@ -1,17 +1,17 @@
+import { getModelToken } from "@nestjs/mongoose";
+import { Test, TestingModule } from "@nestjs/testing";
+import { Model, Query } from "mongoose";
+import { IUser, User, userSchema } from "../models/User";
+import { UsersModule } from "../users/users.module";
+import { UsersService } from "../users/users.service";
 import { ServicesController } from "./services.controller";
 import { ServicesService } from "./services.service";
-import { UsersService } from "../users/users.service"
-import { User, IUser, userSchema } from "../models/User"
-import { Test, TestingModule } from "@nestjs/testing";
-import { getModelToken } from "@nestjs/mongoose";
-import { Model, Query } from "mongoose";
-import { UsersModule } from "../users/users.module";
 
 const mockUser = (
 	email = "pol.bachelin@epitech.eu",
 	password = "",
 	areas = [],
-	discord = {access_token: "z7N7jwrJeINzr6GCn6WHRaKbX1G2Fw", token_type: "Bearer", expires_in: 604800, refresh_token: "", scope: "email"},
+	discord = {access_token: "No more token", token_type: "Bearer", expires_in: 604800, refresh_token: "", scope: "email"},
 	google = undefined,
 	notion = undefined,
 	intra = undefined,
