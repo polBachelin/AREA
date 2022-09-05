@@ -1,11 +1,11 @@
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import axios, { AxiosRequestConfig } from 'axios';
+import { properties } from "src/interfaces/task.interface";
 import { ATrigger } from "src/interfaces/trigger.interface";
 import { IUser } from "src/models/User";
-import axios, {AxiosRequestConfig} from 'axios';
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { properties } from "src/interfaces/task.interface";
 
 const WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?units=metric&q="
-const API_KEY = "&appid=b362492d7885049baca48386d84b710d"
+const API_KEY = "&appid=" + process.env.WEATHER_KEY;
 const WEATHER_REFRESH_RATE = 10000
 
 export class WeatherChange extends ATrigger {
