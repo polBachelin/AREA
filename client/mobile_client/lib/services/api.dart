@@ -34,7 +34,6 @@ class Server {
       notion.headers = headers;
       discord.headers = headers;
       google.headers = headers;
-      //print("TOKEN UPDATED ==> " + p.getString("access_token")!);
     });
   }
 
@@ -49,7 +48,6 @@ class Server {
     final response =
         await ServerRequest.postRequest(url, '/auth/register', data, headers);
     if (response.statusCode >= 300) {
-      print(response.body.toString());
       return false;
     }
     prefs.then((SharedPreferences p) {
